@@ -7,11 +7,8 @@ Add your content here.
 
 = Access=
 
-The OECD provide a web service to get the data in XML:
-
-{{{
-http://stats.oecd.org/glossary/filter.asp?cET=A&tET=&vED=ON&cED=A&tED=&vEC=ON&cEC=A&tEC=&vFT=ON&cFT=A&tFT=&vFD=ON&cFD=A&tFD=&vFC=ON&cFC=A&tFC=&vP=ON&cP=A&tP=&vU=ON&cU=A&tU=&vS=ON&cS=All&vV=ON&cV=All&vC=ON&cC=All&vT=ON&cT=All&vO=ON&cO=All&vI=ON&Idd=dd&Imm=mm&Iyy=yyyy&vE=ON&Edd=dd&Emm=mm&Eyy=yyyy&vCR=ON&format=martif&vL=ON&cL=All&No=50&SUBMIT.x=10&SUBMIT.y=24&CurPage=1
-}}}
+The OECD provide a [http://stats.oecd.org/glossary/webservice.asp web service] to get the data in XML:
+[http://stats.oecd.org/glossary/filter.asp?cET=A&tET=&vED=ON&cED=A&tED=&vEC=ON&cEC=A&tEC=&vFT=ON&cFT=A&tFT=&vFD=ON&cFD=A&tFD=&vFC=ON&cFC=A&tFC=&vP=ON&cP=A&tP=&vU=ON&cU=A&tU=&vS=ON&cS=All&vV=ON&cV=All&vC=ON&cC=All&vT=ON&cT=All&vO=ON&cO=All&vI=ON&Idd=dd&Imm=mm&Iyy=yyyy&vE=ON&Edd=dd&Emm=mm&Eyy=yyyy&vCR=ON&format=martif&vL=ON&cL=All&No=50&SUBMIT.x=10&SUBMIT.y=24&CurPage=1 Sample Data]
 
 Change the CurPage field at the end of the URL to get pages 2, 3, 4 etc. The last page number is 139.
 
