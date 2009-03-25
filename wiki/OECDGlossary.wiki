@@ -107,7 +107,7 @@ This is what that entry needs to look like in RDF/XML:
   </skos:Concept>
 
   <!-- this is from GlossaryOutputSegmentCodes -->
-  <1-- use the slugify function from http://www.djangosnippets.org/snippets/29/ to turn the text into the bit at the end of the URL -->
+  <!-- use the slugify function from http://www.djangosnippets.org/snippets/29/ to turn the text into the bit at the end of the URL -->
   <skos:Collection rdf:about="http://example.org/oecd-glossary/segments/economic-outlook">
     <skos:prefLabel xml:lang="en">Economic Outlook</skos:prefLabel>
     <skos:member rdf:resource="http://example.org/oecd-glossary/concepts/16" />
