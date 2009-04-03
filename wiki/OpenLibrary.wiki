@@ -4,10 +4,9 @@
 = Introduction =
 
 = Useful links =
-
- * [http://openlibrary.org/static/jsondump/ Open Library data in JSON]
+ * [http://openlibrary.org/dev/docs/restful_api Open Library API], [http://openlibrary.org/static/jsondump/ Open Library data in JSON]
  * [http://openlibrary.org/b/OL7983950M/Weaving-the-Web.rdf existing rdf]
- * [http://mondeca.wordpress.com/2009/01/05/openlibrary-api-rdf-wrapper-on-google-app-engine/ Open Library wrapper] and [http://olrdf.appspot.com/key/b/OL7983950M.rdf sample output 1], [http://olrdf.appspot.com/key/b/OL5218098M.rdf sample output 2]
+ * [http://mondeca.wordpress.com/2009/01/05/openlibrary-api-rdf-wrapper-on-google-app-engine/ Open Library wrapper], [https://spreadsheets.google.com/a/mondeca.com/ccc?key=prOEQ8nnfPsH5c7cBBMZzTg&hl=en details of mapping] and [http://olrdf.appspot.com/key/b/OL7983950M.rdf sample output 1], [http://olrdf.appspot.com/key/b/OL5218098M.rdf sample output 2]
  * Rob Styles conversion notes: [http://blogs.talis.com/n2/archives/92 part 1] and [http://blogs.talis.com/n2/archives/101 part 2]
  * [http://openlibrary.org/dev/docs/data other Open Library datasets]
 
