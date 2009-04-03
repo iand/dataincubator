@@ -1,5 +1,5 @@
 #summary Mapping OECD Glossary of Statistical Terms
-#labels economics,oecd,skos,taxonomy,mapping
+#labels economics,oecd,skos,taxonomy,mapping,Featured
 
 = Introduction =
 
