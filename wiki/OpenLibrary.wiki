@@ -6,10 +6,22 @@
 = Useful links =
  * OpenLibrary site emits data as [http://openlibrary.org/b/OL7983950M/Weaving-the-Web.json JSON] and (often broken) [http://openlibrary.org/b/OL7983950M/Weaving-the-Web.rdf RDF]
  * It has a [http://openlibrary.org/dev/docs/restful_api RESTful API] and provides  [http://openlibrary.org/static/jsondump/ dumps of all the data in JSON]
-
  * [http://mondeca.wordpress.com/2009/01/05/openlibrary-api-rdf-wrapper-on-google-app-engine/ Open Library wrapper], [https://spreadsheets.google.com/a/mondeca.com/ccc?key=prOEQ8nnfPsH5c7cBBMZzTg&hl=en details of mapping] and [http://olrdf.appspot.com/key/b/OL7983950M.rdf sample output 1], [http://olrdf.appspot.com/key/b/OL5218098M.rdf sample output 2]
  * Rob Styles conversion notes: [http://blogs.talis.com/n2/archives/92 part 1] and [http://blogs.talis.com/n2/archives/101 part 2]
  * [http://openlibrary.org/dev/docs/data other Open Library datasets]
+
+Some interesting records:
+
+  * http://openlibrary.org/b/OL7815034M/The-Colour-of-Magic - Audio Cassette, abridged edition
+  * http://openlibrary.org/b/OL22632398M/colour-of-magic - paperback
+  * http://openlibrary.org/b/OL7878387M/The-Colour-Of-Magic - hardback with first sentence
+  * http://openlibrary.org/b/OL7985559M/The-Colour-of-Magic - Audio CD, unabridged
+  * http://openlibrary.org/b/OL3691799M/Free-culture - lccn is linked
+  * http://openlibrary.org/b/OL22859738M/Free-culture - table of contents
+  * http://openlibrary.org/b/OL8682804M/Free-Software,-Free-Society - rich detail
+
+
+
 
 = Proposed URI Structure =
  * http://ol.dataincubator.org/editions/{edition-id}
