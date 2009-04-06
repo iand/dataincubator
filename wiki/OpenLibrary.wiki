@@ -1,5 +1,5 @@
 #summary Notes on converting OpenLibrary data to RDF
-#labels marc,rdf,openlibrary
+#labels marc,openlibrary
 
 = Introduction =
 
@@ -11,7 +11,10 @@
  * [http://openlibrary.org/dev/docs/data other Open Library datasets]
 
 = Proposed URI Structure =
-
- * /people - the list of all people
- * /people/xxxx - a specific person
- 
+ * http://ol.dataincubator.org/editions/{edition-id}
+ * http://ol.dataincubator.org/works/{work-id}
+ * http://ol.dataincubator.org/series/{series-id}
+ * http://ol.dataincubator.org/sections/{section-id}
+ * http://ol.dataincubator.org/people/{person-id}
+ * http://ol.dataincubator.org/places/{place-id}
+ * http://ol.dataincubator.org/events/{event-id}
