@@ -20,9 +20,6 @@ Some interesting records:
   * http://openlibrary.org/b/OL22859738M/Free-culture - table of contents
   * http://openlibrary.org/b/OL8682804M/Free-Software,-Free-Society - rich detail
 
-
-
-
 = Proposed URI Structure =
  * http://ol.dataincubator.org/editions/{edition-id}
  * http://ol.dataincubator.org/works/{work-id}
@@ -31,3 +28,7 @@ Some interesting records:
  * http://ol.dataincubator.org/people/{person-id}
  * http://ol.dataincubator.org/places/{place-id}
  * http://ol.dataincubator.org/events/{event-id}
+
+= Other Data to Mix In =
+
+  * [http://www.librarything.com/thingology/2007/03/thingisbn-data-in-one-file.php LibraryThing's ISBN database]
