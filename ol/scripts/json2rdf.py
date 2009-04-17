@@ -1,8 +1,11 @@
-import urllib2
 import json
+import optparse
+import os
 import rdflib
 import sys
-  
+import tarfile
+import urllib2
+
 #import rdfoutput
 BASE_URI = "http://ol.dataincubator.org"
 #rdfoutput.register("bibo", "http://purl.org/ontology/bibo/")
@@ -243,6 +246,10 @@ class Converter:
         print "  Did not process '%s':'%s'" % (k, v)
     #rdfoutput.make_table(triples)
     #rdfoutput.make_graph(triples)
+  
+  def clear(self):
+    self.graph = rdflib.ConjunctiveGraph()
+  
   def get_graph(self):
     return self.graph 
     
@@ -251,10 +258,24 @@ class Converter:
     return BASE_URI + "/" + prefix + "/" + str(self.resource_index)
   
 if __name__ == "__main__":
-  batch_size = 800
-  input_filename =  sys.argv[1]
-  output_filename_parts = sys.argv[2].split(".")
-  output_format = sys.argv[3]
+  p = optparse.OptionParser()
+  p.set_defaults(batch_size=800, compress=False, format="xml")
+  p.add_option("-b", "--batch-size", action="store", type="int", dest="batch_size", metavar="BATCH_SIZE", help="specify the size of each batch")
+  p.add_option("-c", "--compress", action="store_true", dest="compress", help="compress the output using TAR-GZ compression")
+  p.add_option("-x", "--xml", action="store_const", const="xml", dest="format", help="save output as XML")
+  p.add_option("-p", "--pretty-xml", action="store_const", const="pretty-xml", dest="format", help="save output as pretty XML")
+  p.add_option("-n", "--ntriples", action="store_const", const="nt", dest="format", help="save output as NTriples")
+  opts, args = p.parse_args()
+  
+  if len(args) < 2:
+    p.print_usage()
+  
+  batch_size = opts.batch_size
+  input_filename = args[0]
+  output_filename = args[1]
+  output_format = opts.format
+  compress = opts.compress
+  output_filename_parts = output_filename.split(".")
 
   bad_record_filename = output_filename_parts[0] + "_bad.json"
   bad_record_file = open(bad_record_filename, "w")
@@ -275,6 +296,11 @@ if __name__ == "__main__":
         output_file = open(batch_filename, "w")
         output_file.write(g.serialize(format=output_format))
         output_file.close()
+        if compress:
+          archive_filename = batch_filename + ".tgz"
+          archive = tarfile.open(archive_filename, "w:gz")
+          archive.add(batch_filename, os.path.basename(batch_filename))
+          archive.close()
         batch = batch + 1
       print "\nStarting batch %s" % batch
       c = Converter()
@@ -289,6 +315,8 @@ if __name__ == "__main__":
   batch_delim = "_" + str(batch) + "."
   batch_filename = batch_delim.join(output_filename_parts)
   g = c.get_graph()
+  
+  
   output_file = open(batch_filename, "w")
   output_file.write(g.serialize(format=output_format))
   output_file.close()
