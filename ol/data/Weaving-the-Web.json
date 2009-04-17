@@ -1,0 +1,45 @@
+{
+	"publishers": ["Texere Publishing"],
+	"physical_format": "Hardcover",
+	"weight": "13.4 ounces",
+	"created": {
+		"type": "/type/datetime",
+		"value": "2008-04-29T15:03:11.581851"
+	},
+	"isbn_10": [
+		"0752820907"
+	],
+	"number_of_pages": 288,
+	"isbn_13": [
+		"9780752820903"
+	],
+	"languages": [
+		{
+			"key": "/l/eng"
+		}
+	],
+	"last_modified": {
+		"type": "/type/datetime",
+		"value": "2008-04-29T15:03:11.581851"
+	},
+	"publish_date": "June 2001",
+	"key": "/b/OL7983950M",
+	"authors": [
+		{
+			"key": "/a/OL25245A"
+		}
+	],
+	"title": "Weaving the Web",
+	"latest_revision": 1,
+	"subjects": [
+		"Internet",
+		"General",
+		"Business / Economics / Finance"
+	],
+	"type": {
+		"key": "/type/edition"
+	},
+	"id": 10826103,
+	"physical_dimensions": "7.7 x 5.2 x 1.3 inches",
+	"revision": 1
+}
