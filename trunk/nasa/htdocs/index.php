@@ -20,12 +20,12 @@ require_once PAGET_DIR . 'paget_storedescribegenerator.class.php';
 class TopicSpaceUriSpace extends PAGET_UriSpace {
   function get_description($uri) {
       
-    if ( $uri == 'http://' . $_SERVER['HTTP_HOST'] . '/space/spacecraft.html' ) {
+    if ( $uri == 'http://' . $_SERVER['HTTP_HOST'] . '/spacecraft.html' ) {
       $desc = new SpacecraftListResourceDescription($uri, 'http://api.talis.com/stores/space'); 
       $desc->set_namespace_mapping('space', 'http://purl.org/net/schemas/space/');
       return $desc;
     }
-    else if ( preg_match('~^http://' . $_SERVER['HTTP_HOST'] . '/space/(.+)$~', $uri, $m) ) {
+    else if ( preg_match('~^http://' . $_SERVER['HTTP_HOST'] . '/(.+)$~', $uri, $m) ) {
       $desc = new StoreBackedResourceDescription('http://purl.org/net/schemas/space/' . $m[1], 'http://api.talis.com/stores/space'); 
       $desc->set_namespace_mapping('space', 'http://purl.org/net/schemas/space/');
       return $desc;
