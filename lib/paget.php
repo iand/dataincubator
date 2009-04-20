@@ -28,7 +28,11 @@ require_once PAGET_DIR . 'paget_storedescribegenerator.class.php';
 
 class StoreBackedUriSpace extends PAGET_UriSpace {
   function get_description($uri) {
-    $desc = new StoreBackedResourceDescription($uri, STORE_URI); 
+    $augment = TRUE;
+    if ( preg_match('~\.(rdf|xml|turtle|json)$~', $uri, $m) ) {
+      $augment = FALSE;
+    }
+    $desc = new StoreBackedResourceDescription($uri, STORE_URI, $augment); 
     $desc->set_namespace_mapping('bibo', 'http://purl.org/ontology/bibo/');
     $desc->set_namespace_mapping('bio', 'http://vocab.org/bio/0.1/');
     $desc->set_namespace_mapping('ol', 'http://olrdf.appspot.com/key/');
@@ -45,10 +49,21 @@ class StoreBackedUriSpace extends PAGET_UriSpace {
 
 class StoreBackedResourceDescription extends PAGET_ResourceDescription {   
   var $_store_uri;
+  var $_augment;
   
-  function __construct($uri, $store_uri) {
+  function __construct($uri, $store_uri, $augment) {
     $this->_store_uri = $store_uri; 
+    $this->_augment = $augment;
     parent::__construct($uri);
+  }
+
+  function get_augmentors() {
+    if ($this->_augment) {
+      return  array( new PAGET_SimplePropertyLabeller() );
+    }
+    else {
+      return array();
+    }
   }
 
   function get_generators() {
