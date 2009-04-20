@@ -26,7 +26,8 @@ skip = ["properties", "kind", "latest_revision", "id", "last_modified", "created
 class Converter:
   resource_index = 0
   
-  def __init__(self):
+  def __init__(self, resource_index):
+    self.resource_index = resource_index
     self.graph = rdflib.ConjunctiveGraph()
     self.graph.bind("rdf", rdf)
     self.graph.bind("rdfs", rdfs)
@@ -38,7 +39,6 @@ class Converter:
     self.graph.bind("foaf", foaf)
     self.graph.bind("dc", dc)
     self.graph.bind("owl", owl)
-    self.graph.bind("ex", ex)
     self.graph.bind("bio", bio)
     self.graph.bind("ov", ov)
   def convert(self, indata):
@@ -50,15 +50,21 @@ class Converter:
     if data["type"]["key"] == "/type/redirect" or data["type"]["key"] == "/type/type" or data["type"]["key"] == "/type/delete" or data["type"]["key"] == "/type/scan_record":
       #print "Ignoring '%s' because it is a '%s'" % (data["key"], data["type"]["key"]) 
       return
-    
-    # Define a URI for the item itself
-    item_uri = self.make_uri("items")
-    
+
+    item_uri = None
+    if data["type"]["key"] == "/type/edition":
+      item_uri = self.make_uri("items")
+
+    elif data["type"]["key"] == "/type/author":
+      item_uri = self.make_uri("people")
+      return
+
+   
     subj = rdflib.URIRef(item_uri)
     
     
     # Temporarily add the original JSON
-    self.graph.add((subj, rdfs["comment"], rdflib.Literal(indata)))
+    #self.graph.add((subj, rdfs["comment"], rdflib.Literal(indata)))
     
     # Connect the item resource to the OpenLibrary document describing it
     ol_document = rdflib.URIRef("http://openlibrary.org" + data["key"])
@@ -216,8 +222,10 @@ class Converter:
       elif k == "description":
         self.graph.add((subj, dcterms["description"], rdflib.Literal(v["value"])))
       elif k == "series":
+        series_resource = rdflib.URIRef(self.make_uri("series"))
+        self.graph.add((subj, ol["series"], series_resource))
         for s in v:
-          self.graph.add((subj, ol["series"], rdflib.Literal(s)))
+          self.graph.add((series_resource, dc["title"], rdflib.Literal(s)))
       elif k == "languages":
         for l in v:
           self.graph.add((subj, dcterms["language"], rdflib.URIRef(BASE_URI + l["key"])))
@@ -257,6 +265,9 @@ class Converter:
   def make_uri(self, prefix):
     self.resource_index = self.resource_index + 1
     return BASE_URI + "/" + prefix + "/" + str(self.resource_index)
+    
+  def get_resource_index(self):
+    return self.resource_index
   
 if __name__ == "__main__":
   p = optparse.OptionParser()
@@ -281,6 +292,8 @@ if __name__ == "__main__":
   bad_record_filename = output_filename_parts[0] + "_bad.json"
   bad_record_file = open(bad_record_filename, "w")
 
+  resource_index = 0
+
   f = open(input_filename, "r")
   error_count = 0
   count = 0
@@ -303,8 +316,9 @@ if __name__ == "__main__":
           archive.add(batch_filename, os.path.basename(batch_filename))
           archive.close()
         batch = batch + 1
+        resource_index = c.get_resource_index() + 1
       print "\nStarting batch %s" % batch
-      c = Converter()
+      c = Converter(resource_index)
       
     try:
       c.convert(line)
