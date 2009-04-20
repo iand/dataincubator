@@ -20,8 +20,8 @@ skos = rdflib.Namespace("http://www.w3.org/2004/02/skos/core#")
 foaf = rdflib.Namespace("http://xmlns.com/foaf/0.1/")
 dc = rdflib.Namespace("http://purl.org/dc/elements/1.1/")
 owl = rdflib.Namespace("http://www.w3.org/2002/07/owl#")
-ex = rdflib.Namespace("http://example.org/terms/")
 bio = rdflib.Namespace("http://vocab.org/bio/0.1/")
+ov = rdflib.Namespace("http://open.vocab.org/terms/")
 skip = ["properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location"]
 class Converter:
   resource_index = 0
@@ -40,6 +40,7 @@ class Converter:
     self.graph.bind("owl", owl)
     self.graph.bind("ex", ex)
     self.graph.bind("bio", bio)
+    self.graph.bind("ov", ov)
   def convert(self, indata):
     data = json.read(indata)
     
@@ -85,7 +86,7 @@ class Converter:
       elif k == "title_prefix":
         self.graph.add((subj, ol["title_prefix"], rdflib.Literal(data["title_prefix"])))
         sort_title = data["title"][len(data["title_prefix"]):].strip()
-        self.graph.add((subj, ol["sort_title"], rdflib.Literal(sort_title)))
+        self.graph.add((subj, ov["sortLabel"], rdflib.Literal(sort_title)))
       elif k == "authors":
         group_resource = rdflib.URIRef(self.make_uri("groups"))
         self.graph.add((subj, bibo["authorList"], group_resource))
@@ -107,7 +108,7 @@ class Converter:
         for t in v:
           self.graph.add((subj, skos["altLabel"], rdflib.Literal(t)))
       elif k == "subtitle":
-        self.graph.add((subj, ol["subtitle"], rdflib.Literal(v)))
+        self.graph.add((subj, ov["subtitle"], rdflib.Literal(v)))
       elif k == "lc_classifications":
         for c in v:
           self.graph.add((subj, ol["lc_classification"], rdflib.Literal(c)))
@@ -141,7 +142,7 @@ class Converter:
           oclc_resource = rdflib.URIRef(BASE_URI + "/oclc/" + str(n))
           self.graph.add((subj, owl["sameAs"], oclc_resource))
           self.graph.add((oclc_resource, owl["sameAs"], subj))
-          self.graph.add((oclc_resource, ex["canonicalUri"], rdflib.Literal(item_uri)))
+          self.graph.add((oclc_resource, ov["canonicalUri"], rdflib.Literal(item_uri)))
       elif k == "publishers":
         for p in v:
           self.graph.add((subj, dc["publisher"], rdflib.Literal(p)))
@@ -154,7 +155,7 @@ class Converter:
         for l in v:
           self.graph.add((subj, bibo["lccn"], rdflib.Literal(l)))
       elif k == "number_of_pages":
-        self.graph.add((subj, ol["number_of_pages"], rdflib.Literal(str(v))))
+        self.graph.add((subj, ov["numberOfPages"], rdflib.Literal(str(v))))
       elif k == "isbn_10":
         for i in v:
           self.graph.add((subj, bibo["isbn10"], rdflib.Literal(i)))
@@ -163,14 +164,14 @@ class Converter:
           isbn_resource = rdflib.URIRef(BASE_URI + "/isbn/" + str(i))
           self.graph.add((subj, owl["sameAs"], isbn_resource))
           self.graph.add((isbn_resource, owl["sameAs"], subj))
-          self.graph.add((isbn_resource, ex["canonicalUri"], rdflib.Literal(item_uri)))
+          self.graph.add((isbn_resource, ov["canonicalUri"], rdflib.Literal(item_uri)))
       elif k == "isbn_13":
         for i in v:
           self.graph.add((subj, bibo["isbn13"], rdflib.Literal(i)))
           isbn_resource = rdflib.URIRef(BASE_URI + "/isbn/" + str(i))
           self.graph.add((subj, owl["sameAs"], isbn_resource))
           self.graph.add((isbn_resource, owl["sameAs"], subj))
-          self.graph.add((isbn_resource, ex["canonicalUri"], rdflib.Literal(item_uri)))
+          self.graph.add((isbn_resource, ov["canonicalUri"], rdflib.Literal(item_uri)))
       elif k == "uris" or k == "url":
         for i in v:
           self.graph.add((subj, rdfs["seeAlso"], rdflib.URIRef(str(i))))
@@ -188,7 +189,7 @@ class Converter:
         self.graph.add((event_resource, rdf["type"], bio["Death"]))
         self.graph.add((event_resource, bio["date"], rdflib.Literal(v)))
       elif k == "weight":
-        self.graph.add((subj, ol["weight"], rdflib.Literal(v)))
+        self.graph.add((subj, ov["weight"], rdflib.Literal(v)))
       elif k == "physical_format":
         self.graph.add((subj, ol["physical_format"], rdflib.Literal(v)))
       elif k == "physical_dimensions":
@@ -201,7 +202,7 @@ class Converter:
       elif k == "bio":
         self.graph.add((subj, bio["olb"], rdflib.Literal(v["value"])))
       elif k == "first_sentence":
-        self.graph.add((subj, ol["first_sentence"], rdflib.Literal(v["value"])))
+        self.graph.add((subj, ov["firstSentence"], rdflib.Literal(v["value"])))
       elif k == "wikipedia":
         self.graph.add((subj, foaf["isPrimaryTopicOf"], rdflib.URIRef(v)))
         # TODO: more specific wikipedia property?
