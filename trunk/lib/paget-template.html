@@ -1,6 +1,7 @@
 <?php
 include_once PAGET_DIR . "paget_termwidget.class.php";
 include_once PAGET_DIR . "paget_datawidget.class.php";
+include_once PAGET_DIR . "paget_tabledatawidget.class.php";
 include_once PAGET_DIR . "paget_historywidget.class.php";
 include_once PAGET_DIR . "paget_ontologywidget.class.php";
 
@@ -20,7 +21,7 @@ include_once PAGET_DIR . "paget_ontologywidget.class.php";
     $widgets[] = new PAGET_OntologyWidget($this);
   }
   else {
-    $widgets[] = new PAGET_DataWidget($this);
+    $widgets[] = new PAGET_TableDataWidget($this);
   }  
   
   echo "<?";
@@ -75,6 +76,15 @@ img.left {
     border: 6px solid #e6e6e6;
     float: left;
     margin: 5px 18px 5px 0;
+}
+
+td, th {
+  padding: 2px;
+  font-size: 1.2em; 
+}
+
+td.odd, th.odd {
+  background-color: #f0f0f0; 
 }
 
 /*
@@ -170,6 +180,10 @@ img.left {
         margin-left: 15px;
         margin-bottom: 15px;
         text-align: justify;
+    }
+    
+    #content th {
+      text-align: left; 
     }
     #content blockquote {
         background: #f1f1f1;
