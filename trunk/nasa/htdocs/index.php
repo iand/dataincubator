@@ -19,8 +19,8 @@ require_once PAGET_DIR . 'paget_storedescribegenerator.class.php';
 
 class TopicSpaceUriSpace extends PAGET_UriSpace {
   function get_description($uri) {
+    if ( $uri == 'http://' . $_SERVER['HTTP_HOST'] . '/spacecraft.html' ) {
       
-    if ( $uri == 'http://' . $_SERVER['HTTP_HOST'] . '/$' ) {
       $desc = new SpacecraftListResourceDescription($uri, 'http://api.talis.com/stores/space'); 
       $desc->set_namespace_mapping('space', 'http://purl.org/net/schemas/space/');
       return $desc;
@@ -31,6 +31,13 @@ class TopicSpaceUriSpace extends PAGET_UriSpace {
       return $desc;
     }
   } 
+
+
+  function get_template($request) {
+    return dirname(dirname(dirname(__FILE__))) . "/lib/paget-template.html";
+  } 
+  
+
 }
 
 class StoreBackedResourceDescription extends PAGET_ResourceDescription {   
@@ -42,15 +49,6 @@ class StoreBackedResourceDescription extends PAGET_ResourceDescription {
   }
   function get_generators() {
     return array( new PAGET_StoreDescribeGenerator($this->_store_uri) );
-  }
-  
-  function get_html() {
-    $config = array();
-    $config['rights_text'] = 'All text and data in this document are in the Public Domain.';
-    $config['credits_html'] = 'Built with <a href="http://code.google.com/p/paget/">paget</a>.';
-   
-    $repr = new PAGET_SimpleHtmlRepresentation($config);
-    $repr->emit($this);
   }
   
   function map_uri($uri) {
@@ -74,15 +72,10 @@ class SpacecraftListResourceDescription extends PAGET_ResourceDescription {
     return array( new SpacecraftListGenerator($this->_store_uri) );
   }
   
-  function get_html() {
-    $config = array();
-    $config['rights_text'] = 'All text and data in this document are in the Public Domain.';
-    $config['credits_html'] = 'Built with <a href="http://code.google.com/p/paget/">paget</a>.';
-   
-    $repr = new PAGET_SimpleHtmlRepresentation($config);
-    $repr->emit($this);
+  function get_type() {
+    return "http://purl.org/net/schemas/space/Spacecraft";  
   }
-  
+ 
   function map_uri($uri) {
     if ( preg_match('~^http://purl.org/net/schemas/space/(.+)$~', $uri, $m) ) {
       return 'http://' . $_SERVER['HTTP_HOST'] . '/' . $m[1];
@@ -101,12 +94,12 @@ prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#>
 prefix foaf: <http://xmlns.com/foaf/0.1/>
 construct {
 ?s foaf:name ?name .
+?s a space:Spacecraft .
 }
 
 where {
  ?s a space:Spacecraft ; foaf:name ?name.
 }
-limit 30
 ';
 
   function __construct($store_uri) {
@@ -119,6 +112,7 @@ limit 30
     $response = $s->graph($this->_query);
     if ($response->is_success()) {
       $desc->add_rdfxml($response->body);
+      $desc->add_literal_triple($resource_uri, DC_TITLE, "List of Spacecraft");
     }
   }
 
