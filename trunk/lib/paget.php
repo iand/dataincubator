@@ -14,6 +14,7 @@ define('MORIARTY_ARC_DIR', LIB_DIR . 'arc_2008_11_18' . DIRECTORY_SEPARATOR);
 if (!defined('MORIARTY_HTTP_CACHE_DIR')  && file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'cache')) {
   define('MORIARTY_HTTP_CACHE_DIR', dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'cache');
 }
+
 define('MORIARTY_HTTP_CACHE_READ_ONLY', TRUE);
 define('MORIARTY_HTTP_CACHE_USE_STALE_ON_FAILURE', TRUE ); // use a cached response if network fails
 
