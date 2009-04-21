@@ -11,8 +11,15 @@ define('PAGET_DIR', LIB_DIR . 'paget' . DIRECTORY_SEPARATOR);
 define('MORIARTY_DIR', LIB_DIR . 'moriarty' . DIRECTORY_SEPARATOR);
 define('MORIARTY_ARC_DIR', LIB_DIR . 'arc_2008_11_18' . DIRECTORY_SEPARATOR);
 
-if (!defined('MORIARTY_HTTP_CACHE_DIR')  && file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'cache')) {
-  define('MORIARTY_HTTP_CACHE_DIR', dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'cache');
+if (!defined('MORIARTY_HTTP_CACHE_DIR') && defined('DI_DOMAIN') && file_exists(dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'cache')) {
+  $cache_dir = dirname(dirname(__FILE__)).DIRECTORY_SEPARATOR.'cache'.DIRECTORY_SEPARATOR.DI_DOMAIN;
+  if ( ! file_exists($cache_dir)) {
+    if (mkdir($cache_dir) === FALSE) {
+      echo 'Could not create cache directory ' . $cache_dir;
+      exit; 
+    }
+  }
+  define('MORIARTY_HTTP_CACHE_DIR', $cache_dir);
 }
 
 define('MORIARTY_HTTP_CACHE_READ_ONLY', TRUE);
