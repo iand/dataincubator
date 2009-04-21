@@ -32,6 +32,14 @@ class StoreBackedUriSpace extends PAGET_UriSpace {
     if ( preg_match('~\.(rdf|xml|turtle|json)$~', $uri, $m) ) {
       $augment = FALSE;
     }
+
+    if ( preg_match('~^http://' . $_SERVER['HTTP_HOST'] . '/about\.(.+)$~', $uri, $m) ) {
+      $uri = 'http://' . $_SERVER['HTTP_HOST'] . '/.' . $m[1];
+    }
+    
+
+    
+
     $desc = new StoreBackedResourceDescription($uri, STORE_URI, $augment); 
     $desc->set_namespace_mapping('bibo', 'http://purl.org/ontology/bibo/');
     $desc->set_namespace_mapping('bio', 'http://vocab.org/bio/0.1/');
@@ -70,10 +78,12 @@ class StoreBackedResourceDescription extends PAGET_ResourceDescription {
     return array( new PAGET_StoreDescribeGenerator($this->_store_uri, 'scbd') );
   }
   
+  
 }
 
 
 $space = new StoreBackedUriSpace();
+$space->add_redirect('/', '/about');
 $space->dispatch();
 
 ?>
