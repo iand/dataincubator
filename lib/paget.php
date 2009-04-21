@@ -33,18 +33,12 @@ class StoreBackedUriSpace extends PAGET_UriSpace {
       $augment = FALSE;
     }
 
-    if ( preg_match('~^http://' . $_SERVER['HTTP_HOST'] . '/about\.(.+)$~', $uri, $m) ) {
-      $uri = 'http://' . $_SERVER['HTTP_HOST'] . '/.' . $m[1];
-    }
-    
-
-    
-
     $desc = new StoreBackedResourceDescription($uri, STORE_URI, $augment); 
     $desc->set_namespace_mapping('bibo', 'http://purl.org/ontology/bibo/');
     $desc->set_namespace_mapping('bio', 'http://vocab.org/bio/0.1/');
     $desc->set_namespace_mapping('ol', 'http://olrdf.appspot.com/key/');
     $desc->set_namespace_mapping('ov', 'http://open.vocab.org/terms/');
+    $desc->set_namespace_mapping('void', 'http://rdfs.org/ns/void#');
     return $desc;
   } 
   
@@ -83,7 +77,6 @@ class StoreBackedResourceDescription extends PAGET_ResourceDescription {
 
 
 $space = new StoreBackedUriSpace();
-$space->add_redirect('/', '/about');
 $space->dispatch();
 
 ?>
