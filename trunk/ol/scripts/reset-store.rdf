@@ -1,0 +1,11 @@
+<rdf:RDF
+    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+    xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+    xmlns:bf="http://schemas.talis.com/2006/bigfoot/configuration#" > 
+  <rdf:Description>
+    <bf:jobType rdf:resource="http://schemas.talis.com/2006/bigfoot/configuration#ResetDataJob"/>
+    <bf:startTime>2007-05-02T14:14:00Z</bf:startTime>
+    <rdfs:label>My Reset Data Job</rdfs:label>
+    <rdf:type rdf:resource="http://schemas.talis.com/2006/bigfoot/configuration#JobRequest"/>
+  </rdf:Description>
+</rdf:RDF>
