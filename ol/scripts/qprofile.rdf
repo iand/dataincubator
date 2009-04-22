@@ -1,0 +1,123 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:bf="http://schemas.talis.com/2006/bigfoot/configuration#"
+  xmlns:frm="http://schemas.talis.com/2006/frame/schema#">
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1">
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#title"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#canonicaluri"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#date"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#preflabel"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#name"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#lcclassification"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#comment"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#subject"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#oclcnum"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#publishcountry"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#lccn"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#issued"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#pagination"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#numberofpages"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#label"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#subtitle"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#bystatement"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#publishplace"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#publisher"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#title">
+    <bf:weight>1</bf:weight>
+    <frm:name>title</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#canonicaluri">
+    <bf:weight>1</bf:weight>
+    <frm:name>canonicaluri</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#date">
+    <bf:weight>1</bf:weight>
+    <frm:name>date</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#preflabel">
+    <bf:weight>1</bf:weight>
+    <frm:name>preflabel</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#name">
+    <bf:weight>1</bf:weight>
+    <frm:name>name</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#lcclassification">
+    <bf:weight>1</bf:weight>
+    <frm:name>lcclassification</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#comment">
+    <bf:weight>1</bf:weight>
+    <frm:name>comment</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#subject">
+    <bf:weight>1</bf:weight>
+    <frm:name>subject</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#oclcnum">
+    <bf:weight>1</bf:weight>
+    <frm:name>oclcnum</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#publishcountry">
+    <bf:weight>1</bf:weight>
+    <frm:name>publishcountry</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#lccn">
+    <bf:weight>1</bf:weight>
+    <frm:name>lccn</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#issued">
+    <bf:weight>1</bf:weight>
+    <frm:name>issued</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#pagination">
+    <bf:weight>1</bf:weight>
+    <frm:name>pagination</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#numberofpages">
+    <bf:weight>1</bf:weight>
+    <frm:name>numberofpages</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#label">
+    <bf:weight>1</bf:weight>
+    <frm:name>label</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#subtitle">
+    <bf:weight>1</bf:weight>
+    <frm:name>subtitle</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#bystatement">
+    <bf:weight>1</bf:weight>
+    <frm:name>bystatement</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#publishplace">
+    <bf:weight>1</bf:weight>
+    <frm:name>publishplace</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/openlibrary/config/queryprofiles/1#publisher">
+    <bf:weight>1</bf:weight>
+    <frm:name>publisher</frm:name>
+  </rdf:Description>
+
+</rdf:RDF>

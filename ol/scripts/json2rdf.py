@@ -5,11 +5,9 @@ import rdflib
 import sys
 import tarfile
 import urllib2
+import re
 
-#import rdfoutput
 BASE_URI = "http://ol.dataincubator.org"
-#rdfoutput.register("bibo", "http://purl.org/ontology/bibo/")
-#rdfoutput.register("ol", "http://olrdf.appspot.com/key/")
 rdf = rdflib.Namespace("http://www.w3.org/1999/02/22-rdf-syntax-ns#")
 rdfs = rdflib.Namespace("http://www.w3.org/2000/01/rdf-schema#")
 dcterms = rdflib.Namespace("http://purl.org/dc/terms/")
@@ -22,12 +20,17 @@ dc = rdflib.Namespace("http://purl.org/dc/elements/1.1/")
 owl = rdflib.Namespace("http://www.w3.org/2002/07/owl#")
 bio = rdflib.Namespace("http://vocab.org/bio/0.1/")
 ov = rdflib.Namespace("http://open.vocab.org/terms/")
-skip = ["properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location"]
+mo = rdflib.Namespace("http://purl.org/ontology/mo/")
+
+skip = ["properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location", "scan_on_demand"]
 class Converter:
-  resource_index = 0
-  
-  def __init__(self, resource_index):
-    self.resource_index = resource_index
+   
+  def __init__(self):
+    self.resource_index = {}
+    self.people_index = {}
+    self.reset()
+
+  def reset(self):
     self.graph = rdflib.ConjunctiveGraph()
     self.graph.bind("rdf", rdf)
     self.graph.bind("rdfs", rdfs)
@@ -41,13 +44,16 @@ class Converter:
     self.graph.bind("owl", owl)
     self.graph.bind("bio", bio)
     self.graph.bind("ov", ov)
+    self.graph.bind("mo", mo)
+    
+
   def convert(self, indata):
     data = json.read(indata)
     
     if data["key"].startswith("/user/"):
       return
 
-    if data["type"]["key"] == "/type/redirect" or data["type"]["key"] == "/type/type" or data["type"]["key"] == "/type/delete" or data["type"]["key"] == "/type/scan_record":
+    if data["type"]["key"] == "/type/redirect" or data["type"]["key"] == "/type/type" or data["type"]["key"] == "/type/delete" or data["type"]["key"] == "/type/scan_record" or data["type"]["key"] == "/type/usergroup" or data["type"]["key"] == "/type/permission" or data["type"]["key"] == "/type/property" or data["type"]["key"] == "/type/backreference":
       #print "Ignoring '%s' because it is a '%s'" % (data["key"], data["type"]["key"]) 
       return
 
@@ -56,10 +62,12 @@ class Converter:
       item_uri = self.make_uri("items")
 
     elif data["type"]["key"] == "/type/author":
-      item_uri = self.make_uri("people")
+      item_uri = self.get_person_uri(data["key"])
+    
+    else:
+      print "  Ignoring unknown type %s" % data["type"]["key"]
       return
-
-   
+      
     subj = rdflib.URIRef(item_uri)
     
     
@@ -99,7 +107,7 @@ class Converter:
         self.graph.add((group_resource, rdf["type"], rdf["Seq"]))
         i = 1
         for author in v:
-          person_resource = rdflib.URIRef(self.make_uri("people"))
+          person_resource = rdflib.URIRef(self.get_person_uri(author["key"]))
           self.graph.add((group_resource, rdf["_" + str(i)], person_resource))
           self.graph.add((person_resource, rdf["type"], foaf["Person"]))
           if isinstance(author, (str, unicode)):
@@ -124,19 +132,22 @@ class Converter:
         self.graph.add((group_resource, rdf["type"], rdf["Bag"]))
         i = 1
         for c in v:
-          person_resource = rdflib.URIRef(self.make_uri("people"))
-          self.graph.add((group_resource, rdf["_" + str(i)], person_resource))
-          self.graph.add((person_resource, rdf["type"], foaf["Person"]))
           if isinstance(c, (str, unicode)):
+            person_resource = rdflib.URIRef(self.make_uri("people"))
+            self.graph.add((group_resource, rdf["_" + str(i)], person_resource))
+            self.graph.add((person_resource, rdf["type"], foaf["Person"]))
             self.graph.add((person_resource, foaf["name"], rdflib.Literal(c)))
           else:
+            person_resource = rdflib.URIRef(self.get_person_uri(c["key"]))
+            self.graph.add((group_resource, rdf["_" + str(i)], person_resource))
+            self.graph.add((person_resource, rdf["type"], foaf["Person"]))
             self.graph.add((person_resource, foaf["isPrimaryTopicOf"], rdflib.URIRef("http://openlibrary.org" + c["key"])))
           i += 1
       elif k == "edition_name":
         self.graph.add((subj, bibo["edition"], rdflib.Literal(v)))
       elif k == "subjects":
         for sub in v:
-          self.graph.add((subj, dc["subject"], rdflib.Literal(sub)))
+          self.graph.add((subj, dc["subject"], rdflib.Literal(self.clean_text(sub))))
       elif k == "publish_country":
         self.graph.add((subj, ol["publish_country"], rdflib.Literal(v.strip())))
       elif k == "by_statement":
@@ -197,18 +208,104 @@ class Converter:
       elif k == "weight":
         self.graph.add((subj, ov["weight"], rdflib.Literal(v)))
       elif k == "physical_format":
-        self.graph.add((subj, ol["physical_format"], rdflib.Literal(v)))
+        format = self.clean_text(str(v)).lower()
+        if format == "map":
+          self.graph.add((subj, rdf["type"], bibo["Map"]))
+        elif format == "audio cd":
+          self.graph.add((subj, rdf["type"], mo["CD"]))
+        elif format == "mp3 cd":
+          # TODO: find a class for mp3 cd
+          pass
+        elif format == "audio cassette":
+          # TODO: find a class for audio cassette
+          pass
+        elif format == "pamphlet":
+          # TODO: find a class for pamphlet
+          pass
+        elif format == "diskette":
+          # TODO: find a class for diskette
+          pass
+        elif format == "microform" or format == "microforme" or format == "microfrom":
+          # TODO: find a class for microform
+          pass
+        elif format == "spoken word":
+          # TODO: find a class for spoken word
+          pass
+        elif format == "paperback" or format == "mass market paperback":
+          # TODO: find a class for paperback
+          pass
+        elif format == "hardback" or format == "hardcover":
+          # TODO: find a class for paperback
+          pass
+        elif format == "turtleback":
+          # TODO: find a class for turtleback
+          pass
+        elif format == "board book":
+          # TODO: find a class for board book
+          pass
+        elif format == "rag book":
+          # TODO: find a class for rag book
+          pass
+        elif format == "calendar":
+          # TODO: find a class for calendar
+          pass
+        elif format == "sheet music":
+          # TODO: find a class for sheet music
+          pass
+        elif format == "cd-rom":
+          # TODO: find a class for cd rom
+          pass
+        elif format == "comic":
+          # TODO: find a class for comic
+          pass
+        elif format == "cards":
+          # TODO: find a class for cards
+          pass
+        elif format == "loose leaf":
+          # TODO: find a class for loose leaf
+          pass
+        elif format == "spiral-bound":
+          # TODO: find a class for spiral bound
+          pass
+        elif format == "ring-bound":
+          # TODO: find a class for ring bound
+          pass
+        elif format == "plastic comb":
+          # TODO: find a class for plastic comb
+          pass
+        elif format == "library binding":
+          # TODO: find a class for library binding
+          pass
+        elif format == "electronic resource" or format == "computer file":
+          # TODO: find a class for electronic resource
+          pass
+        elif format == "video recording" or format == "videorecording":
+          # TODO: find a class for video recording
+          pass
+        elif format == "pdf":
+          # TODO: find a class for pdf
+          pass
+        elif format == "graphic":
+          # TODO: find a class for graphic
+          pass
+        elif format == "textbook binding":
+          # TODO: find a class for tectbook binding
+          pass
+        elif format == "unknown binding":
+          pass
+        else:
+          print "  Found physical format '%s'" % (self.clean_text(str(v)))
       elif k == "physical_dimensions":
         self.graph.add((subj, ol["physical_dimensions"], rdflib.Literal(v)))
       elif k == "dewey_decimal_class":
         for d in v:
           self.graph.add((subj, ol["dewey_decimal_class"], rdflib.Literal(d)))
       elif k == "notes":
-        self.graph.add((subj, ol["notes"], rdflib.Literal(v["value"])))
+        self.graph.add((subj, rdfs["comment"], rdflib.Literal(self.clean_text(v["value"]))))
       elif k == "bio":
-        self.graph.add((subj, bio["olb"], rdflib.Literal(v["value"])))
+        self.graph.add((subj, bio["olb"], rdflib.Literal(self.clean_text(v["value"]))))
       elif k == "first_sentence":
-        self.graph.add((subj, ov["firstSentence"], rdflib.Literal(v["value"])))
+        self.graph.add((subj, ov["firstSentence"], rdflib.Literal(self.clean_text(v["value"]))))
       elif k == "wikipedia":
         self.graph.add((subj, foaf["isPrimaryTopicOf"], rdflib.URIRef(v)))
         # TODO: more specific wikipedia property?
@@ -263,11 +360,30 @@ class Converter:
     return self.graph 
     
   def make_uri(self, prefix):
-    self.resource_index = self.resource_index + 1
-    return BASE_URI + "/" + prefix + "/" + str(self.resource_index)
-    
-  def get_resource_index(self):
-    return self.resource_index
+    return BASE_URI + "/" + prefix + "/" + str(self.get_next_resource_index(prefix))
+   
+  def get_next_resource_index(self, prefix):
+    if self.resource_index.has_key(prefix):
+      self.resource_index[prefix] += 1
+    else:
+      self.resource_index[prefix] = 1
+    return self.resource_index[prefix]
+        
+  def get_person_uri(self, key):  
+    if self.people_index.has_key(key):
+      return BASE_URI + "/people/" + self.people_index[key]
+    else:
+      index = str(self.get_next_resource_index("people"))
+      self.people_index[key] = index
+      return BASE_URI + "/people/" + index
+      
+  def clean_uri(self, uri):
+    return uri
+  
+  def clean_text(self, text):
+    text = re.sub('[^\w]+$', '', text)
+    text = re.sub('^[^\w\)\]\!]+', '', text)
+    return text 
   
 if __name__ == "__main__":
   p = optparse.OptionParser()
@@ -292,7 +408,7 @@ if __name__ == "__main__":
   bad_record_filename = output_filename_parts[0] + "_bad.json"
   bad_record_file = open(bad_record_filename, "w")
 
-  resource_index = 0
+  c = Converter()
 
   f = open(input_filename, "r")
   error_count = 0
@@ -300,6 +416,7 @@ if __name__ == "__main__":
   triple_count = 0
   batch = 1
   for line in f:
+
     if count % batch_size == 0:
       if count > 0:
         batch_delim = "_" + str(batch) + "."
@@ -316,13 +433,12 @@ if __name__ == "__main__":
           archive.add(batch_filename, os.path.basename(batch_filename))
           archive.close()
         batch = batch + 1
-        resource_index = c.get_resource_index() + 1
       print "\nStarting batch %s" % batch
-      c = Converter(resource_index)
+      c.reset()
       
     try:
       c.convert(line)
-      count = count + 1
+      count += 1
     except Exception,e:
       bad_record_file.write(line)
 
@@ -338,5 +454,3 @@ if __name__ == "__main__":
 
   f.close()
   bad_record_file.close()
-
-
