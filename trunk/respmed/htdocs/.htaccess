@@ -1,4 +1,22 @@
+<Files ~ "^\.html">
+    Order allow,deny
+    Allow from all
+</Files>
+
 RewriteEngine on
 
-RewriteRule ^/$  /index.html [L]
-RewriteRule ^resources/(.*)$  http://api.talis.com/stores/stanforddev-1/meta?about=http\://respmed.dataincubator.org/resources/$1 [QSA,L]
+RewriteRule ^$  index.php [L]
+
+RewriteCond %{REQUEST_FILENAME}  -d
+RewriteRule  ^.*$  -  [L]
+
+RewriteCond %{REQUEST_FILENAME}  -f
+RewriteRule  ^.*$  -  [L]
+
+RewriteRule ^.*$  index.php [L]
+
+# Previous rules, changed 2009-04-23
+#RewriteEngine on
+
+#RewriteRule ^/$  /index.html [L]
+#RewriteRule ^resources/(.*)$  http://api.talis.com/stores/stanforddev-1/meta?about=http\://respmed.dataincubator.org/resources/$1 [QSA,L]
