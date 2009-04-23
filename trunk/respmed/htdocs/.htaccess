@@ -5,7 +5,7 @@
 
 RewriteEngine on
 
-RewriteRule ^$  index.php [L]
+RewriteRule ^$  index.html [L]
 
 RewriteCond %{REQUEST_FILENAME}  -d
 RewriteRule  ^.*$  -  [L]
