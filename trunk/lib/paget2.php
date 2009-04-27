@@ -7,8 +7,8 @@ if (!defined('STORE_URI') ) {
 
 ob_start("ob_gzhandler"); 
 define('LIB_DIR', dirname(dirname(dirname(__FILE__))) . '/lib/');
-//define('PAGET_DIR', LIB_DIR . 'paget' . DIRECTORY_SEPARATOR);
-define('PAGET_DIR', '/home/iand/wip/paget2/');
+define('PAGET_DIR', LIB_DIR . 'paget2' . DIRECTORY_SEPARATOR);
+//define('PAGET_DIR', '/home/iand/wip/paget2/');
 define('MORIARTY_DIR', LIB_DIR . 'moriarty' . DIRECTORY_SEPARATOR);
 define('MORIARTY_ARC_DIR', LIB_DIR . 'arc_2008_11_18' . DIRECTORY_SEPARATOR);
 
