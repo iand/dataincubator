@@ -1,0 +1,91 @@
+<?php
+  include_once dirname(__FILE__) . "/paget2-main-header.html";
+?>  
+        <div id="content">
+          <form action="/~search" method="get"><input type="text" name="query" id="query" size="40" /> <input type="submit" value="Search" /></form>
+
+      <?php
+        $this->exclude($resource_uri, FOAF_ISPRIMARYTOPICOF);
+        $this->exclude($resource_uri, RDFS_SEEALSO);
+        $this->exclude($resource_uri, OWL_SAMEAS);
+    
+        echo $this->render(array('value' => $resource_uri, 'type'=>'uri'), FALSE);
+
+        $paginator = create_paginator($this, $resource_uri);
+        echo $paginator;
+
+
+      ?>
+        </div>
+<?php
+  include_once dirname(__FILE__) . "/paget2-main-footer.html";
+
+  function create_paginator($template, $resource_uri) {
+    $ret = '';
+    $total_results = $template->desc->get_first_literal($resource_uri, 'http://a9.com/-/spec/opensearch/1.1/totalResults');
+    $start_index = $template->desc->get_first_literal($resource_uri, 'http://a9.com/-/spec/opensearch/1.1/startIndex');
+    $items_per_page = $template->desc->get_first_literal($resource_uri, 'http://a9.com/-/spec/opensearch/1.1/itemsPerPage');
+    
+    if (! is_numeric($items_per_page) || $items_per_page == 0) {
+      $items_per_page = 30; 
+    }
+    if (! is_numeric($start_index)) {
+      $start_index = 0; 
+    }
+    if (! is_numeric($total_results) || $total_results == 0) {
+      $total_results = $start_index;  
+    }
+              
+    $total_number_of_pages = ceil($total_results / $items_per_page);
+    if ($total_number_of_pages > 1) {
+      $ret = '<div class="paginator"><strong>Result pages: </strong><br />';
+      $current_page = floor($start_index / $items_per_page) + 1;
+       
+      if ($current_page > 1) {
+        $offset_raw = $start_index - $items_per_page;
+        $offset_page = floor( $offset_raw / $items_per_page);
+        $offset = $offset_page * $items_per_page;
+        if ( $offset < 0 ) $offset = 0;
+        $ret .= ' <a href="' . htmlspecialchars($template->request->full_path) . '?query=' . htmlspecialchars($template->request->data['query']) . '&offset=' . $offset . '">Prev</a>'; 
+      } 
+      if ($current_page > 6) {
+        $page_links_start = $current_page - 5;
+        $page_links_end = $current_page + 4;
+      }
+      else {
+        $page_links_start = 1;
+        $page_links_end = 10;
+      }       
+      if ($page_links_end > $total_number_of_pages) {
+        $page_links_end = $total_number_of_pages;
+      }
+      
+      for ($i = $page_links_start; $i <= $page_links_end;$i++ ) {
+        if ($i == $current_page) {
+          $ret .= ' ' . $i; 
+        } 
+        else {
+          $offset_raw = $start_index - ($items_per_page * ($current_page - $i));
+          $offset_page = floor( $offset_raw / $items_per_page);
+          $offset = $offset_page * $items_per_page;
+          if ( $offset < 0 ) $offset = 0;
+          if ( $offset <= $total_results ) {
+            $ret .= ' <a href="' . htmlspecialchars($template->request->full_path) . '?query=' . htmlspecialchars($template->request->data['query']) . '&offset=' . $offset . '">' . $i . '</a>'; 
+          }
+        }
+      }
+
+      if ($current_page < $total_number_of_pages) {
+        $offset_raw = $start_index + $items_per_page;
+        $offset_page = floor( $offset_raw / $items_per_page);
+        $offset = $offset_page * $items_per_page;
+        if ( $offset <= $total_results ) {
+          $ret .= ' <a href="' . htmlspecialchars($template->request->full_path) . '?query=' . htmlspecialchars($template->request->data['query']) . '&offset=' . $offset . '">Next</a>'; 
+        }
+      } 
+      $ret .= '</div>';
+    }          
+    return $ret;
+  }
+
+?>  

@@ -1,0 +1,19 @@
+<?php
+  include_once dirname(__FILE__) . "/paget2-main-header.html";
+?>  
+        <div id="content">
+          <form action="/~search" method="get"><input type="text" name="query" id="query" size="32" /> <input type="submit" value="Search" /></form>
+
+      <?php
+        
+        $this->exclude($resource_uri, FOAF_ISPRIMARYTOPICOF);
+        $this->exclude($resource_uri, RDFS_SEEALSO);
+        $this->exclude($resource_uri, OWL_SAMEAS);
+    
+        echo $this->render(array('value' => $resource_uri, 'type'=>'uri'), FALSE);
+
+      ?>
+        </div>
+<?php
+  include_once dirname(__FILE__) . "/paget2-main-footer.html";
+?>  
