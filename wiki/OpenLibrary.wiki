@@ -54,7 +54,65 @@ These mappings are implemented in [http://code.google.com/p/dataincubator/source
 || pagination || ol:pagination ||
 || lccn || Create each one as a separate bibi:lccn with a literal value ||
 || number_of_pages || ov:numberOfPages ||
-||
+|| isbn_10 || Add each one using bibo:isbn10, add owl:sameAs with a link to http://www4.wiwiss.fu-berlin.de/bookmashup/books/{isbn}, create a new resource http://ol.dataincubator.org/isbn/{isbn} and link to resource with owl:sameAs ||
+|| isbn_13 || Add each one using bibo:isbn13, create a new resource http://ol.dataincubator.org/isbn/{isbn} and link to resource with owl:sameAs ||
+|| uris and uri || rdfs:seeAlso ||
+|| publish_date || dct:issued ||
+|| birth_date || Create a new resource with URI http://ol.dataincubator.org/events/{event-id} and give it a type of bio:Birth and a bio:date, link to resource using bio:event ||
+|| death_date || Create a new resource with URI http://ol.dataincubator.org/events/{event-id} and give it a type of bio:Death and a bio:date, link to resource using bio:event ||
+|| weight || ov:weight ||
+|| physical_format || Convert to rdf:type (see below) ||
+|| physical_dimensions || ol:physical_dimensions ||
+|| dewey_decimal_class || Create each one as a separate ol:dewey_decimal_class with a literal value ||
+|| notes || rdfs:comment ||
+|| bio || bio:olb ||
+|| first_sentence ||  ov:firstSentence ||
+|| wikipedia || foaf:isPrimaryTopicOf ||
+|| ocaid || foaf:isPrimaryTopicOf ||
+|| description || dct:description ||
+|| series || Create a new resource with URI http://ol.dataincubator.org/series/{series-id} add dc:title for each value in JSON, link to resource with ol:series ||
+|| languages || Use dct:langauage to link to http://ol.dataincubator.org/l/{language} ||
+|| table_of_contents || Create a new group of type rdf:Seq and link with dct:tableOfContents property. Add each item as an item in the rdf:Seq ||
+
+The following JSON keys are ignored: [properties, kind, latest_revision, id, last_modified, created, revision, uri_descriptions, genres, subject_place, subject_time, work_title, work_titles, isbn_invalid, location, scan_on_demand
+
+Physical formats are mapped to RDF classes where possible. Some cleaning and normalisation of the values is performed. The following is a comprehensive list of formats found in a 1% sample of the data, with mapped classes where assigned.
+
+|| physical_format value || class ||
+|| map || bibo:Map ||
+|| audio cd || mo:CD ||
+|| mp3 cd || *TBD* ||
+|| audio cassette || *TBD* ||
+|| pamphlet || *TBD* ||
+|| diskette || *TBD* ||
+|| microform, microforme and microfrom || *TBD* ||
+|| spoken word || *TBD* ||
+|| paperback || *TBD* ||
+|| mass market paperback || *TBD* ||
+|| hardback and hardcover || *TBD* ||
+|| turtleback || *TBD* ||
+|| board book || *TBD* ||
+|| rag book || *TBD* ||
+|| calendar || *TBD* ||
+|| sheet music || *TBD* ||
+|| cd-rom || *TBD* ||
+|| comic || *TBD* ||
+|| cards || *TBD* ||
+|| loose leaf || *TBD* ||
+|| spiral-bound || *TBD* ||
+|| ring-bound || *TBD* ||
+|| plastic comb || *TBD* ||
+|| library binding || *TBD* ||
+|| electronic resource and computer file || *TBD* ||
+|| video recording and "videorecording || *TBD* ||
+|| pdf || *TBD* ||
+|| graphic || *TBD* ||
+|| textbook binding || *TBD* ||
+|| unknown binding || *TBD* ||
+ 
+
+
+
 = Other Data to Mix In =
 
   * [http://www.librarything.com/thingology/2007/03/thingisbn-data-in-one-file.php LibraryThing's ISBN database]
