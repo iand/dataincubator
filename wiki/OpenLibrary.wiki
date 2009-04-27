@@ -33,10 +33,28 @@ Some interesting records:
 
 These mappings are implemented in [http://code.google.com/p/dataincubator/source/browse/trunk/ol/scripts/json2rdf.py json2rdf.py]
 
-|| *JSON Key* || *Property* || *Notes* ||
-|| title || skos:prefLabel and rdfs:label || ||
-
-
+|| *JSON Key* || *Mapping* ||
+|| title || skos:prefLabel and rdfs:label as Literals ||
+|| name || skos:prefLabel  ||
+|| personal_name || foaf:name ||
+|| title_prefix || ol:title_prefix + ov:sortLabel  formed by removing ttitle_prefix from the title ||
+|| authors || Create a new group of type rdf:Seq and link with bibo:authorList property. Add each author as an item in the rdf:Seq ||
+|| other_titles || Create each one as a separate skos:altLabel ||
+|| alternate_names || Create each one as a separate skos:altLabel ||
+|| subtitle || ov:subtitle ||
+|| lc_classifications || Create each one as a separate ol:lc_classification ||
+|| contributions || Create a new group of type rdf:Seq and link with bibo:contributorList property. Add each contributor as an item in the rdf:Seq ||
+|| edition_name || bibi:edition ||
+|| subjects || Create each one as a separate dc:subject with a literal value (cleaned to remove some trailing punctuation) ||
+|| publish_country || ol:publish_country ||
+|| by_statement || ol:by_statement ||
+|| oclc_numbers and oclc_number || Add each one using bibo:oclcnum, add foaf:isPrimaryTopicOf with a link to http://www.worldcat.org/oclc/{oclcnum}, create a new resource http://ol.dataincubator.org/oclc/{oclcnum} and link to resource with owl:sameAs ||
+|| publishers || Create each one as a separate dc:publisher with a literal value ||
+|| publish_places || Create each one as a separate ol:publish_place with a literal value ||
+|| pagination || ol:pagination ||
+|| lccn || Create each one as a separate bibi:lccn with a literal value ||
+|| number_of_pages || ov:numberOfPages ||
+||
 = Other Data to Mix In =
 
   * [http://www.librarything.com/thingology/2007/03/thingisbn-data-in-one-file.php LibraryThing's ISBN database]
