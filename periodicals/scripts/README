@@ -1,0 +1,61 @@
+LINKED PERIODICALS DATA CONVERSION
+
+This project contains some ruby scripts for converting journal metadata into RDF. The metadata is sourced 
+from several websites including the NLM and Highwire.
+
+For background on the motivations for this project see this blog posting from Bruce D'Arcus and the 
+relates mailing list discussion:
+
+ http://community.muohio.edu/blogs/darcusb/archives/2009/04/20/linked-periodical-data
+ 
+INSTALLATION:
+
+The ruby code is dependent on the following being available:
+
+* Ruby 1.8.5 (or higher)
+* Rake
+* Rubygems
+
+You'll need to install those first before proceeding.
+
+The code is also dependent on several rubygems. To install those, from the project directory run:
+
+ rake dependencies
+
+This will invoke the gem install to grab the pho and parseexcel gems (and their dependencies)
+
+RUNNING THE CODE:
+
+The scripts can all be run directly, but can be more easily automated by using the Rake tasks.
+
+For each source of data there are several tasks that do the following tasks:
+
+ * Download (cache) the journal data
+ * Convert the data to RDF
+ * Upload the data to the Talis Platform
+
+Check the Rakefile for more details.
+
+To quickly convert all the data simply run:
+
+ rake journals
+
+UPLOADING TO THE TALIS PLATFORM:
+ 
+To convert the data and upload to the Platform run:
+
+ rake upload
+ 
+In order to upload to the Platform you'll need to have either your own store, or admin privileges to 
+the "periodicals" store. You'll need to set two environment variables: TALIS_USER (your user id) 
+and TALIS_PASS (your password). To set the storename to use, use the TALIS_STORE environment 
+variable e.g:
+
+ export TALIS_USER=username
+ export TALIS_PASS=pass
+ export TALIS_STORE=periodicals
+
+Any data in the periodicals store (http://api.talis.com/stores/periodicals) will be immediately 
+available as linked data from the Linked Periodicals dataincubator site at:
+
+  http://periodicals.dataincubator.org
