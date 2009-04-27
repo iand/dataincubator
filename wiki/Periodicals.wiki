@@ -1,0 +1,3 @@
+#summary Notes on converting periodical data
+
+Discuss this project on the [http://groups.google.com/group/dataincubator mailing list]
