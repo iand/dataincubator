@@ -44,7 +44,7 @@ These mappings are based heavily on Thomas Francart's mapping spreadsheet (linke
 || subtitle || ov:subtitle ||
 || lc_classifications || Create each one as a separate ol:lc_classification ||
 || contributions || Create a new group of type rdf:Seq and link with bibo:contributorList property. Add each contributor as an item in the rdf:Seq ||
-|| edition_name || bibi:edition ||
+|| edition_name || bibo:edition ||
 || subjects || Create each one as a separate dc:subject with a literal value (cleaned to remove some trailing punctuation) ||
 || publish_country || ol:publish_country ||
 || by_statement || ol:by_statement ||
