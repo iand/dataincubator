@@ -1,7 +1,7 @@
 #summary Notes on converting OpenLibrary data to RDF
 #labels marc,openlibrary,library
 
-= Introduction =
+Discuss this project on the [http://groups.google.com/group/dataincubator mailing list]
 
 = Useful links =
  * OpenLibrary site emits data as [http://openlibrary.org/b/OL7983950M/Weaving-the-Web.json JSON] and (often broken) [http://openlibrary.org/b/OL7983950M/Weaving-the-Web.rdf RDF]
@@ -28,6 +28,14 @@ Some interesting records:
  * http://ol.dataincubator.org/people/{person-id}
  * http://ol.dataincubator.org/places/{place-id}
  * http://ol.dataincubator.org/events/{event-id}
+
+= JSON Mapping =
+
+These mappings are implemented in [http://code.google.com/p/dataincubator/source/browse/trunk/ol/scripts/json2rdf.py json2rdf.py]
+
+|| *JSON Key* || *Property* || *Notes* ||
+|| title || skos:prefLabel and rdfs:label || ||
+
 
 = Other Data to Mix In =
 
