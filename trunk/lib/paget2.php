@@ -1,5 +1,5 @@
 <?php
-ini_set ( "memory_limit", "20M");
+ini_set ( "memory_limit", "32M");
 if (!defined('STORE_URI') ) {
   echo "STORE_URI not defined";
   exit; 
