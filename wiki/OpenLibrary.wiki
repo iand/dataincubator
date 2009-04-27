@@ -6,7 +6,7 @@ Discuss this project on the [http://groups.google.com/group/dataincubator mailin
 = Useful links =
  * OpenLibrary site emits data as [http://openlibrary.org/b/OL7983950M/Weaving-the-Web.json JSON] and (often broken) [http://openlibrary.org/b/OL7983950M/Weaving-the-Web.rdf RDF]
  * It has a [http://openlibrary.org/dev/docs/restful_api RESTful API] and provides  [http://openlibrary.org/static/jsondump/ dumps of all the data in JSON]
- * [http://mondeca.wordpress.com/2009/01/05/openlibrary-api-rdf-wrapper-on-google-app-engine/ Open Library wrapper], [https://spreadsheets.google.com/a/mondeca.com/ccc?key=prOEQ8nnfPsH5c7cBBMZzTg&hl=en details of mapping] and [http://olrdf.appspot.com/key/b/OL7983950M.rdf sample output 1], [http://olrdf.appspot.com/key/b/OL5218098M.rdf sample output 2]
+ * Thomas Francart's [http://mondeca.wordpress.com/2009/01/05/openlibrary-api-rdf-wrapper-on-google-app-engine/ Open Library wrapper], [https://spreadsheets.google.com/a/mondeca.com/ccc?key=prOEQ8nnfPsH5c7cBBMZzTg&hl=en details of mapping] and [http://olrdf.appspot.com/key/b/OL7983950M.rdf sample output 1], [http://olrdf.appspot.com/key/b/OL5218098M.rdf sample output 2]
  * Rob Styles conversion notes: [http://blogs.talis.com/n2/archives/92 part 1] and [http://blogs.talis.com/n2/archives/101 part 2]
  * [http://openlibrary.org/dev/docs/data other Open Library datasets]
 
@@ -31,7 +31,7 @@ Some interesting records:
 
 = JSON Mapping =
 
-These mappings are implemented in [http://code.google.com/p/dataincubator/source/browse/trunk/ol/scripts/json2rdf.py json2rdf.py]
+These mappings are based heavily on Thomas Francart's mapping spreadsheet (linked above) and are implemented in [http://code.google.com/p/dataincubator/source/browse/trunk/ol/scripts/json2rdf.py json2rdf.py]
 
 || *JSON Key* || *Mapping* ||
 || title || skos:prefLabel and rdfs:label as Literals ||
@@ -74,11 +74,27 @@ These mappings are implemented in [http://code.google.com/p/dataincubator/source
 || languages || Use dct:langauage to link to http://ol.dataincubator.org/l/{language} ||
 || table_of_contents || Create a new group of type rdf:Seq and link with dct:tableOfContents property. Add each item as an item in the rdf:Seq ||
 
+The following namespace prefixes are used:
+||  *prefix* || *URI* ||
+|| rdf  || http://www.w3.org/1999/02/22-rdf-syntax-ns# ||
+|| rdfs  || http://www.w3.org/2000/01/rdf-schema# ||
+|| dcterms  || http://purl.org/dc/terms/ ||
+|| ol  || http://olrdf.appspot.com/key/ ||
+|| bibo  || http://purl.org/ontology/bibo/ ||
+|| frbr  || http://purl.org/vocab/frbr/core# ||
+|| skos  || http://www.w3.org/2004/02/skos/core# ||
+|| foaf  || http://xmlns.com/foaf/0.1/ ||
+|| dc  || http://purl.org/dc/elements/1.1/ ||
+|| owl  || http://www.w3.org/2002/07/owl# ||
+|| bio  || http://vocab.org/bio/0.1/ ||
+|| ov  || http://open.vocab.org/terms/ ||
+|| mo  || http://purl.org/ontology/mo/ ||
+
 The following JSON keys are ignored: [properties, kind, latest_revision, id, last_modified, created, revision, uri_descriptions, genres, subject_place, subject_time, work_title, work_titles, isbn_invalid, location, scan_on_demand
 
 Physical formats are mapped to RDF classes where possible. Some cleaning and normalisation of the values is performed. The following is a comprehensive list of formats found in a 1% sample of the data, with mapped classes where assigned.
 
-|| physical_format value || class ||
+|| *physical_format value* || *class* ||
 || map || bibo:Map ||
 || audio cd || mo:CD ||
 || mp3 cd || *TBD* ||
