@@ -29,9 +29,6 @@ define('MORIARTY_HTTP_CACHE_USE_STALE_ON_FAILURE', TRUE ); // use a cached respo
 
 
 
-//require_once PAGET_DIR . 'paget_urispace.class.php';
-//require_once PAGET_DIR . 'paget_simplepropertylabeller.class.php';
-//require_once PAGET_DIR . 'paget_storedescribegenerator.class.php';
 require_once PAGET_DIR . 'paget_storebackedurispace.class.php';
 
 $space = new PAGET_StoreBackedUriSpace(STORE_URI);
