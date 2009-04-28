@@ -9,14 +9,6 @@ function pretty_link($uri) {
 }
   
   $resource_uri = $this->desc->get_primary_resource_uri();
-  $document_base = $resource_uri;
-  if ( preg_match('~^(.+)' . preg_quote($this->desc->_config['format_delimiter']) . 'html$~', $this->desc->get_uri(), $m)) {
-    $document_base = $m[1];
-  }
-  
-  $title = $this->desc->get_label();
-
-
 
   echo "<?";
 

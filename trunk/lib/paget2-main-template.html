@@ -3,12 +3,7 @@ include_once PAGET_DIR . "paget_template.class.php";
 
   
   $resource_uri = $this->desc->get_primary_resource_uri();
-  $document_base = $resource_uri;
-  if ( preg_match('~^(.+)' . preg_quote($this->desc->_config['format_delimiter']) . 'html$~', $this->desc->get_uri(), $m)) {
-    $document_base = $m[1];
-  }
-  
-  $title = $this->desc->get_label();
+  $title = $this->get_title($resource_uri);
 
 
 
@@ -19,7 +14,7 @@ include_once PAGET_DIR . "paget_template.class.php";
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
-        <title><?php e($this->get_title($resource_uri));?></title>
+        <title><?php e($title);?></title>
 <?php
   $formats = $this->desc->get_resource_triple_values($this->desc->get_uri(), 'http://purl.org/dc/terms/hasFormat');
   foreach ($formats as $format_uri) {
@@ -95,7 +90,7 @@ td.odd, th.odd {background-color: #f0f0f0;}
     <body>
 
         <div id="header">
-            <h1><?php echo(htmlspecialchars($this->get_title($resource_uri))) ?></h1>
+            <h1><?php echo(htmlspecialchars($title)) ?></h1>
             <h2><a href="<?php echo(htmlspecialchars($resource_uri));?>" rel="bookmark"><?php echo(htmlspecialchars($resource_uri));?></a></h2>
         </div>
 
