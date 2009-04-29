@@ -17,6 +17,8 @@ function pretty_link($uri) {
 <html>
     <head>
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
+        <meta name="description" content="<?php e($this->get_description($resource_uri));?>" />
+
         <title><?php e($this->get_title($resource_uri));?></title>
 <?php
   $formats = $this->desc->get_resource_triple_values($this->desc->get_uri(), 'http://purl.org/dc/terms/hasFormat');
