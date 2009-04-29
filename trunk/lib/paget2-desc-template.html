@@ -2,10 +2,10 @@
   include_once dirname(__FILE__) . "/paget2-main-header.html";
 ?>  
         <div id="content">
-          <form action="<?php echo( $this->_base_path); ?>~search" method="get"><input type="text" name="query" id="query" size="32" /> <input type="submit" value="Search" />
+          <form action="/~search" method="get"><input type="text" name="query" id="query" size="32" /> <input type="submit" value="Search" />
           <?php
             if (defined('AUTH_USER') && defined('AUTH_PWD')) {
-              echo '<a href="' . $this->_base_path . '~browse">browse resources</a>';
+              echo '<a href="/~browse">browse resources</a>';
             }
           ?>
           </form>
