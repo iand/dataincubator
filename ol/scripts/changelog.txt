@@ -1,0 +1,24 @@
+2009-04-29 (2)
+Removed generated http://ol.dataincubator/org/isbn/{num} resources
+Removed http://ol.dataincubator/org/oclc/{num} resources
+Introduced mapping database of identifiers
+Introduced persistent mapping of OL keys to dataincubator URIs
+Added mo:wikipedia links to wikipedia
+Added owl:sameAs links for dbpedia based on wikipedia keys
+Removed ov:sortLabel since algorithm based on title_prefix was incorrect
+Changed value of dct:language to a literal
+Generate void automatically
+Link every resource to dataset using dct:isPartOf
+Removed irrelevant rdf:type on open library URIs
+Fixed incorrect BIO namespace
+
+
+2009-04-29 (1)
+Added dct:creator to link item to author
+Added dct:contributor to link item to contributor
+Mapped physical_format to dct:medium
+Replaced dc:subject with dct:subject
+Replaced dc:publisher with dct:publisher
+Replaced dc:title with dct:title
+Replaced rdfs:label with dct:title for "title" mapping
+Mapped title to foaf:title if item is an author
