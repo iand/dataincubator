@@ -9,16 +9,24 @@ class PubmedJournal
   end
   
   def id()
-    return fields["NlmId"]
+    id = fields["JournalTitle"].clone
+    id.gsub!(/[^\w\d]/,'')
+    if (id == nil)
+      return fields["NlmId"]  
+    end
+    id.gsub!(/[^A-z0-9]/,'')
+    return id.downcase
   end
   
   def uri()
-    return "http://periodicals.dataincubator.org/journal/#{fields["NlmId"]}"
+    slug = id()
+    return "http://periodicals.dataincubator.org/journal/#{slug}"
   end 
-    
+
   def to_rdf(stream)
     rdf = "<bibo:Journal rdf:about=\"#{uri()}\">\n"
     rdf << " <dc:title>#{Util.escape_xml( fields["JournalTitle"] )}</dc:title>\n"
+    rdf << " <dc:partOf rdf:resource=\"http://periodicals.dataincubator.org/datasets/nlm\" />\n"
     
     rdf << "<dc:identifier>#{fields["NlmId"]}</dc:identifier>\n"
     
