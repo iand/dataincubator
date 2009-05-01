@@ -8,24 +8,44 @@
 
  <rdf:Description rdf:about="http://periodicals.dataincubator.org/">
 
-  <dct:source rdf:resource="http://www.nlm.nih.gov/"/>
-  <dct:source rdf:resource="http://highwire.stanford.edu"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/cancerresearch"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/thejournalofheartandlungtransplantation"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/comparativeandgeneralpharmacology"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/oncologist"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/pediatricsinreview"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/journaloftransplantation"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/cellmotilityandthecytoskeleton"/>
 
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/0155161"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/8501884"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/8510461"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/theoncologist-alphamedpress"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/sciencemag"/>
-
-  <dct:description>
-  A conversion of the journal metadata provided by the NLM and Highwire
-  </dct:description>
+  <dct:description>A conversion of the journal metadata provided by CrossRef, Highwire and the NLM.</dct:description>
 
   <rdf:type rdf:resource="http://rdfs.org/ns/void#Dataset"/>
   <dct:title>Linked Periodicals Data</dct:title>
   <void:uriRegexPattern>http://periodicals.dataincubator.org/.+</void:uriRegexPattern>
   <void:sparqlEndpoint rdf:resource="http://api.talis.com/stores/periodicals/services/sparql"/>
 
-</rdf:Description>
+  <void:subset rdf:resource="http://periodicals.dataincubator.org/datasets/highwire"/>
+  <void:subset rdf:resource="http://periodicals.dataincubator.org/datasets/crossref"/>
+  <void:subset rdf:resource="http://periodicals.dataincubator.org/datasets/nlm"/>
 
+ </rdf:Description>
+
+ <rdf:Description rdf:about="http://periodicals.dataincubator.org/datasets/crossref">
+  <dct:source rdf:resource="http://ftp.crossref.org/titlelist/titleFile.csv"/>
+  <dct:description>A conversion of the journal metadata provided for FTP download by CrossRef.</dct:description>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/journaloftransplantation"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/cellmotilityandthecytoskeleton"/>
+ </rdf:Description>
+ <rdf:Description rdf:about="http://periodicals.dataincubator.org/datasets/highwire">
+  <dct:source rdf:resource="http://highwire.stanford.edu/institutions/AtoZList.xls"/>
+  <dct:description>A conversion of the journal metadata provided for FTP download by Highwire.</dct:description>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/oncologist"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/pediatricsinreview"/>
+ </rdf:Description>
+ <rdf:Description rdf:about="http://periodicals.dataincubator.org/datasets/nlm">
+  <dct:source rdf:resource="ftp://ftp.ncbi.nih.gov/pubmed/J_Medline.txt"/>
+  <dct:description>A conversion of the journal metadata provided for FTP download by the NLM.</dct:description>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/thejournalofheartandlungtransplantation"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/comparativeandgeneralpharmacology"/>
+ </rdf:Description>
+	
 </rdf:RDF>

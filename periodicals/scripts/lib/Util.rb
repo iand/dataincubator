@@ -8,6 +8,7 @@ module Util
     xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n\
     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n\
     xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n\
+    xmlns:void=\"http://rdfs.org/ns/void#\"\n\
     xmlns:bibo=\"http://purl.org/ontology/bibo/\">\n\n"  
   end
   
@@ -25,6 +26,17 @@ module Util
     return escaped
     
   end
+
+  def Util.escape_uri(s)
+    escaped = s.dup
+    
+    escaped.gsub!(" ", "%20")
+    escaped.gsub!("&", "&amp;")
+            
+    return escaped
+    
+  end
+
 
   #Util code for cleaning up whitespace, newlines, etc
   def Util.clean_ws(s)
