@@ -7,6 +7,8 @@ import tarfile
 import urllib2
 import re
 import gdbm
+import isbn
+
 from time import strftime
 
 BASE_URI = "http://ol.dataincubator.org"
@@ -24,14 +26,15 @@ ov = rdflib.Namespace("http://open.vocab.org/terms/")
 mo = rdflib.Namespace("http://purl.org/ontology/mo/")
 void = rdflib.Namespace("http://rdfs.org/ns/void#")
 
-skip = ["properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location", "scan_on_demand"]
 class Converter:
    
   def __init__(self):
-    self.resource_index = {}
-    self.people_index = {}
+    self.interesting_uris = []
+    self.worksdone = {}
     self.key_cache = gdbm.open('key_cache.db', 'c');
     self.identifier_map = gdbm.open('identifier_map.db', 'c');
+    self.lcsh_lookup = gdbm.open('lcsh_lookup.db', 'r');
+    self.thingisbn_lookup = gdbm.open('thingisbn_lookup.db', 'r');
     self.dataset_resource = rdflib.URIRef(BASE_URI + "/")
     self.reset()
 
@@ -57,55 +60,99 @@ class Converter:
     if data["key"].startswith("/user/"):
       return
 
-    if data["type"]["key"] == "/type/redirect" or data["type"]["key"] == "/type/type" or data["type"]["key"] == "/type/delete" or data["type"]["key"] == "/type/scan_record" or data["type"]["key"] == "/type/usergroup" or data["type"]["key"] == "/type/permission" or data["type"]["key"] == "/type/property" or data["type"]["key"] == "/type/backreference":
+    elif data["type"]["key"] == "/type/redirect" or data["type"]["key"] == "/type/type" or data["type"]["key"] == "/type/delete" or data["type"]["key"] == "/type/scan_record" or data["type"]["key"] == "/type/usergroup" or data["type"]["key"] == "/type/permission" or data["type"]["key"] == "/type/property" or data["type"]["key"] == "/type/backreference":
       #print "Ignoring '%s' because it is a '%s'" % (data["key"], data["type"]["key"]) 
       return
-
-    item_uri = None
-    if data["type"]["key"] == "/type/edition":
-      item_uri = self.get_manifestation_uri(data["key"])
-
+    elif data["type"]["key"] == "/type/edition":
+      self.parse_edition(data)
     elif data["type"]["key"] == "/type/author":
-      item_uri = self.get_person_uri(data["key"])
-    
+      self.parse_person(data)
     else:
       print "  Ignoring unknown type %s" % data["type"]["key"]
       return
-      
+
+
+  def parse_edition(self, data):
+    item_uri = None
+    work_uri = None
+    manifestations = []     
+
+    # Look for librarything work id      
+    if data.has_key("isbn_10"):
+      for isbn10 in data["isbn_10"]:
+        if self.thingisbn_lookup.has_key(isbn10):
+          workid = self.thingisbn_lookup[isbn10]
+          work_uri = self.get_work_uri("workid:" + workid)
+          break          
+  
+    if work_uri is None:
+      work_uri = self.get_work_uri(data["key"])
+
+    isbn13s = {}
+    if data.has_key("isbn_10"):
+      for isbn10 in data["isbn_10"]:
+        manifestation_uri = self.get_manifestation_uri("isbn:" + isbn10)
+        manifestations.append(manifestation_uri)
+        isbn13 =  isbn.convert(isbn10)
+        if isbn13 is not None:
+          isbn13s[isbn13] = 1
+          self.graph.add((rdflib.URIRef(manifestation_uri), bibo["isbn10"], rdflib.Literal(isbn10)))
+          self.graph.add((rdflib.URIRef(manifestation_uri), bibo["isbn13"], rdflib.Literal(isbn13)))
+          self.graph.add((rdflib.URIRef(manifestation_uri), owl["sameAs"], rdflib.URIRef("http://www4.wiwiss.fu-berlin.de/bookmashup/books/" + isbn10)))
+        else:
+          print "  ISBN %s is invalid" % isbn10
+
+    else:
+      manifestations.append(self.get_manifestation_uri(data["key"]))
+  
+    if not self.worksdone.has_key(work_uri):
+      self.worksdone[work_uri] = 1
+      self.parse_work(data,work_uri)
+
+    for manifestation_uri in manifestations:
+      self.graph.add((rdflib.URIRef(manifestation_uri), dct["isVersionOf"], rdflib.URIRef(work_uri)))
+      self.graph.add((rdflib.URIRef(work_uri), dct["hasVersion"], rdflib.URIRef(manifestation_uri)))
+      self.parse_manifestation(data,manifestation_uri)
+
+
+  def parse_work(self, data, item_uri ):
+    skip = ["key", "type", "properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location", "scan_on_demand",
+            "edition_name", "publish_country", "isbn_10", "isbn_13", "oclc_numbers", "oclc_number", "publishers", "publish_places", "pagination", "lccn", "number_of_pages", "publish_date", "weight", "physical_format", "physical_dimensions", "ocaid", "languages", "table_of_contents", "coverimage",
+            "first_sentence"]
     subj = rdflib.URIRef(item_uri)
-    
-    
-    # Temporarily add the original JSON
-    #self.graph.add((subj, rdfs["comment"], rdflib.Literal(indata)))
-    
+    self.graph.add((subj, rdf["type"], frbr["Work"]))
+
     # Connect the item resource to the OpenLibrary document describing it
     ol_document = rdflib.URIRef("http://openlibrary.org" + data["key"])
     self.graph.add((subj, foaf["isPrimaryTopicOf"], ol_document))
-    self.graph.add((subj, dct["isPartOf"], self.dataset_resource))
+    self.add_preflabel(data, subj)
     
     for k, v in data.items():
-      if k == "key":
-        pass
-      elif k == "type":
-        if v["key"] == "/type/edition":
-          self.graph.add((subj, rdf["type"], frbr["Manifestation"]))
-        elif v["key"] == "/type/author":
-          self.graph.add((subj, rdf["type"], foaf["Person"]))
-        else:
-          print "Unknown type '%s'" % (v["key"])
-          #self.graph.add((subj, rdf["type"], rdflib.URIRef(BASE_URI + v["key"])))
-      elif k == "title":
-        if data["type"]["key"] == "/type/author":
-          self.graph.add((subj, foaf["title"], rdflib.Literal(v)))
-        else:
-          self.graph.add((subj, dct["title"], rdflib.Literal(v)))
-          self.graph.add((subj, skos["prefLabel"], rdflib.Literal(v)))
-      elif k == "name":
-        self.graph.add((subj, skos["prefLabel"], rdflib.Literal(v)))
-      elif k == "personal_name":
-        self.graph.add((subj, foaf["name"], rdflib.Literal(v)))
+      if k == "title":
+        self.graph.add((subj, dct["title"], rdflib.Literal(v)))
+      elif k == "subtitle":
+        self.graph.add((subj, ov["subtitle"], rdflib.Literal(v)))
       elif k == "title_prefix":
         self.graph.add((subj, ol["title_prefix"], rdflib.Literal(v)))
+      elif k == "other_titles":
+        for t in v:
+          self.graph.add((subj, skos["altLabel"], rdflib.Literal(t)))
+      elif k == "by_statement":
+        self.graph.add((subj, ol["by_statement"], rdflib.Literal(v)))
+      elif k == "series":
+        series = ""
+        for s in v:
+          if not series.endswith(";"):
+            series_resource = rdflib.URIRef(self.make_uri("series"))
+            self.graph.add((subj, ol["series"], series_resource))
+            self.graph.add((series_resource, skos["prefLabel"], rdflib.Literal(s)))
+            series = ""
+          series += " " + s
+        if s != "":
+          series_resource = rdflib.URIRef(self.make_uri("series"))
+          self.graph.add((subj, ol["series"], series_resource))
+          self.graph.add((series_resource, skos["prefLabel"], rdflib.Literal(s)))
+          
       elif k == "authors":
         group_resource = rdflib.URIRef(self.make_uri("groups"))
         self.graph.add((group_resource, dct["isPartOf"], self.dataset_resource))
@@ -122,27 +169,20 @@ class Converter:
           else:
             self.graph.add((person_resource, foaf["isPrimaryTopicOf"], rdflib.URIRef("http://openlibrary.org" + author["key"])))
           i += 1
-      elif k == "other_titles":
-        for t in v:
-          self.graph.add((subj, skos["altLabel"], rdflib.Literal(t)))
       elif k == "alternate_names":
         for t in v:
           self.graph.add((subj, skos["altLabel"], rdflib.Literal(t)))
-      elif k == "subtitle":
-        self.graph.add((subj, ov["subtitle"], rdflib.Literal(v)))
       elif k == "lc_classifications":
         for c in v:
           self.graph.add((subj, ol["lc_classification"], rdflib.Literal(c)))
       elif k == "contributions":
         group_resource = rdflib.URIRef(self.make_uri("groups"))
-        self.graph.add((group_resource, dct["isPartOf"], self.dataset_resource))
         self.graph.add((subj, bibo["contributorList"], group_resource))
         self.graph.add((group_resource, rdf["type"], rdf["Bag"]))
         i = 1
         for c in v:
           if isinstance(c, (str, unicode)):
             person_resource = rdflib.URIRef(self.make_uri("people"))
-            self.graph.add((person_resource, dct["isPartOf"], self.dataset_resource))
             self.graph.add((subj, dct["contributor"], person_resource))
             self.graph.add((group_resource, rdf["_" + str(i)], person_resource))
             self.graph.add((person_resource, rdf["type"], foaf["Person"]))
@@ -154,25 +194,78 @@ class Converter:
             self.graph.add((person_resource, rdf["type"], foaf["Person"]))
             self.graph.add((person_resource, foaf["isPrimaryTopicOf"], rdflib.URIRef("http://openlibrary.org" + c["key"])))
           i += 1
-      elif k == "edition_name":
-        self.graph.add((subj, bibo["edition"], rdflib.Literal(v)))
       elif k == "subjects":
         for sub in v:
-          self.graph.add((subj, dct["subject"], rdflib.Literal(self.clean_text(sub))))
+          sub = sub.replace(" -- ", "--")
+          if self.lcsh_lookup.has_key(sub):
+            lcsh_uri = self.lcsh_lookup[sub]
+            self.graph.add((subj, dct["subject"], rdflib.URIRef(lcsh_uri)))
+            self.graph.add((rdflib.URIRef(lcsh_uri), skos["prefLabel"], rdflib.Literal(sub)))
+          else:          
+            #print "  did not match subject %s" % sub
+            self.graph.add((subj, dct["subject"], rdflib.Literal(sub)))
+      elif k == "uris" or k == "url":
+        for i in v:
+          self.graph.add((subj, rdfs["seeAlso"], rdflib.URIRef(str(i))))
+      elif k == "dewey_decimal_class":
+        for d in v:
+          self.graph.add((subj, ol["dewey_decimal_class"], rdflib.Literal(d)))
+      elif k == "notes":
+        self.graph.add((subj, rdfs["comment"], rdflib.Literal(self.clean_text(v["value"]))))
+      elif k == "wikipedia":
+        self.graph.add((subj, foaf["isPrimaryTopicOf"], rdflib.URIRef(v)))
+        self.graph.add((subj, mo["wikipedia"], rdflib.URIRef(v)))
+        if re.match('^http://en.wikipedia.org/wiki/', v):
+          dbpedia_uri = re.sub('http://en.wikipedia.org/wiki/', 'http://dbpedia.org/resource/', v)
+          self.graph.add((subj, owl["sameAs"], rdflib.URIRef(dbpedia_uri)))
+      elif k == "description":
+        self.graph.add((subj, dct["description"], rdflib.Literal(v["value"])))
+      elif k in skip:
+        pass
+      else:
+        print "  parse_work did not process '%s':'%s'" % (k, v)
+    
+  def add_preflabel(self, data, subj):
+    if data.has_key("title"):
+      title = data["title"]
+      if data.has_key("subtitle"):  
+        title += ": " + data["subtitle"]
+      if data.has_key("title_prefix"):    
+        if not data["title_prefix"].endswith(" "):
+          title = data["title_prefix"] + " " + title
+        else:
+          title = data["title_prefix"] + title
+      self.graph.add((subj, skos["prefLabel"], rdflib.Literal(title)))
+    
+    
+  def parse_manifestation(self, data, item_uri ):
+    skip = ["key", "type", "properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location", "scan_on_demand",
+            "lc_classifications","authors","contributions","subjects","isbn_10","isbn_13","uris", "url","dewey_decimal_class","wikipedia","series"];
+
+    subj = rdflib.URIRef(item_uri)
+    self.graph.add((subj, rdf["type"], frbr["Manifestation"]))
+
+    # Connect the item resource to the OpenLibrary document describing it
+    ol_document = rdflib.URIRef("http://openlibrary.org" + data["key"])
+    self.graph.add((subj, foaf["isPrimaryTopicOf"], ol_document))
+    self.add_preflabel(data, subj)
+
+    for k, v in data.items():
+      if k == "title":
+        self.graph.add((subj, dct["title"], rdflib.Literal(v)))
+      elif k == "title_prefix":
+        self.graph.add((subj, ol["title_prefix"], rdflib.Literal(v)))
+      elif k == "other_titles":
+        for t in v:
+          self.graph.add((subj, skos["altLabel"], rdflib.Literal(t)))
+      elif k == "subtitle":
+        self.graph.add((subj, ov["subtitle"], rdflib.Literal(v)))
+      elif k == "edition_name":
+        self.graph.add((subj, bibo["edition"], rdflib.Literal(v)))
       elif k == "publish_country":
         self.graph.add((subj, ol["publish_country"], rdflib.Literal(v.strip())))
       elif k == "by_statement":
         self.graph.add((subj, ol["by_statement"], rdflib.Literal(v)))
-      elif k == "isbn_10":
-        for i in v:
-          self.graph.add((subj, bibo["isbn10"], rdflib.Literal(i)))
-          self.graph.add((subj, owl["sameAs"], rdflib.URIRef("http://www4.wiwiss.fu-berlin.de/bookmashup/books/" + i)))
-          self.identifier_map["isbn10:" + str(i)] = item_uri;
-
-      elif k == "isbn_13":
-        for i in v:
-          self.graph.add((subj, bibo["isbn13"], rdflib.Literal(i)))
-          self.identifier_map["isbn13:" + str(i)] = item_uri;
       elif k == "oclc_numbers" or k == "oclc_number":
         for n in v:
           self.graph.add((subj, bibo["oclcnum"], rdflib.Literal(n)))
@@ -191,25 +284,8 @@ class Converter:
           self.graph.add((subj, bibo["lccn"], rdflib.Literal(l)))
       elif k == "number_of_pages":
         self.graph.add((subj, ov["numberOfPages"], rdflib.Literal(str(v))))
-
-      elif k == "uris" or k == "url":
-        for i in v:
-          self.graph.add((subj, rdfs["seeAlso"], rdflib.URIRef(str(i))))
-            
       elif k == "publish_date":
         self.graph.add((subj, dct["issued"], rdflib.Literal(v)))
-      elif k == "birth_date":
-        event_resource = rdflib.URIRef(self.make_uri("events"))
-        self.graph.add((event_resource, dct["isPartOf"], self.dataset_resource))
-        self.graph.add((subj, bio["event"], event_resource))
-        self.graph.add((event_resource, rdf["type"], bio["Birth"]))
-        self.graph.add((event_resource, bio["date"], rdflib.Literal(v)))
-      elif k == "death_date":
-        event_resource = rdflib.URIRef(self.make_uri("events"))
-        self.graph.add((event_resource, dct["isPartOf"], self.dataset_resource))
-        self.graph.add((subj, bio["event"], event_resource))
-        self.graph.add((event_resource, rdf["type"], bio["Death"]))
-        self.graph.add((event_resource, bio["date"], rdflib.Literal(v)))
       elif k == "weight":
         self.graph.add((subj, ov["weight"], rdflib.Literal(v)))
       elif k == "physical_format":
@@ -307,21 +383,10 @@ class Converter:
           print "  Found physical format '%s'" % (self.clean_text(str(v)))
       elif k == "physical_dimensions":
         self.graph.add((subj, ol["physical_dimensions"], rdflib.Literal(v)))
-      elif k == "dewey_decimal_class":
-        for d in v:
-          self.graph.add((subj, ol["dewey_decimal_class"], rdflib.Literal(d)))
       elif k == "notes":
         self.graph.add((subj, rdfs["comment"], rdflib.Literal(self.clean_text(v["value"]))))
-      elif k == "bio":
-        self.graph.add((subj, bio["olb"], rdflib.Literal(self.clean_text(v["value"]))))
       elif k == "first_sentence":
         self.graph.add((subj, ov["firstSentence"], rdflib.Literal(self.clean_text(v["value"]))))
-      elif k == "wikipedia":
-        self.graph.add((subj, foaf["isPrimaryTopicOf"], rdflib.URIRef(v)))
-        self.graph.add((subj, mo["wikipedia"], rdflib.URIRef(v)))
-        if re.match('^http://en.wikipedia.org/wiki/', v):
-          dbpedia_uri = re.sub('http://en.wikipedia.org/wiki/', 'http://dbpedia.org/resource/', v)
-          self.graph.add((subj, owl["sameAs"], rdflib.URIRef(dbpedia_uri)))
       elif k == "ocaid":
         self.graph.add((subj, foaf["isPrimaryTopicOf"], rdflib.URIRef("http://www.archive.org/details/" + v)))
         # TODO: add links to scanned content in internet archive
@@ -331,25 +396,17 @@ class Converter:
         # Full text: http://www.archive.org/stream/{ocaid}/{ocaid}_djvu.txt
       elif k == "description":
         self.graph.add((subj, dct["description"], rdflib.Literal(v["value"])))
-      elif k == "series":
-        series_resource = rdflib.URIRef(self.make_uri("series"))
-        self.graph.add((series_resource, dct["isPartOf"], self.dataset_resource))
-        self.graph.add((subj, ol["series"], series_resource))
-        for s in v:
-          self.graph.add((series_resource, dct["title"], rdflib.Literal(s)))
       elif k == "languages":
         for l in v:
           if l["key"].startswith('/l/'):
             self.graph.add((subj, dct["language"], rdflib.Literal(l["key"][3:])))
       elif k == "table_of_contents":
         toc_resource = rdflib.URIRef(self.make_uri("tocs"))
-        self.graph.add((toc_resource, dct["isPartOf"], self.dataset_resource))
         self.graph.add((subj, dct["tableOfContents"], toc_resource))
         self.graph.add((toc_resource, rdf["type"], rdf["Seq"]))
         i = 1
         for x in v:
           section = rdflib.URIRef(self.make_uri("sections"))
-          self.graph.add((section, dct["isPartOf"], self.dataset_resource))
           if isinstance(x, (str, unicode)):
             x = {"type" : "/type/text", "value" : x}
           elif x["type"] == "/type/toc_item":
@@ -361,16 +418,64 @@ class Converter:
             self.graph.add((section, skos["prefLabel"], rdflib.Literal(x["value"])))
             
           self.graph.add((section, rdf["type"], bibo["DocumentPart"]))
-          self.graph.add((section, dct["isPartOf"], subj))
           self.graph.add((toc_resource, rdf["_" + str(i)], section))
           i += 1
       elif k in skip:
         pass
       else:
-        print "  Did not process '%s':'%s'" % (k, v)
-    #rdfoutput.make_table(triples)
-    #rdfoutput.make_graph(triples)
+        print "  parse_manifestation not process '%s':'%s'" % (k, v)
   
+
+
+  def parse_person(self, data ):
+    item_uri = self.get_person_uri(data["key"])
+    subj = rdflib.URIRef(item_uri)
+    
+    skip = ["key", "type", "properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location", "scan_on_demand"]
+    self.graph.add((subj, rdf["type"], foaf["Person"]))
+
+    # Connect the item resource to the OpenLibrary document describing it
+    ol_document = rdflib.URIRef("http://openlibrary.org" + data["key"])
+    self.graph.add((subj, foaf["isPrimaryTopicOf"], ol_document))
+    
+    for k, v in data.items():
+      if k == "title":
+        self.graph.add((subj, foaf["title"], rdflib.Literal(v)))
+      elif k == "name":
+        self.graph.add((subj, skos["prefLabel"], rdflib.Literal(v)))
+      elif k == "personal_name":
+        self.graph.add((subj, foaf["name"], rdflib.Literal(v)))
+      elif k == "alternate_names":
+        for t in v:
+          self.graph.add((subj, skos["altLabel"], rdflib.Literal(t)))
+      elif k == "birth_date":
+        event_resource = rdflib.URIRef(self.make_uri("events"))
+        self.graph.add((subj, bio["event"], event_resource))
+        self.graph.add((event_resource, rdf["type"], bio["Birth"]))
+        self.graph.add((event_resource, bio["date"], rdflib.Literal(v)))
+      elif k == "death_date":
+        event_resource = rdflib.URIRef(self.make_uri("events"))
+        self.graph.add((subj, bio["event"], event_resource))
+        self.graph.add((event_resource, rdf["type"], bio["Death"]))
+        self.graph.add((event_resource, bio["date"], rdflib.Literal(v)))
+      elif k == "notes":
+        self.graph.add((subj, rdfs["comment"], rdflib.Literal(self.clean_text(v["value"]))))
+      elif k == "bio":
+        self.graph.add((subj, bio["olb"], rdflib.Literal(self.clean_text(v["value"]))))
+      elif k == "wikipedia":
+        self.graph.add((subj, foaf["isPrimaryTopicOf"], rdflib.URIRef(v)))
+        self.graph.add((subj, mo["wikipedia"], rdflib.URIRef(v)))
+        if re.match('^http://en.wikipedia.org/wiki/', v):
+          dbpedia_uri = re.sub('http://en.wikipedia.org/wiki/', 'http://dbpedia.org/resource/', v)
+          self.graph.add((subj, owl["sameAs"], rdflib.URIRef(dbpedia_uri)))
+      elif k in skip:
+        pass
+      else:
+        print "  parse_person did not process '%s':'%s'" % (k, v)
+
+
+
+
   def clear(self):
     self.graph = rdflib.ConjunctiveGraph()
   
@@ -387,22 +492,28 @@ class Converter:
       self.key_cache['idx_' + prefix] = '1';
     return self.key_cache['idx_' + prefix]
         
+  def get_work_uri(self, key):  
+    if self.key_cache.has_key("[work]" + key):
+      return self.key_cache["[work]" + key]
+    else:
+      index = str(self.get_next_resource_index("works"))
+      self.key_cache["[work]" + key] = BASE_URI + "/works/" + index
+      return BASE_URI + "/works/" + index
+
   def get_manifestation_uri(self, key):  
-    if self.key_cache.has_key(key):
-      return self.key_cache[key]
+    if self.key_cache.has_key("[item]" + key):
+      return self.key_cache["[item]" + key]
     else:
       index = str(self.get_next_resource_index("items"))
-      self.key_cache[key] = BASE_URI + "/items/" + index
-      self.graph.add((rdflib.URIRef(BASE_URI + "/items/" + index), dct["isPartOf"], self.dataset_resource))
+      self.key_cache["[item]" + key] = BASE_URI + "/items/" + index
       return BASE_URI + "/items/" + index
 
   def get_person_uri(self, key):  
-    if self.key_cache.has_key(key):
-      return self.key_cache[key]
+    if self.key_cache.has_key("[person]" + key):
+      return self.key_cache["[person]" + key]
     else:
       index = str(self.get_next_resource_index("people"))
-      self.key_cache[key] = BASE_URI + "/people/" + index
-      self.graph.add((rdflib.URIRef(BASE_URI + "/people/" + index), dct["isPartOf"], self.dataset_resource))
+      self.key_cache["[person]" + key] = BASE_URI + "/people/" + index
       return BASE_URI + "/people/" + index
       
   def clean_uri(self, uri):
@@ -499,6 +610,7 @@ if __name__ == "__main__":
   void_graph.add((dataset_resource, dct["issued"], rdflib.Literal("2009-04-20",datatype=rdflib.URIRef("http://www.w3.org/2001/XMLSchema#date"))))
   void_graph.add((dataset_resource, dct["modified"], rdflib.Literal(strftime("%Y-%m-%d"),datatype=rdflib.URIRef("http://www.w3.org/2001/XMLSchema#date"))))
   void_graph.add((dataset_resource, dct["creator"], rdflib.URIRef("http://iandavis.com/id/me")))
+  void_graph.add((dataset_resource, dct["subject"], rdflib.URIRef("http://lcsubjects.org/subjects/sh85079330#concept")))
   void_graph.add((rdflib.URIRef("http://iandavis.com/id/me"), rdfs["label"], rdflib.Literal("Ian Davis")))
   void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/73716")))
   void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/143291")))

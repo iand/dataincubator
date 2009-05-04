@@ -1,3 +1,15 @@
+2009-05-04 (2)
+
+2009-05-04
+Refined formatting of series labels
+Refined construction of work and manifestation prefLabel
+
+2009-05-03
+Removed dct:isPartOf due to misunderstanding of dataset linking
+Added lookup of subjects in LCSH 
+Crudely split editions into works and manifestations
+Added lookup of thingisbn work id for work grouping
+
 2009-04-29 (2)
 Removed generated http://ol.dataincubator/org/isbn/{num} resources
 Removed http://ol.dataincubator/org/oclc/{num} resources
