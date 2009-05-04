@@ -1,4 +1,0 @@
-RewriteEngine on
-
-RewriteRule ^/$  /index.html [L]
-RewriteRule ^resources/(.*)$  http://api.talis.com/stores/stanforddev-1/meta?about=http\://respmed.dataincubator.org/resources/$1 [QSA,L]
