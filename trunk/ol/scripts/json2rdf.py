@@ -83,6 +83,7 @@ class Converter:
         if self.thingisbn_lookup.has_key(isbn10):
           workid = self.thingisbn_lookup[isbn10]
           work_uri = self.get_work_uri("workid:" + workid)
+          self.graph.add((rdflib.URIRef(work_uri), foaf["isPrimaryTopicOf"], rdflib.URIRef("http://www.librarything.com/work/" + workid)))
           break          
   
     if work_uri is None:
@@ -282,6 +283,7 @@ class Converter:
       elif k == "lccn":
         for l in v:
           self.graph.add((subj, bibo["lccn"], rdflib.Literal(l)))
+          self.graph.add((subj, foaf["isPrimaryTopicOf"], rdflib.URIRef("http://lccn.loc.gov/" + l)))
       elif k == "number_of_pages":
         self.graph.add((subj, ov["numberOfPages"], rdflib.Literal(str(v))))
       elif k == "publish_date":
@@ -612,9 +614,9 @@ if __name__ == "__main__":
   void_graph.add((dataset_resource, dct["creator"], rdflib.URIRef("http://iandavis.com/id/me")))
   void_graph.add((dataset_resource, dct["subject"], rdflib.URIRef("http://lcsubjects.org/subjects/sh85079330#concept")))
   void_graph.add((rdflib.URIRef("http://iandavis.com/id/me"), rdfs["label"], rdflib.Literal("Ian Davis")))
-  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/73716")))
-  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/143291")))
-  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/135963")))
+  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/works/59650")))
+  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/works/6102")))
+  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/49015")))
   void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/people/6889")))
   void_graph.add((dataset_resource, void["sparqlEndpoint"], rdflib.URIRef("http://api.talis.com/stores/openlibrary/services/sparql")))
   void_graph.add((dataset_resource, void["uriLookupEndpoint"], rdflib.URIRef("http://api.talis.com/stores/openlibrary/meta?about=")))

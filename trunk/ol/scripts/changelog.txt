@@ -1,4 +1,6 @@
 2009-05-04 (2)
+Added foaf:isPrimaryTopicOf links to http://lccn.loc.gov/
+Added foaf:isPrimaryTopicOf links to http://www.librarything.com/work/ for ThingISBN work IDs
 
 2009-05-04
 Refined formatting of series labels
