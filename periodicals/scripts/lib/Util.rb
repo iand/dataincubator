@@ -48,5 +48,17 @@ module Util
       return nil
     end
     return cleaned
-  end  
+  end
+  
+  
+  def Util.makeSlug(s) 
+    slug = s.downcase
+    removelist = ["a", "an", "as", "at", "before", "but", "by", "for","from","is", "in", "into", "like", "of", "off", "on", "onto","per","since", "than", "the", "this", "that", "to", "up", "via","with"];
+    removelist.each do |word|
+       slug = slug.gsub(" #{ word } ",' ')
+    end
+    return slug.gsub("&","and").gsub(/[\s]/,'-').gsub(/[^A-Za-z\d-]/,'').gsub("--","-")
+  end
+
+    
 end
