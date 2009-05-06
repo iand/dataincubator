@@ -8,13 +8,18 @@
 
  <rdf:Description rdf:about="http://periodicals.dataincubator.org/">
 
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/cancerresearch"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/thejournalofheartandlungtransplantation"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/comparativeandgeneralpharmacology"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/oncologist"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/pediatricsinreview"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/journaloftransplantation"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/cellmotilityandthecytoskeleton"/>
+  <!-- Highwire -->
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/work-employment-and-society"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/organization/sage-publications"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/organization/american-academy-pediatrics"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/groups/hirewire-publishers"/>
+  <!-- CrossRef -->
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/electrical-engineering-japan"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/organization/wiley-blackwell-john-wiley-and-sons"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/groups/crossref-publishers"/>
+  <!-- PubMed -->
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/lunion-medicale-des-praticiens-francais"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/modern-healthcare-short-term-care-ed"/>
 
   <dct:description>A conversion of the journal metadata provided by CrossRef, Highwire and the NLM.</dct:description>
 
@@ -32,20 +37,23 @@
  <rdf:Description rdf:about="http://periodicals.dataincubator.org/datasets/crossref">
   <dct:source rdf:resource="http://ftp.crossref.org/titlelist/titleFile.csv"/>
   <dct:description>A conversion of the journal metadata provided for FTP download by CrossRef.</dct:description>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/journaloftransplantation"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/cellmotilityandthecytoskeleton"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/electrical-engineering-japan"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/organization/wiley-blackwell-john-wiley-and-sons"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/groups/crossref-publishers"/>
  </rdf:Description>
  <rdf:Description rdf:about="http://periodicals.dataincubator.org/datasets/highwire">
   <dct:source rdf:resource="http://highwire.stanford.edu/institutions/AtoZList.xls"/>
   <dct:description>A conversion of the journal metadata provided for FTP download by Highwire.</dct:description>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/oncologist"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/pediatricsinreview"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/work-employment-and-society"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/organization/sage-publications"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/organization/american-academy-pediatrics"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/groups/hirewire-publishers"/>
  </rdf:Description>
  <rdf:Description rdf:about="http://periodicals.dataincubator.org/datasets/nlm">
   <dct:source rdf:resource="ftp://ftp.ncbi.nih.gov/pubmed/J_Medline.txt"/>
   <dct:description>A conversion of the journal metadata provided for FTP download by the NLM.</dct:description>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/thejournalofheartandlungtransplantation"/>
-  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/comparativeandgeneralpharmacology"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/lunion-medicale-des-praticiens-francais"/>
+  <void:exampleResource rdf:resource="http://periodicals.dataincubator.org/journal/modern-healthcare-short-term-care-ed"/>
  </rdf:Description>
 	
 </rdf:RDF>

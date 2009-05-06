@@ -8,27 +8,16 @@ class PubmedJournal
     @fields = fields
   end
   
-  def id()
-    id = fields["JournalTitle"].clone
-    id.gsub!(/[^\w\d]/,'')
-    if (id == nil)
-      return fields["NlmId"]  
-    end
-    id.gsub!(/[^A-z0-9]/,'')
-    return id.downcase
-  end
-  
   def uri()
-    slug = id()
+    slug = Util.makeSlug(fields["JournalTitle"])
     return "http://periodicals.dataincubator.org/journal/#{slug}"
   end 
 
   def to_rdf(stream)
     rdf = "<bibo:Journal rdf:about=\"#{uri()}\">\n"
     rdf << " <dc:title>#{Util.escape_xml( fields["JournalTitle"] )}</dc:title>\n"
-    rdf << " <dc:partOf rdf:resource=\"http://periodicals.dataincubator.org/datasets/nlm\" />\n"
     
-    rdf << "<dc:identifier>#{fields["NlmId"]}</dc:identifier>\n"
+    rdf << "<dc:identifier rdf:resource=\"info:pmid/#{fields["NlmId"]}\"/>\n"
     
     rdf << "<foaf:isPrimaryTopicOf rdf:resource=\"http://www.ncbi.nlm.nih.gov/sites/entrez?Db=nlmcatalog&amp;doptcmdl=Expanded&amp;cmd=search&amp;Term=#{fields["NlmId"]}%5BNlmId%5D\"/>\n"
     rdf << "<foaf:isPrimaryTopicOf rdf:resource=\"http://locatorplus.gov/cgi-bin/Pwebrecon.cgi?DB=local&amp;v1=1&amp;ti=1,1&amp;Search_Arg=#{fields["NlmId"]}&amp;Search_Code=0359&amp;CNT=20&amp;SID=1\"/>\n"

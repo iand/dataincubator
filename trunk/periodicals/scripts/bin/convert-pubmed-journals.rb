@@ -1,5 +1,7 @@
+$KCODE = 'u'
 $:.unshift File.join(File.dirname(__FILE__), "..", "lib")
 require "PubmedJournal"
+require 'jcode'
   
 fields = nil
 count = 0
