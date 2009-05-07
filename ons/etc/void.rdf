@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rdf:RDF
+   xmlns:bibo="http://purl.org/ontology/bibo/"
+   xmlns:bio="http://vocab.org/bio/0.1/"
+   xmlns:dct="http://purl.org/dc/terms/"
+   xmlns:foaf="http://xmlns.com/foaf/0.1/"
+   xmlns:ol="http://olrdf.appspot.com/key/"
+   xmlns:ov="http://open.vocab.org/terms/"
+   xmlns:owl="http://www.w3.org/2002/07/owl#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+   xmlns:skos="http://www.w3.org/2004/02/skos/core#"
+   xmlns:void="http://rdfs.org/ns/void#"
+>
+  <void:Dataset rdf:about="http://ons.dataincubator.org/">
+
+    <dct:title>Office for National Statistics Data</dct:title>
+    <dct:description>A conversion of the OpenLibrary JSON dumps. Currently this is only a sample of 200,000 records (about 1% of the total) which corresponds to about 6.8 million triples.</dct:description>
+    <dct:rights>The data and text in this dataset scheme is under Crown Copyright. This conversion to linked data is conducted under click-use licence number C2009001009 held by Ian Davis</dct:rights>
+    <void:uriRegexPattern>http://ons.dataincubator.org/.+</void:uriRegexPattern>
+    <dct:source rdf:resource="http://www.statistics.gov.uk/"/>
+    <void:sparqlEndpoint rdf:resource="http://api.talis.com/stores/ons/services/sparql"/>
+    <void:uriLookupEndpoint rdf:resource="http://api.talis.com/stores/ons/meta?about="/>
+    <dct:creator rdf:resource="http://iandavis.com/id/me"/>
+    <rdfs:seeAlso rdf:resource="http://code.google.com/p/dataincubator/wiki/ONS"/>
+    <rdfs:seeAlso rdf:resource="http://groups.google.com/group/dataincubator"/>
+    <void:vocabulary rdf:resource="http://www.w3.org/2004/02/skos/core#"/>
+    <void:vocabulary rdf:resource="http://purl.org/dc/terms/"/>
+  </void:Dataset>
+
+
+  <rdf:Description rdf:about="http://iandavis.com/id/me">
+    <rdfs:label>Ian Davis</rdfs:label>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://purl.org/dc/terms/">
+    <rdfs:label>Dublin Core</rdfs:label>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://www.w3.org/2004/02/skos/core#">
+    <rdfs:label>SKOS</rdfs:label>
+  </rdf:Description>
+
+</rdf:RDF>
