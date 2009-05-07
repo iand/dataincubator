@@ -1,0 +1,803 @@
+                                           (ons)
+         Standard Occupational Classification 2000 (SOC2000)
+         Summary of Structure
+
+         The Standard Occupational Classification consists of the following major groups:
+
+
+           1      Managers and Senior Officials
+           2      Professional Occupations
+           3      Associate Professional and Technical Occupations
+           4      Administrative and Secretarial Occupations
+           5      Skilled Trades Occupations
+           6      Personal Service Occupations
+           7      Sales and Customer Service Occupations
+           8      Process, Plant and Machine Operatives
+           9      Elementary Occupations
+
+
+         The sub-major, minor group and unit group structure of these major groups is defined as follows:
+
+
+
+
+user guides 2000\ug 20.2                     © Standard Occupational Classification 2000 Volume 1   June 2000   1
+Standard Occupational Classification 2000 (SOC2000)
+Summary of Structure
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+1                                          MANAGERS AND SENIOR OFFICIALS
+
+           11                              CORPORATE MANAGERS
+
+                           111             Corporate Managers And Senior Officials
+
+                                   1111    Senior officials in national government
+                                   1112    Directors and chief executives of major organisations
+                                   1113    Senior officials in local government
+                                   1114    Senior officials of special interest organisations
+
+                           112             Production Managers
+
+                                   1121    Production, works and maintenance managers
+                                   1122    Managers in construction
+                                   1123    Managers in mining and energy
+
+                           113             Functional Managers
+
+                                   1131    Financial managers and chartered secretaries
+                                   1132    Marketing and sales managers
+                                   1133    Purchasing managers
+                                   1134    Advertising and public relations managers
+                                   1135    Personnel, training and industrial relations managers
+                                   1136    Information and communication technology managers
+                                   1137    Research and development managers
+
+                           114             Quality And Customer Care Managers
+
+                                   1141    Quality assurance managers
+                                   1142    Customer care managers
+
+                           115             Financial Institution And Office Managers
+
+                                   1151    Financial institution managers
+                                   1152    Office managers
+
+                           116             Managers In Distribution, Storage And Retailing
+
+                                   1161    Transport and distribution managers
+                                   1162    Storage and warehouse managers
+                                   1163    Retail and wholesale managers
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   2
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+                           117             Protective Service Officers
+
+                                   1171    Officers in armed forces
+                                   1172    Police officers (inspectors and above)
+                                   1173    Senior officers in fire, ambulance, prison and related services
+                                   1174    Security managers
+
+                           118             Health And Social Services Managers
+
+                                   1181    Hospital and health service managers
+                                   1182    Pharmacy managers
+                                   1183    Healthcare practice managers
+                                   1184    Social services managers
+                                   1185    Residential and day care managers
+
+           12                              MANAGERS AND PROPRIETORS IN AGRICULTURE AND SERVICES
+
+                           121             Managers In Farming, Horticulture, Forestry And Fishing
+
+                                   1211    Farm managers
+                                   1212    Natural environment and conservation managers
+                                   1219    Managers in animal husbandry, forestry and fishing n.e.c.
+
+                           122             Managers And Proprietors In Hospitality And Leisure Services
+
+                                   1221    Hotel and accommodation managers
+                                   1222    Conference and exhibition managers
+                                   1223    Restaurant and catering managers
+                                   1224    Publicans and managers of licensed premises
+                                   1225    Leisure and sports managers
+                                   1226    Travel agency managers
+
+                           123             Managers And Proprietors In Other Service Industries
+
+                                   1231    Property, housing and land managers
+                                   1232    Garage managers and proprietors
+                                   1233    Hairdressing and beauty salon managers and proprietors
+                                   1234    Shopkeepers and wholesale/retail dealers
+                                   1235    Recycling and refuse disposal managers
+                                   1239    Managers and proprietors in other services n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   3
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+2                                          PROFESSIONAL OCCUPATIONS
+
+           21                              SCIENCE AND TECHNOLOGY PROFESSIONALS
+
+                           211             Science Professionals
+
+                                   2111    Chemists
+                                   2112    Biological scientists and biochemists
+                                   2113    Physicists, geologists and meteorologists
+
+                           212             Engineering Professionals
+
+                                   2121    Civil engineers
+                                   2122    Mechanical engineers
+                                   2123    Electrical engineers
+                                   2124    Electronics engineers
+                                   2125    Chemical engineers
+                                   2126    Design and development engineers
+                                   2127    Production and process engineers
+                                   2128    Planning and quality control engineers
+                                   2129    Engineering professionals n.e.c.
+
+                           213             Information And Communication Technology Professionals
+
+                                   2131    IT strategy and planning professionals
+                                   2132    Software professionals
+
+           22                              HEALTH PROFESSIONALS
+
+                           221             Health Professionals
+
+                                   2211    Medical practitioners
+                                   2212    Psychologists
+                                   2213    Pharmacists/pharmacologists
+                                   2214    Ophthalmic opticians
+                                   2215    Dental practitioners
+                                   2216    Veterinarians
+
+           23                              TEACHING AND RESEARCH PROFESSIONALS
+
+                           231             Teaching Professionals
+
+                                   2311    Higher education teaching professionals
+                                   2312    Further education teaching professionals
+                                   2313    Education officers, school inspectors
+                                   2314    Secondary education teaching professionals
+                                   2315    Primary and nursery education teaching professionals
+                                   2316    Special needs education teaching professionals
+                                   2317    Registrars and senior administrators of educational establishments
+                                   2319    Teaching professionals n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   4
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+                           232             Research Professionals
+
+                                   2321    Scientific researchers
+                                   2322    Social science researchers
+                                   2329    Researchers n.e.c.
+
+           24                              BUSINESS AND PUBLIC SERVICE PROFESSIONALS
+
+                           241             Legal Professionals
+
+                                   2411    Solicitors and lawyers, judges and coroners
+                                   2419    Legal professionals n.e.c.
+
+                           242             Business And Statistical Professionals
+
+                                   2421    Chartered and certified accountants
+                                   2422    Management accountants
+                                   2423    Management consultants, actuaries, economists and statisticians
+
+                           243             Architects, Town Planners, Surveyors
+
+                                   2431    Architects
+                                   2432    Town planners
+                                   2433    Quantity surveyors
+                                   2434    Chartered surveyors (not quantity surveyors)
+
+                           244             Public Service Professionals
+
+                                   2441    Public service administrative professionals
+                                   2442    Social workers
+                                   2443    Probation officers
+                                   2444    Clergy
+
+                           245             Librarians And Related Professionals
+
+                                   2451    Librarians
+                                   2452    Archivists and curators
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   5
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+3                                          ASSOCIATE PROFESSIONAL AND TECHNICAL OCCUPATIONS
+
+           31                              SCIENCE AND TECHNOLOGY ASSOCIATE PROFESSIONALS
+
+                           311             Science And Engineering Technicians
+
+                                   3111    Laboratory technicians
+                                   3112    Electrical/electronics technicians
+                                   3113    Engineering technicians
+                                   3114    Building and civil engineering technicians
+                                   3115    Quality assurance technicians
+                                   3119    Science and engineering technicians n.e.c.
+
+                           312             Draughtspersons And Building Inspectors
+
+                                   3121    Architectural technologists and town planning technicians
+                                   3122    Draughtspersons
+                                   3123    Building inspectors
+
+                           313             IT Service Delivery Occupations
+
+                                   3131    IT operations technicians
+                                   3132    IT user support technicians
+
+           32                              HEALTH AND SOCIAL WELFARE ASSOCIATE PROFESSIONALS
+
+                           321             Health Associate Professionals
+
+                                   3211    Nurses
+                                   3212    Midwives
+                                   3213    Paramedics
+                                   3214    Medical radiographers
+                                   3215    Chiropodists
+                                   3216    Dispensing opticians
+                                   3217    Pharmaceutical dispensers
+                                   3218    Medical and dental technicians
+
+                           322             Therapists
+
+                                   3221    Physiotherapists
+                                   3222    Occupational therapists
+                                   3223    Speech and language therapists
+                                   3229    Therapists n.e.c.
+
+                           323             Social Welfare Associate Professionals
+
+                                   3231    Youth and community workers
+                                   3232    Housing and welfare officers
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   6
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+           33                              PROTECTIVE SERVICE OCCUPATIONS
+
+                           331             Protective Service Occupations
+
+                                   3311    NCOs and other ranks
+                                   3312    Police officers (sergeant and below)
+                                   3313    Fire service officers (leading fire officer and below)
+                                   3314    Prison service officers (below principal officer)
+                                   3319    Protective service associate professionals n.e.c.
+
+           34                              CULTURE, MEDIA AND SPORTS OCCUPATIONS
+
+                           341             Artistic And Literary Occupations
+
+                                   3411    Artists
+                                   3412    Authors, writers
+                                   3413    Actors, entertainers
+                                   3414    Dancers and choreographers
+                                   3415    Musicians
+                                   3416    Arts officers, producers and directors
+
+                           342             Design Associate Professionals
+
+                                   3421    Graphic designers
+                                   3422    Product, clothing and related designers
+
+                           343             Media Associate Professionals
+
+                                   3431    Journalists, newspaper and periodical editors
+                                   3432    Broadcasting associate professionals
+                                   3433    Public relations officers
+                                   3434    Photographers and audio-visual equipment operators
+
+                           344             Sports And Fitness Occupations
+
+                                   3441    Sports players
+                                   3442    Sports coaches, instructors and officials
+                                   3443    Fitness instructors
+                                   3449    Sports and fitness occupations n.e.c.
+
+           35                              BUSINESS AND PUBLIC SERVICE ASSOCIATE PROFESSIONALS
+
+                           351             Transport Associate Professionals
+
+                                   3511    Air traffic controllers
+                                   3512    Aircraft pilots and flight engineers
+                                   3513    Ship and hovercraft officers
+                                   3514    Train drivers
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   7
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+                           352             Legal Associate Professionals
+
+                                   3520    Legal associate professionals
+
+                           353             Business And Finance Associate Professionals
+
+                                   3531    Estimators, valuers and assessors
+                                   3532    Brokers
+                                   3533    Insurance underwriters
+                                   3534    Finance and investment analysts/advisers
+                                   3535    Taxation experts
+                                   3536    Importers, exporters
+                                   3537    Financial and accounting technicians
+                                   3539    Business and related associate professionals n.e.c.
+
+                           354             Sales And Related Associate Professionals
+
+                                   3541    Buyers and purchasing officers
+                                   3542    Sales representatives
+                                   3543    Marketing associate professionals
+                                   3544    Estate agents, auctioneers
+
+                           355             Conservation Associate Professionals
+
+                                   3551    Conservation and environmental protection officers
+                                   3552    Countryside and park rangers
+
+                           356             Public Service And Other Associate Professionals
+
+                                   3561    Public service associate professionals
+                                   3562    Personnel and industrial relations officers
+                                   3563    Vocational and industrial trainers and instructors
+                                   3564    Careers advisers and vocational guidance specialists
+                                   3565    Inspectors of factories, utilities and trading standards
+                                   3566    Statutory examiners
+                                   3567    Occupational hygienists and safety officers (health and safety)
+                                   3568    Environmental health officers
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   8
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+4                                          ADMINISTRATIVE AND SECRETARIAL OCCUPATIONS
+
+           41                              ADMINISTRATIVE OCCUPATIONS
+
+                           411             Administrative Occupations: Government And Related Organisations
+
+                                   4111    Civil Service executive officers
+                                   4112    Civil Service administrative officers and assistants
+                                   4113    Local government clerical officers and assistants
+                                   4114    Officers of non-governmental organisations
+
+                           412             Administrative Occupations: Finance
+
+                                   4121    Credit controllers
+                                   4122    Accounts and wages clerks, book-keepers, other financial clerks
+                                   4123    Counter clerks
+
+                           413             Administrative Occupations: Records
+
+                                   4131    Filing and other records assistants/clerks
+                                   4132    Pensions and insurance clerks
+                                   4133    Stock control clerks
+                                   4134    Transport and distribution clerks
+                                   4135    Library assistants/clerks
+                                   4136    Database assistants/clerks
+                                   4137    Market research interviewers
+
+                           414             Administrative Occupations: Communications
+
+                                   4141    Telephonists
+                                   4142    Communication operators
+
+                           415             Administrative Occupations: General
+
+                                   4150    General office assistants/clerks
+
+           42                              SECRETARIAL AND RELATED OCCUPATIONS
+
+                           421             Secretarial And Related Occupations
+
+                                   4211    Medical secretaries
+                                   4212    Legal secretaries
+                                   4213    School secretaries
+                                   4214    Company secretaries
+                                   4215    Personal assistants and other secretaries
+                                   4216    Receptionists
+                                   4217    Typists
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   9
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+5                                          SKILLED TRADES OCCUPATIONS
+
+           51                              SKILLED AGRICULTURAL TRADES
+
+                           511             Agricultural Trades
+
+                                   5111    Farmers
+                                   5112    Horticultural trades
+                                   5113    Gardeners and groundsmen/groundswomen
+                                   5119    Agricultural and fishing trades n.e.c.
+
+           52                              SKILLED METAL AND ELECTRICAL TRADES
+
+                           521             Metal Forming, Welding And Related Trades
+
+                                   5211    Smiths and forge workers
+                                   5212    Moulders, core makers, die casters
+                                   5213    Sheet metal workers
+                                   5214    Metal plate workers, shipwrights, riveters
+                                   5215    Welding trades
+                                   5216    Pipe fitters
+
+                           522             Metal Machining, Fitting And Instrument Making Trades
+
+                                   5221    Metal machining setters and setter-operators
+                                   5222    Tool makers, tool fitters and markers-out
+                                   5223    Metal working production and maintenance fitters
+                                   5224    Precision instrument makers and repairers
+
+                           523             Vehicle Trades
+
+                                   5231    Motor mechanics, auto engineers
+                                   5232    Vehicle body builders and repairers
+                                   5233    Auto electricians
+                                   5234    Vehicle spray painters
+
+                           524             Electrical Trades
+
+                                   5241    Electricians, electrical fitters
+                                   5242    Telecommunications engineers
+                                   5243    Lines repairers and cable jointers
+                                   5244    TV, video and audio engineers
+                                   5245    Computer engineers, installation and maintenance
+                                   5249    Electrical/electronics engineers n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   10
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+           53                              SKILLED CONSTRUCTION AND BUILDING TRADES
+
+                           531             Construction Trades
+
+                                   5311    Steel erectors
+                                   5312    Bricklayers, masons
+                                   5313    Roofers, roof tilers and slaters
+                                   5314    Plumbers, heating and ventilating engineers
+                                   5315    Carpenters and joiners
+                                   5316    Glaziers, window fabricators and fitters
+                                   5319    Construction trades n.e.c.
+
+                           532             Building Trades
+
+                                   5321    Plasterers
+                                   5322    Floorers and wall tilers
+                                   5323    Painters and decorators
+
+           54                              TEXTILES, PRINTING AND OTHER SKILLED TRADES
+
+                           541             Textiles And Garments Trades
+
+                                   5411    Weavers and knitters
+                                   5412    Upholsterers
+                                   5413    Leather and related trades
+                                   5414    Tailors and dressmakers
+                                   5419    Textiles, garments and related trades n.e.c.
+
+                           542             Printing Trades
+
+                                   5421    Originators, compositors and print preparers
+                                   5422    Printers
+                                   5423    Bookbinders and print finishers
+                                   5424    Screen printers
+
+                           543             Food Preparation Trades
+
+                                   5431    Butchers, meat cutters
+                                   5432    Bakers, flour confectioners
+                                   5433    Fishmongers, poultry dressers
+                                   5434    Chefs, cooks
+
+                           549             Skilled Trades n. e. c.
+
+                                   5491    Glass and ceramics makers, decorators and finishers
+                                   5492    Furniture makers, other craft woodworkers
+                                   5493    Pattern makers (moulds)
+                                   5494    Musical instrument makers and tuners
+                                   5495    Goldsmiths, silversmiths, precious stone workers
+                                   5496    Floral arrangers, florists
+                                   5499    Hand craft occupations n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   11
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+6                                          PERSONAL SERVICE OCCUPATIONS
+
+           61                              CARING PERSONAL SERVICE OCCUPATIONS
+
+                           611             Healthcare And Related Personal Services
+
+                                   6111    Nursing auxiliaries and assistants
+                                   6112    Ambulance staff (excluding paramedics)
+                                   6113    Dental nurses
+                                   6114    Houseparents and residential wardens
+                                   6115    Care assistants and home carers
+
+                           612             Childcare And Related Personal Services
+
+                                   6121    Nursery nurses
+                                   6122    Childminders and related occupations
+                                   6123    Playgroup leaders/assistants
+                                   6124    Educational assistants
+
+                           613             Animal Care Services
+
+                                   6131    Veterinary nurses and assistants
+                                   6139    Animal care occupations n.e.c.
+
+           62                              LEISURE AND OTHER PERSONAL SERVICE OCCUPATIONS
+
+                           621             Leisure And Travel Service Occupations
+
+                                   6211    Sports and leisure assistants
+                                   6212    Travel agents
+                                   6213    Travel and tour guides
+                                   6214    Air travel assistants
+                                   6215    Rail travel assistants
+                                   6219    Leisure and travel service occupations n.e.c.
+
+                           622             Hairdressers And Related Occupations
+
+                                   6221    Hairdressers, barbers
+                                   6222    Beauticians and related occupations
+
+                           623             Housekeeping Occupations
+
+                                   6231    Housekeepers and related occupations
+                                   6232    Caretakers
+
+                           629             Personal Services Occupations n. e. c.
+
+                                   6291    Undertakers and mortuary assistants
+                                   6292    Pest control officers
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   12
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+7                                          SALES AND CUSTOMER SERVICE OCCUPATIONS
+
+           71                              SALES OCCUPATIONS
+
+                           711             Sales Assistants And Retail Cashiers
+
+                                   7111    Sales and retail assistants
+                                   7112    Retail cashiers and check-out operators
+                                   7113    Telephone salespersons
+
+                           712             Sales Related Occupations
+
+                                   7121    Collector salespersons and credit agents
+                                   7122    Debt, rent and other cash collectors
+                                   7123    Roundsmen/women and van salespersons
+                                   7124    Market and street traders and assistants
+                                   7125    Merchandisers and window dressers
+                                   7129    Sales related occupations n.e.c.
+
+           72                              CUSTOMER SERVICE OCCUPATIONS
+
+                           721             Customer Service Occupations
+
+                                   7211    Call centre agents/operators
+                                   7212    Customer care occupations
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   13
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+8                                          PROCESS, PLANT AND MACHINE OPERATIVES
+
+           81                              PROCESS, PLANT AND MACHINE OPERATIVES
+
+                           811             Process Operatives
+
+                                   8111    Food, drink and tobacco process operatives
+                                   8112    Glass and ceramics process operatives
+                                   8113    Textile process operatives
+                                   8114    Chemical and related process operatives
+                                   8115    Rubber process operatives
+                                   8116    Plastics process operatives
+                                   8117    Metal making and treating process operatives
+                                   8118    Electroplaters
+                                   8119    Process operatives n.e.c.
+
+                           812             Plant And Machine Operatives
+
+                                   8121    Paper and wood machine operatives
+                                   8122    Coal mine operatives
+                                   8123    Quarry workers and related operatives
+                                   8124    Energy plant operatives
+                                   8125    Metal working machine operatives
+                                   8126    Water and sewerage plant operatives
+                                   8129    Plant and machine operatives n.e.c.
+
+                           813             Assemblers And Routine Operatives
+
+                                   8131    Assemblers (electrical products)
+                                   8132    Assemblers (vehicles and metal goods)
+                                   8133    Routine inspectors and testers
+                                   8134    Weighers, graders, sorters
+                                   8135    Tyre, exhaust and windscreen fitters
+                                   8136    Clothing cutters
+                                   8137    Sewing machinists
+                                   8138    Routine laboratory testers
+                                   8139    Assemblers and routine operatives n.e.c.
+
+                           814             Construction Operatives
+
+                                   8141    Scaffolders, stagers, riggers
+                                   8142    Road construction operatives
+                                   8143    Rail construction and maintenance operatives
+                                   8149    Construction operatives n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   14
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+           82                              TRANSPORT AND MOBILE MACHINE DRIVERS AND OPERATIVES
+
+                           821             Transport Drivers And Operatives
+
+                                   8211    Heavy goods vehicle drivers
+                                   8212    Van drivers
+                                   8213    Bus and coach drivers
+                                   8214    Taxi, cab drivers and chauffeurs
+                                   8215    Driving instructors
+                                   8216    Rail transport operatives
+                                   8217    Seafarers (merchant navy); barge, lighter and boat operatives
+                                   8218    Air transport operatives
+                                   8219    Transport operatives n.e.c.
+
+                           822             Mobile Machine Drivers And Operatives
+
+                                   8221    Crane drivers
+                                   8222    Fork-lift truck drivers
+                                   8223    Agricultural machinery drivers
+                                   8229    Mobile machine drivers and operatives n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   15
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+9                                          ELEMENTARY OCCUPATIONS
+
+           91                              ELEMENTARY TRADES, PLANT AND STORAGE RELATED OCCUPATIONS
+
+                           911             Elementary Agricultural Occupations
+
+                                   9111    Farm workers
+                                   9112    Forestry workers
+                                   9119    Fishing and agriculture related occupations n.e.c.
+
+                           912             Elementary Construction Occupations
+
+                                   9121    Labourers in building and woodworking trades
+                                   9129    Labourers in other construction trades n.e.c.
+
+                           913             Elementary Process Plant Occupations
+
+                                   9131    Labourers in foundries
+                                   9132    Industrial cleaning process occupations
+                                   9133    Printing machine minders and assistants
+                                   9134    Packers, bottlers, canners, fillers
+                                   9139    Labourers in process and plant operations n.e.c.
+
+                           914             Elementary Goods Storage Occupations
+
+                                   9141    Stevedores, dockers and slingers
+                                   9149    Other goods handling and storage occupations n.e.c.
+
+           92                              ELEMENTARY ADMINISTRATION AND SERVICE OCCUPATIONS
+
+                           921             Elementary Administration Occupations
+
+                                   9211    Postal workers, mail sorters, messengers, couriers
+                                   9219    Elementary office occupations n.e.c.
+
+                           922             Elementary Personal Services Occupations
+
+                                   9221    Hospital porters
+                                   9222    Hotel porters
+                                   9223    Kitchen and catering assistants
+                                   9224    Waiters, Waitresses
+                                   9225    Bar staff
+                                   9226    Leisure and theme park attendants
+                                   9229    Elementary personal services occupations n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   16
+Major      Sub-Major       Minor   Unit    Group Title
+Group      Group           Group   Group
+
+                           923             Elementary Cleaning Occupations
+
+                                   9231    Window cleaners
+                                   9232    Road sweepers
+                                   9233    Cleaners, domestics
+                                   9234    Launderers, dry cleaners, pressers
+                                   9235    Refuse and salvage occupations
+                                   9239    Elementary cleaning occupations n.e.c.
+
+                           924             Elementary Security Occupations
+
+                                   9241    Security guards and related occupations
+                                   9242    Traffic wardens
+                                   9243    School crossing patrol attendants
+                                   9244    School mid-day assistants
+                                   9245    Car park attendants
+                                   9249    Elementary security occupations n.e.c.
+
+                           925             Elementary Sales Occupations
+
+                                   9251    Shelf fillers
+                                   9259    Elementary sales occupations n.e.c.
+
+
+
+
+user guides 2000\ug 20.2                       © Standard Occupational Classification 2000 Volume 1   June 2000   17
+
