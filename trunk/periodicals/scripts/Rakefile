@@ -62,6 +62,7 @@ end
 task :dependencies do
   sh %{sudo gem install pho}
   sh %{sudo gem install parseexcel}
+  sh %{sudo gem install fastercsv}
 end
 
 task :init do
