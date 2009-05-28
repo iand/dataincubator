@@ -60,5 +60,25 @@ module Util
     return slug.gsub("&","and").gsub(/[\s]/,'-').gsub(/[^A-Za-z\d-]/,'').gsub("--","-")
   end
 
+  def Util.lookupSubjectHeading(subject_heading)
+    require 'net/http'
+    require 'uri'
+
+    location = "/authorities/label/" << subject_heading    
+    response = nil
+        Net::HTTP.start('id.loc.gov', 80) {|http|
+          response = http.head(location)
+        }
+        
+        
+        
+        if response.instance_of? Net::HTTPFound
+          location_uri = response['Location']
+          print "     -> found location: #{location_uri} \n"
+          return location_uri
+        end
     
+        return false
+    
+  end
 end
