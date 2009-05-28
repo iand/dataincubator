@@ -2,7 +2,8 @@ module Util
   
   def Util.rdf_root
     return "<rdf:RDF     
-    xmlns:dc=\"http://purl.org/dc/terms/\"\n\
+    xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n\
+    xmlns:dct=\"http://purl.org/dc/terms/\"\n\
     xmlns:rdfs=\"http://www.w3.org/2000/01/rdf-schema#\"\n\
     xmlns:foaf=\"http://xmlns.com/foaf/0.1/\"\n\
     xmlns:owl=\"http://www.w3.org/2002/07/owl#\"\n\
