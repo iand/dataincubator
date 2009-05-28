@@ -1,0 +1,142 @@
+require 'rubygems'
+require 'rake'
+require 'rake/clean'
+require 'pho'
+
+BASE_DIR="data"
+
+PUBMED_DIR="#{BASE_DIR}/pubmed"
+PUBMED_CACHE_DIR="#{PUBMED_DIR}/cache"
+PUBMED_DATA_DIR="#{PUBMED_DIR}/data"
+
+HIGHWIRE_DIR="#{BASE_DIR}/highwire"
+HIGHWIRE_CACHE_DIR="#{HIGHWIRE_DIR}/cache"
+HIGHWIRE_DATA_DIR="#{HIGHWIRE_DIR}/data"
+
+CROSSREF_DIR="#{BASE_DIR}/crossref"
+CROSSREF_CACHE_DIR="#{CROSSREF_DIR}/cache"
+CROSSREF_DATA_DIR="#{CROSSREF_DIR}/data"
+VOID_DATA_DIR="etc"
+
+#TODO: make this neater
+CLEAN.include ["#{PUBMED_DATA_DIR}/*.rdf", "#{PUBMED_DATA_DIR}/*.ok", "#{PUBMED_DATA_DIR}/*.fail"]
+CLEAN.include ["#{HIGHWIRE_DATA_DIR}/*.rdf", "#{HIGHWIRE_DATA_DIR}/*.ok", "#{HIGHWIRE_DATA_DIR}/*.fail"]
+CLEAN.include ["#{CROSSREF_DATA_DIR}/*.rdf", "#{CROSSREF_DATA_DIR}/*.ok", "#{CROSSREF_DATA_DIR}/*.fail"]
+
+STORENAME = "http://api.talis.com/stores/periodicals"
+#if ENV["TALIS_STORE"]
+#  STORENAME = ENV["TALIS_STORE"]
+#end
+#if !STORENAME.start_with?("http")
+#  STORENAME = "http://api.talis.com/stores/#{storename}"  
+#end
+
+  
+STORE = Pho::Store.new(STORENAME, ENV["TALIS_USER"], ENV["TALIS_PASS"])
+
+#Helper function to create data dirs
+def mkdirs(base)
+  if !File.exists?(BASE_DIR)
+    Dir.mkdir(BASE_DIR)
+  end  
+  if !File.exists?(base)
+    Dir.mkdir(base)
+  end
+  if !File.exists?("#{base}/cache")
+    Dir.mkdir("#{base}/cache")
+  end
+  if !File.exists?("#{base}/data")
+    Dir.mkdir("#{base}/data")
+  end
+end
+
+#Helper function to upload collections of rdf
+def upload(base)
+  collection = Pho::RDFCollection.new(STORE, base)
+  puts "Uploading from to #{STORENAME} from #{base}"
+  collection.store()
+  puts collection.summary()    
+end
+
+#Install required rubygems
+task :dependencies do
+  sh %{sudo gem install pho}
+  sh %{sudo gem install parseexcel}
+  sh %{sudo gem install fastercsv}
+end
+
+task :init do
+  mkdirs(CROSSREF_DIR)      
+  mkdirs(PUBMED_DIR)      
+  mkdirs(HIGHWIRE_DIR)
+end
+
+#Pubmed Tasks
+
+#Download journal list
+task :cache_pubmed do
+  sh %{ curl -s ftp://ftp.ncbi.nih.gov/pubmed/J_Medline.txt > #{PUBMED_CACHE_DIR}/J_Medline.txt }
+end
+
+#Convert journal list
+task :convert_pubmed do
+  sh %{ruby bin/convert-pubmed-journals.rb #{PUBMED_CACHE_DIR}/J_Medline.txt #{PUBMED_DATA_DIR} }  
+end
+
+task :pubmed => [:init, :cache_pubmed, :convert_pubmed]
+
+#Upload pubmed data
+task :upload_pubmed do
+  upload(PUBMED_DATA_DIR)
+end
+
+# Highwire
+
+#Download journal list
+task :cache_highwire do
+  sh %{ curl -s http://highwire.stanford.edu/institutions/AtoZList.xls > #{HIGHWIRE_CACHE_DIR}/AtoZList.xls }  
+end
+
+#Convert journal list
+task :convert_highwire do
+  sh %{ruby bin/convert-highwire-journals.rb #{HIGHWIRE_CACHE_DIR}/AtoZList.xls #{HIGHWIRE_DATA_DIR} }  
+end
+
+task :highwire => [:init, :cache_highwire, :convert_highwire]
+
+#Upload highwire data
+task :upload_highwire do
+  upload(HIGHWIRE_DATA_DIR)
+end
+
+# Crossref
+
+#Download journal list
+task :cache_crossref do
+  sh %{ curl -s http://ftp.crossref.org/titlelist/titleFile.csv > #{CROSSREF_CACHE_DIR}/titleFile.csv }  
+  sh %{ iconv --from-code=ISO-8859-1 --to-code=UTF-8 #{CROSSREF_CACHE_DIR}/titleFile.csv > #{CROSSREF_CACHE_DIR}/titleFile-utf8.csv }
+  sh %{ perl -pi -e "s/\\\\\\\\\\\"/'/g" #{CROSSREF_CACHE_DIR}/titleFile-utf8.csv }
+end
+
+#Convert journal list
+task :convert_crossref do
+  sh %{ruby bin/convert-crossref-journals.rb #{CROSSREF_CACHE_DIR}/titleFile-utf8.csv #{CROSSREF_DATA_DIR} }  
+end
+
+task :crossref => [:init, :cache_crossref, :convert_crossref]
+
+#Upload highwire data
+task :upload_crossref do
+  upload(CROSSREF_DATA_DIR)
+end
+
+task :upload_void do
+  upload(VOID_DATA_DIR)
+end
+
+
+#Convert all data
+task :journals => [:pubmed, :highwire, :crossref]
+
+#Download, convert and upload all data
+task :upload => [:journals, :upload_highwire, :upload_pubmed, :upload_crossref, :upload_void]
