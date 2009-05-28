@@ -52,7 +52,7 @@ module Util
   
   
   def Util.makeSlug(s) 
-    slug = s.downcase
+    slug = s.downcase.strip
     removelist = ["a", "an", "as", "at", "before", "but", "by", "for","from","is", "in", "into", "like", "of", "off", "on", "onto","per","since", "than", "the", "this", "that", "to", "up", "via","with"];
     removelist.each do |word|
        slug = slug.gsub(" #{ word } ",' ')
