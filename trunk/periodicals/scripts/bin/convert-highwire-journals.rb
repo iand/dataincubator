@@ -37,5 +37,8 @@ end
 out.write Util.rdf_end
 out.close()
 
+p "Processed #{i} results > highwire-#{filenum}.rdf"
+p "Total #{i} results, #{filenum} files created"
+
 
   

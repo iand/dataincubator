@@ -33,3 +33,6 @@ end
   
 out.write Util.rdf_end
 out.close()
+
+p "Total #{count} results"
+
