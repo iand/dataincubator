@@ -35,7 +35,7 @@ class CrossRefJournal
     if fields["subjects"] != nil && fields["subjects"] != "Unknown" && fields["subjects"] != ""
       fields["subjects"].split("; ").each do |subject|
         print " -> processing subject: #{subject} \n" 
-        subjectUri = Util.lookupSubjectHeading(Util.escape_uri(subject.strip));
+        subjectUri = Util.lookup_subject_heading(Util.escape_uri(subject.strip));
         #subjectUri=false
         if subjectUri == false
           rdf << " <dc:subject>#{ Util.escape_xml( subject.strip ) }</dc:subject>\n"

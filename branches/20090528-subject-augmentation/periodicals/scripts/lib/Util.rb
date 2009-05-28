@@ -67,7 +67,7 @@ module Util
   # or returns a 302 with Location header that points to the uri for the subject.
   # This method therefore returns the uri for the subject if it is matched, or returns
   # false.
-  def Util.lookupSubjectHeading(subject_heading)
+  def Util.lookup_subject_heading(subject_heading)
     require 'net/http'
     require 'uri'
 
