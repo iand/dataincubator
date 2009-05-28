@@ -1,0 +1,38 @@
+2009-05-04 (2)
+Added foaf:isPrimaryTopicOf links to http://lccn.loc.gov/
+Added foaf:isPrimaryTopicOf links to http://www.librarything.com/work/ for ThingISBN work IDs
+
+2009-05-04
+Refined formatting of series labels
+Refined construction of work and manifestation prefLabel
+
+2009-05-03
+Removed dct:isPartOf due to misunderstanding of dataset linking
+Added lookup of subjects in LCSH 
+Crudely split editions into works and manifestations
+Added lookup of thingisbn work id for work grouping
+
+2009-04-29 (2)
+Removed generated http://ol.dataincubator/org/isbn/{num} resources
+Removed http://ol.dataincubator/org/oclc/{num} resources
+Introduced mapping database of identifiers
+Introduced persistent mapping of OL keys to dataincubator URIs
+Added mo:wikipedia links to wikipedia
+Added owl:sameAs links for dbpedia based on wikipedia keys
+Removed ov:sortLabel since algorithm based on title_prefix was incorrect
+Changed value of dct:language to a literal
+Generate void automatically
+Link every resource to dataset using dct:isPartOf
+Removed irrelevant rdf:type on open library URIs
+Fixed incorrect BIO namespace
+
+
+2009-04-29 (1)
+Added dct:creator to link item to author
+Added dct:contributor to link item to contributor
+Mapped physical_format to dct:medium
+Replaced dc:subject with dct:subject
+Replaced dc:publisher with dct:publisher
+Replaced dc:title with dct:title
+Replaced rdfs:label with dct:title for "title" mapping
+Mapped title to foaf:title if item is an author

@@ -1,0 +1,26 @@
+Options MultiViews
+Options +FollowSymLinks
+Options +Indexes
+IndexIgnore CVS
+
+AddType image/svg+xml svg
+AddType image/svg+xml svgz
+AddType application/rss+xml rss
+# Use qs=0.9 so that this has lower priority than html in content neg.
+AddType application/rdf+xml;charset=UTF-8;qs=0.9 rdf
+AddType text/html;charset=UTF-8;qs=1 html
+AddType application/xhtml+xml;charset=UTF-8;qs=0.8 xhtml
+AddType text/plain;qs=0.6 asc
+
+AddEncoding gzip svgz
+DirectoryIndex index.html index.rdf
+
+
+RewriteEngine On
+RewriteBase /
+
+# Canonical hostname
+RewriteCond %{HTTP_HOST}   !^dataincubator\.org [NC]
+RewriteCond %{HTTP_HOST}   !^dataincubator\.org\.local [NC]
+RewriteCond %{HTTP_HOST}   !^$
+RewriteRule ^(.*)         http://dataincubator\.org/$1 [L,R]

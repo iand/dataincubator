@@ -1,0 +1,128 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:frm="http://schemas.talis.com/2006/frame/schema#">
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1">
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#type"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#title"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#canonicaluri"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#date"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#preflabel"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#name"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#lcclassification"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#comment"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#subject"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#oclcnum"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#publishcountry"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#lccn"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#issued"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#pagination"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#numberofpages"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#label"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#subtitle"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#bystatement"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#publishplace"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/ons/config/fpmaps/1#publisher"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#type">
+    <frm:property rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"/>
+    <frm:name>type</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#title">
+    <frm:property rdf:resource="http://purl.org/dc/elements/1.1/title"/>
+    <frm:name>title</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#canonicaluri">
+    <frm:property rdf:resource="http://open.vocab.org/terms/canonicalUri"/>
+    <frm:name>canonicaluri</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#date">
+    <frm:property rdf:resource="http://vocab.org/bio/0.1/date"/>
+    <frm:name>date</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#preflabel">
+    <frm:property rdf:resource="http://www.w3.org/2004/02/skos/core#prefLabel"/>
+    <frm:name>preflabel</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#name">
+    <frm:property rdf:resource="http://xmlns.com/foaf/0.1/name"/>
+    <frm:name>name</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#lcclassification">
+    <frm:property rdf:resource="http://olrdf.appspot.com/key/lc_classification"/>
+    <frm:name>lcclassification</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#comment">
+    <frm:property rdf:resource="http://www.w3.org/2000/01/rdf-schema#comment"/>
+    <frm:name>comment</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#subject">
+    <frm:property rdf:resource="http://purl.org/dc/elements/1.1/subject"/>
+    <frm:name>subject</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#oclcnum">
+    <frm:property rdf:resource="http://purl.org/ontology/bibo/oclcnum"/>
+    <frm:name>oclcnum</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#publishcountry">
+    <frm:property rdf:resource="http://olrdf.appspot.com/key/publish_country"/>
+    <frm:name>publishcountry</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#lccn">
+    <frm:property rdf:resource="http://purl.org/ontology/bibo/lccn"/>
+    <frm:name>lccn</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#issued">
+    <frm:property rdf:resource="http://purl.org/dc/terms/issued"/>
+    <frm:name>issued</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#pagination">
+    <frm:property rdf:resource="http://olrdf.appspot.com/key/pagination"/>
+    <frm:name>pagination</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#numberofpages">
+    <frm:property rdf:resource="http://open.vocab.org/terms/numberOfPages"/>
+    <frm:name>numberofpages</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#label">
+    <frm:property rdf:resource="http://www.w3.org/2000/01/rdf-schema#label"/>
+    <frm:name>label</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#subtitle">
+    <frm:property rdf:resource="http://open.vocab.org/terms/subtitle"/>
+    <frm:name>subtitle</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#bystatement">
+    <frm:property rdf:resource="http://olrdf.appspot.com/key/by_statement"/>
+    <frm:name>bystatement</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#publishplace">
+    <frm:property rdf:resource="http://olrdf.appspot.com/key/publish_place"/>
+    <frm:name>publishplace</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/ons/config/fpmaps/1#publisher">
+    <frm:property rdf:resource="http://purl.org/dc/elements/1.1/publisher"/>
+    <frm:name>publisher</frm:name>
+  </rdf:Description>
+
+</rdf:RDF>
