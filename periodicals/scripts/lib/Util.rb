@@ -66,19 +66,16 @@ module Util
 
     location = "/authorities/label/" << subject_heading    
     response = nil
-        Net::HTTP.start('id.loc.gov', 80) {|http|
-          response = http.head(location)
-        }
-        
-        
-        
-        if response.instance_of? Net::HTTPFound
-          location_uri = response['Location']
-          print "     -> found location: #{location_uri} \n"
-          return location_uri
-        end
+    Net::HTTP.start('id.loc.gov', 80) {|http|
+      response = http.head(location)
+    }
+                
+    if response.instance_of? Net::HTTPFound
+      location_uri = response['Location']
+      print "     -> found location: #{location_uri} \n"
+      return location_uri
+    end
     
-        return false
-    
+    return false
   end
 end
