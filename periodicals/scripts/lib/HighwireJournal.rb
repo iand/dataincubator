@@ -54,8 +54,6 @@ class HighwireJournal
     if publisher
       rdf << "<foaf:Organization rdf:about=\"#{ publisher_uri() }\">\n"
       rdf << "  <foaf:name>#{ Util.escape_xml( fields["publisher"] ) }</foaf:name>\n";
-      # rights holder of the journal
-      rdf << "  <dc:rightsHolder rdf:resource=\"#{ uri() }\" />\n"
       rdf << "</foaf:Organization>\n"
       rdf << "<foaf:Group rdf:about=\"http://periodicals.dataincubator.org/groups/hirewire-publishers\">\n"
       rdf << "  <foaf:name>Highwire</foaf:name>\n"

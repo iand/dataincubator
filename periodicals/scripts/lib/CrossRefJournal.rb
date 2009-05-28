@@ -31,6 +31,12 @@ class CrossRefJournal
       rdf << " <dc:publisher rdf:resource=\"#{ publisher_uri() }\"/>\n"
     end
 
+    if fields["subjects"] != nil && fields["subjects"] != "Unknown" && fields["subjects"] != ""
+      fields["subjects"].split("; ").each do |subject| 
+        rdf << " <dc:subject>#{ Util.escape_xml( subject.strip ) }</dc:subject>\n"
+      end
+    end
+        
     if fields["ISSN"] != nil && fields["ISSN"] != "Unknown" && fields["ISSN"] != ""
       issn = true 
       rdf << " <bibo:issn>#{fields["ISSN"]}</bibo:issn>\n"
@@ -54,8 +60,6 @@ class CrossRefJournal
     if publisher
       rdf << "<foaf:Organization rdf:about=\"#{ publisher_uri() }\">\n"
       rdf << "  <foaf:name>#{ Util.escape_xml( fields["publisher"] ) }</foaf:name>\n";
-      # rights holder of the journal
-      rdf << "  <dc:rightsHolder rdf:resource=\"#{ uri() }\" />\n"
       rdf << "</foaf:Organization>\n"
       rdf << "<foaf:Group rdf:about=\"http://periodicals.dataincubator.org/groups/crossref-publishers\">\n"
       rdf << "  <foaf:name>CrossRef</foaf:name>\n"
