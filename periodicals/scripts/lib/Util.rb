@@ -60,6 +60,13 @@ module Util
     return slug.gsub("&","and").gsub(/[\s]/,'-').gsub(/[^A-Za-z\d-]/,'').gsub("--","-")
   end
 
+
+  # Given a subject heading will make a request
+  # to http://id.loc.gov/authorities/label/<subject heading>
+  # this service either returns a 404 if the subject heading could not be matched
+  # or returns a 302 with Location header that points to the uri for the subject.
+  # This method therefore returns the uri for the subject if it is matched, or returns
+  # false.
   def Util.lookupSubjectHeading(subject_heading)
     require 'net/http'
     require 'uri'
