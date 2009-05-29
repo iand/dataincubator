@@ -26,11 +26,11 @@ class HighwireJournal
     issn = false
     eissn = false
     publisher = false
-    rdf << " <dc:title>#{ Util.escape_xml( fields["title"] ) }</dc:title>\n"
+    rdf << " <dct:title>#{ Util.escape_xml( fields["title"] ) }</dct:title>\n"
                 
     if fields["publisher"] != nil && fields["publisher"] != "Unknown" && fields["publisher"] != ""
       publisher = true      
-      rdf << " <dc:publisher rdf:resource=\"#{ publisher_uri() }\"/>\n"
+      rdf << " <dct:publisher rdf:resource=\"#{ publisher_uri() }\"/>\n"
     end
         
     if fields["ISSN"] != nil && fields["ISSN"] != "Unknown"
