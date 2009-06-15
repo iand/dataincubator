@@ -57,5 +57,5 @@ for line in f:
 
 f.close()
 
-g.add((rdflib.URIRef(BASE_URI), void["exampleResource"], rdflib.URIRef(BASE_URI + "soc2000/")))
+g.add((rdflib.URIRef(BASE_URI), void["exampleResource"], rdflib.URIRef(BASE_URI + "soctitles/")))
 g.flush()
