@@ -19,7 +19,7 @@ function pretty_link($uri) {
         <meta http-equiv="content-type" content="text/html; charset=utf-8" />
         <meta name="description" content="<?php e($this->get_description($resource_uri));?>" />
 
-        <title><?php e($this->get_title($resource_uri));?></title>
+        <title><?php e($this->get_title($resource_uri));?> (Data Incubator)</title>
 <?php
   $formats = $this->desc->get_resource_triple_values($this->desc->get_uri(), 'http://purl.org/dc/terms/hasFormat');
   foreach ($formats as $format_uri) {
@@ -91,29 +91,27 @@ td.odd, th.odd {background-color: #f0f0f0;}
 #content .dt a {color: #666;}
         
         </style>
-        
     </head>
     <body>
+      <div id="header">
+          <h1><?php echo(htmlspecialchars($this->get_title($resource_uri))) ?></h1>
+          <h2><a href="<?php echo(htmlspecialchars($resource_uri));?>" rel="bookmark"><?php echo(htmlspecialchars($resource_uri));?></a></h2>
+      </div>
 
-        <div id="header">
-            <h1><?php echo(htmlspecialchars($this->get_title($resource_uri))) ?></h1>
-            <h2><a href="<?php echo(htmlspecialchars($resource_uri));?>" rel="bookmark"><?php echo(htmlspecialchars($resource_uri));?></a></h2>
-        </div>
-
-        <div id="menu">
-    <ul>
-    <?php
-      $formats = $this->desc->get_resource_triple_values($this->desc->get_uri(), 'http://purl.org/dc/terms/hasFormat');
-      $done_first = false;
-      foreach ($formats as $format_uri) {
-        $media_type = $this->desc->get_first_literal($format_uri, 'http://purl.org/dc/elements/1.1/format');  
-        $label = $this->desc->get_first_literal($format_uri, RDFS_LABEL, $media_type);  
+      <div id="menu">
+        <ul>
+        <?php
+          $formats = $this->desc->get_resource_triple_values($this->desc->get_uri(), 'http://purl.org/dc/terms/hasFormat');
+          $done_first = false;
+          foreach ($formats as $format_uri) {
+            $media_type = $this->desc->get_first_literal($format_uri, 'http://purl.org/dc/elements/1.1/format');  
+            $label = $this->desc->get_first_literal($format_uri, RDFS_LABEL, $media_type);  
+            
+            echo '<li><a href="' . htmlspecialchars($format_uri) . '" rel="alternate" title="' . htmlspecialchars($label) . ' version of this document" type="' . htmlspecialchars($media_type) . '">' . htmlspecialchars($label) . '</a></li>' . "\n";
+            $done_first = true;
+          }
         
-        echo '<li><a href="' . htmlspecialchars($format_uri) . '" rel="alternate" title="' . htmlspecialchars($label) . ' version of this document" type="' . htmlspecialchars($media_type) . '">' . htmlspecialchars($label) . '</a></li>' . "\n";
-        $done_first = true;
-      }
-    
-    ?>
-    </ul>
-            </div>
+        ?>
+        </ul>
+      </div>
 

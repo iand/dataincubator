@@ -25,6 +25,15 @@ bio = rdflib.Namespace("http://purl.org/vocab/bio/0.1/")
 ov = rdflib.Namespace("http://open.vocab.org/terms/")
 mo = rdflib.Namespace("http://purl.org/ontology/mo/")
 void = rdflib.Namespace("http://rdfs.org/ns/void#")
+rd = rdflib.Namespace("http://rdvocab.info/Elements/")
+
+def slugify(inStr):
+  removelist = ["a", "an", "as", "at", "before", "but", "by", "for","from","is", "in", "into", "like", "of", "off", "on", "onto","per","since", "than", "the", "this", "that", "to", "up", "via","with"];
+  for a in removelist:
+      aslug = re.sub(r'\b'+a+r'\b','',inStr)
+  aslug = re.sub('[^\w\s-]', '', aslug).strip().lower()
+  aslug = re.sub('\s+', '-', aslug)
+  return aslug
 
 class Converter:
    
@@ -52,6 +61,7 @@ class Converter:
     self.graph.bind("bio", bio)
     self.graph.bind("ov", ov)
     self.graph.bind("mo", mo)
+    self.graph.bind("rd", rd)
     
 
   def convert(self, indata):
@@ -183,7 +193,16 @@ class Converter:
         i = 1
         for c in v:
           if isinstance(c, (str, unicode)):
-            person_resource = rdflib.URIRef(self.make_uri("people"))
+            if re.search('[0-9]{4}', c):
+              # possibly an authority controlled name
+              item_uri = BASE_URI + "/people/" + slugify(c)
+              print "  Cont: Using person URI %s" % item_uri
+            else:
+              item_uri = self.make_uri("people")
+
+
+
+            person_resource = rdflib.URIRef(item_uri)
             self.graph.add((subj, dct["contributor"], person_resource))
             self.graph.add((group_resource, rdf["_" + str(i)], person_resource))
             self.graph.add((person_resource, rdf["type"], foaf["Person"]))
@@ -277,7 +296,7 @@ class Converter:
           self.graph.add((subj, dct["publisher"], rdflib.Literal(p)))
       elif k == "publish_places":
         for p in v:
-          self.graph.add((subj, ol["publish_place"], rdflib.Literal(p)))
+          self.graph.add((subj, rd["placeOfPublication"], rdflib.Literal(p)))
       elif k == "pagination":
         self.graph.add((subj, ol["pagination"], rdflib.Literal(v)))
       elif k == "lccn":
@@ -430,11 +449,28 @@ class Converter:
 
 
   def parse_person(self, data ):
-    item_uri = self.get_person_uri(data["key"])
+    if data.has_key("name") and re.search('[0-9][0-9][0-9][0-9]', data['name']):
+      # possibly an authority controlled name
+      item_uri = BASE_URI + "/people/" + slugify(data['name'])
+      print "  Using person URI %s" % item_uri
+    else:
+      item_uri = BASE_URI + "/people/" + slugify(data['key'])
+
     subj = rdflib.URIRef(item_uri)
     
     skip = ["key", "type", "properties", "kind", "latest_revision", "id", "last_modified", "created", "revision", "uri_descriptions", "genres", "subject_place", "subject_time", "work_title", "work_titles", "isbn_invalid", "location", "scan_on_demand"]
     self.graph.add((subj, rdf["type"], foaf["Person"]))
+
+    if data.has_key("name"):
+      name = data["name"]
+      if data.has_key("title"):    
+        if not data["title"].endswith(" "):
+          name = data["title"] + " " + name
+        else:
+          name = data["title"] + title
+      self.graph.add((subj, skos["prefLabel"], rdflib.Literal(name)))
+
+
 
     # Connect the item resource to the OpenLibrary document describing it
     ol_document = rdflib.URIRef("http://openlibrary.org" + data["key"])
@@ -616,8 +652,9 @@ if __name__ == "__main__":
   void_graph.add((rdflib.URIRef("http://iandavis.com/id/me"), rdfs["label"], rdflib.Literal("Ian Davis")))
   void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/works/59650")))
   void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/works/6102")))
-  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/49015")))
-  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/people/6889")))
+  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/151729")))
+  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/items/81131")))
+  void_graph.add((dataset_resource, void["exampleResource"], rdflib.URIRef(BASE_URI + "/people/24667")))
   void_graph.add((dataset_resource, void["sparqlEndpoint"], rdflib.URIRef("http://api.talis.com/stores/openlibrary/services/sparql")))
   void_graph.add((dataset_resource, void["uriLookupEndpoint"], rdflib.URIRef("http://api.talis.com/stores/openlibrary/meta?about=")))
   void_graph.add((dataset_resource, void["uriRegexPattern"], rdflib.Literal(BASE_URI + "/.+")))

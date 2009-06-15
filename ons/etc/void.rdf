@@ -15,7 +15,7 @@
   <void:Dataset rdf:about="http://ons.dataincubator.org/">
 
     <dct:title>Office for National Statistics Data</dct:title>
-    <dct:description>A conversion of the OpenLibrary JSON dumps. Currently this is only a sample of 200,000 records (about 1% of the total) which corresponds to about 6.8 million triples.</dct:description>
+    <dct:description>A conversion of taxonomies and data from the UK Office for National Statistics</dct:description>
     <dct:rights>The data and text in this dataset scheme is under Crown Copyright. This conversion to linked data is conducted under click-use licence number C2009001009 held by Ian Davis</dct:rights>
     <void:uriRegexPattern>http://ons.dataincubator.org/.+</void:uriRegexPattern>
     <dct:source rdf:resource="http://www.statistics.gov.uk/"/>
