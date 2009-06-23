@@ -1,5 +1,7 @@
 module Util
   
+   @@subject_headings_cache = {}
+  
   def Util.rdf_root
     return "<rdf:RDF     
     xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n\
@@ -72,18 +74,27 @@ module Util
     require 'net/http'
     require 'uri'
 
-    location = "/authorities/label/" << subject_heading    
-    response = nil
-    Net::HTTP.start('id.loc.gov', 80) {|http|
-      response = http.head(location)
-    }
+
+    unless @@subject_headings_cache.has_key?(subject_heading)
+      print "     -> performing live lookup \n"
+      location = "/authorities/label/" << subject_heading    
+      response = nil
+
+      Net::HTTP.start('id.loc.gov', 80) {|http|
+        response = http.head(location)
+      }
                 
-    if response.instance_of? Net::HTTPFound
-      location_uri = response['Location']
-      print "     -> found location: #{location_uri} \n"
-      return location_uri
+      if response.instance_of? Net::HTTPFound
+        location_uri = response['Location']
+        print "     -> found location: #{location_uri} caching ...\n"
+        @@subject_headings_cache[subject_heading] = location_uri
+      else
+        print "     -> location not found, caching ...\n"
+        @@subject_headings_cache[subject_heading] = false        
+      end      
     end
     
-    return false
+    return @@subject_headings_cache[subject_heading]
   end
+  
 end
