@@ -36,8 +36,8 @@ class CrossRefJournal
       fields["subjects"].split("; ").each do |subject|
         print " -> processing subject: #{subject} \n" 
         rdf << " <dc:subject>#{ Util.escape_xml( subject.strip ) }</dc:subject>\n"
-        subjectUri = Util.lookup_subject_heading(Util.escape_uri(subject.strip));
-        subjectUri=false
+        subjectUri = Util.lookup_subject_heading(subject.strip);
+                
         if subjectUri != false
           rdf << " <dct:subject rdf:resource\"#{subjectUri}\"/>\n"
         end
