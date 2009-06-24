@@ -39,7 +39,7 @@ class CrossRefJournal
         subjectUri = Util.lookup_subject_heading(subject.strip);
                 
         if subjectUri != false
-          rdf << " <dct:subject rdf:resource\"#{subjectUri}\"/>\n"
+          rdf << " <dct:subject rdf:resource=\"#{subjectUri}\"/>\n"
         end
         
         
