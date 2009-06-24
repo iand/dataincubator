@@ -19,21 +19,30 @@ class CrossRefJournal
   end 
         
   def to_rdf(stream)
+    print "* Processing #{uri()} \n"
     rdf = "<bibo:Journal rdf:about=\"#{uri()}\">\n"
     issn = false
     eissn = false
     doi = false
     publisher = false
-    rdf << " <dc:title>#{ Util.escape_xml( fields["title"] ) }</dc:title>\n"
+    rdf << " <dct:title>#{ Util.escape_xml( fields["title"] ) }</dct:title>\n"
         
     if fields["publisher"] != nil && fields["publisher"] != "Unknown" && fields["publisher"] != ""
       publisher = true      
-      rdf << " <dc:publisher rdf:resource=\"#{ publisher_uri() }\"/>\n"
+      rdf << " <dct:publisher rdf:resource=\"#{ publisher_uri() }\"/>\n"
     end
 
     if fields["subjects"] != nil && fields["subjects"] != "Unknown" && fields["subjects"] != ""
-      fields["subjects"].split("; ").each do |subject| 
+      fields["subjects"].split("; ").each do |subject|
+        print " -> processing subject: #{subject} \n" 
         rdf << " <dc:subject>#{ Util.escape_xml( subject.strip ) }</dc:subject>\n"
+        subjectUri = Util.lookup_subject_heading(subject.strip);
+                
+        if subjectUri != false
+          rdf << " <dct:subject rdf:resource=\"#{subjectUri}\"/>\n"
+        end
+        
+        
       end
     end
         
