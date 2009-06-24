@@ -15,7 +15,7 @@ class PubmedJournal
 
   def to_rdf(stream)
     rdf = "<bibo:Journal rdf:about=\"#{uri()}\">\n"
-    rdf << " <dc:title>#{Util.escape_xml( fields["JournalTitle"] )}</dc:title>\n"
+    rdf << " <dct:title>#{Util.escape_xml( fields["JournalTitle"] )}</dct:title>\n"
     
     rdf << "<dc:identifier rdf:resource=\"info:pmid/#{fields["NlmId"]}\"/>\n"
     

@@ -50,6 +50,7 @@ def mkdirs(base)
   end
 end
 
+
 #Helper function to upload collections of rdf
 def upload(base)
   collection = Pho::RDFCollection.new(STORE, base)
