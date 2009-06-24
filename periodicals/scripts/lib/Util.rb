@@ -33,8 +33,8 @@ module Util
   def Util.escape_uri(s)
     escaped = s.dup
     
-    escaped.gsub!(" ", "%20")
-    escaped.gsub!("&", "&amp;")
+    escaped.gsub!(/\s/, "%20")
+    escaped.gsub!(/\&/, "&amp;")
             
     return escaped
     
@@ -74,10 +74,9 @@ module Util
     require 'net/http'
     require 'uri'
 
-
     unless @@subject_headings_cache.has_key?(subject_heading)
       print "     -> performing live lookup \n"
-      location = "/authorities/label/" << subject_heading    
+      location = "/authorities/label/" + Util.escape_uri(subject_heading)    
       response = nil
 
       Net::HTTP.start('id.loc.gov', 80) {|http|
