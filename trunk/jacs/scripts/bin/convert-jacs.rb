@@ -9,6 +9,8 @@ filenum = 1
 out = File.new( File.join( ARGV[1], "jacs-#{filenum}.rdf" ), "w")
 out.write Util.rdf_root  
 
+out.write Util.skos_taxonomy_scheme
+
 reader = FasterCSV.open(ARGV[0], 'r')
  
 i = 0

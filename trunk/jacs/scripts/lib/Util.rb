@@ -14,6 +14,13 @@ module Util
     xmlns:bibo=\"http://purl.org/ontology/bibo/\">\n\n"  
   end
   
+  
+  def Util.skos_taxonomy_scheme
+     return "\n<skos:ConceptScheme rdf:about=\"http://jacs.dataincubator.org/\">\n\
+       <dc:title xml:lang=\"en\">Joint Academic Coding System</dc:title>
+     </skos:ConceptScheme>\n\n"
+  end
+  
   def Util.rdf_end
     return "\n\n</rdf:RDF>"  
   end 

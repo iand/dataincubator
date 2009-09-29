@@ -87,6 +87,8 @@ class JacsCode
     label = fields["subject"]
     
     rdf << " <skos:prefLabel>#{ Util.escape_xml( label.strip ) }</skos:prefLabel>\n"
+    rdf << " <skos:inScheme rdf:resource=\"http://jacs.dataincubator.org/\" />\n"
+    
     
     if fields["description"] != nil && fields["description"] != ""
       description = fields["description"]
@@ -103,6 +105,10 @@ class JacsCode
       rdf << "<skos:Concept rdf:about=\"#{parent_uri}\">\n"
       rdf << " <skos:narrower rdf:resource=\"#{concept_uri}\" />\n"    
       rdf << "</skos:Concept>\n"
+    else
+      rdf << "<skos:ConceptScheme rdf:about=\"http://jacs.dataincubator.org/\">\n"
+      rdf << " <skos:hasTopConcept rdf:resource=\"#{concept_uri}\" />\n"          
+      rdf << "</skos:ConceptScheme>\n"
     end
     
     
