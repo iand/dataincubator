@@ -41,6 +41,9 @@ def mkdirs(base)
   end
 end
 
+task :clear_store do
+  STORE.reset
+end
 
 #Helper function to upload collections of rdf
 def upload(base)
@@ -78,7 +81,7 @@ end
 
 task :jacs => [:init, :cache_jacs, :convert_jacs]
 
-#Upload highwire data
+#Upload jacs data
 task :upload_jacs do
   upload(JACS_DATA_DIR)
 end

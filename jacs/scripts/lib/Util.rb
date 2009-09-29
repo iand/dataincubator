@@ -10,7 +10,7 @@ module Util
     xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\n\
     xmlns:xsd=\"http://www.w3.org/2001/XMLSchema#\"\n\
     xmlns:void=\"http://rdfs.org/ns/void#\"\n\
-    xmlns:skos=\"http://www.w3.org/2004/02/skos/core\"\n\
+    xmlns:skos=\"http://www.w3.org/2004/02/skos/core#\"\n\
     xmlns:bibo=\"http://purl.org/ontology/bibo/\">\n\n"  
   end
   

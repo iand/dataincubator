@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:foaf="http://xmlns.com/foaf/0.1/"
+  xmlns:dct="http://purl.org/dc/terms/"
+  xmlns:dc="http://purl.org/dc/elements/1.1/"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+  xmlns:void="http://rdfs.org/ns/void#">
+  
+<rdf:Description rdf:about="http://jacs.dataincubator.org/">
+  <dct:description>A conversion of the JACS Joint Academic Coding System into a SKOS taxonomy.</dct:description>
+  <rdf:type rdf:resource="http://rdfs.org/ns/void#Dataset"/>
+  <dct:title>JACS Data Set</dct:title>
+  <void:uriRegexPattern>http://jacs.dataincubator.org/.+</void:uriRegexPattern>
+  <void:sparqlEndpoint rdf:resource="http://api.talis.com/stores/jacs/services/sparql"/>
+  <void:subset rdf:resource="http://jacs.dataincubator.org/datasets/jacs"/>
+ </rdf:Description>
+ <rdf:Description rdf:about="http://jacs.dataincubator.org/datasets/jacs">
+   <dct:source rdf:resource="http://www.hesa.ac.uk/dox/jacs/JACS.csv"/>
+   <dct:description>A conversion of the JACS metadata provided for HTTP download by HESA.</dct:description>
+  </rdf:Description>
+</rdf:RDF>
