@@ -9,12 +9,12 @@ class JacsCode
   end
 
   def uri()
-    code = fields["code"]
+    code = @fields["code"]
     return "http://jacs.dataincubator.org/" + Util.makeSlug(code)
   end
 
   def hierarchical_uri()
-    code = fields["code"]
+    code = String.new(@fields["code"])
     
     if code.length == 1
       # top level
@@ -72,9 +72,9 @@ class JacsCode
     #   
     #   concept_uri = hierarchical_uri()
     #   parent_uri = get_parent_uri(concept_uri, true)
-
+        
     concept_uri = uri();
-    structured_uri = hierarchical_uri()
+    structured_uri = hierarchical_uri()    
     parent_uri = get_parent_uri(structured_uri, false)
 
     #concept_uri = hierarchical_uri()
@@ -84,14 +84,19 @@ class JacsCode
     print "* Processing #{concept_uri} \n"
     rdf = "<skos:Concept rdf:about=\"#{concept_uri}\">\n"
     
-    label = fields["subject"]
     
-    rdf << " <skos:prefLabel>#{ Util.escape_xml( label.strip ) }</skos:prefLabel>\n"
+    subject = @fields["subject"]
+    jacscode = @fields["code"]
+    
+    
+    rdf << " <skos:prefLabel>#{ Util.escape_xml( subject.strip ) }</skos:prefLabel>\n"
     rdf << " <skos:inScheme rdf:resource=\"http://jacs.dataincubator.org/\" />\n"
+    rdf << " <dct:identifier>#{jacscode}</dct:identifier>\n"
     
     
-    if fields["description"] != nil && fields["description"] != ""
-      description = fields["description"]
+    
+    if @fields["description"] != nil && @fields["description"] != ""
+      description = @fields["description"]
       rdf << " <skos:scopeNote>#{ Util.escape_xml( description.strip ) }</skos:scopeNote>\n"
     end
     
