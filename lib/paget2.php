@@ -38,6 +38,7 @@ $space->set_namespace_mapping('bio', 'http://vocab.org/bio/0.1/');
 $space->set_namespace_mapping('ol', 'http://olrdf.appspot.com/key/');
 $space->set_namespace_mapping('ov', 'http://open.vocab.org/terms/');
 $space->set_namespace_mapping('void', 'http://rdfs.org/ns/void#');
+$space->set_namespace_mapping('ex', 'http://example.org/terms/');
 $space->dispatch();
 
 ?>
