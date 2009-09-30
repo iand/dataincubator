@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:bf="http://schemas.talis.com/2006/bigfoot/configuration#"
+  xmlns:frm="http://schemas.talis.com/2006/frame/schema#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/queryprofiles/1#type">
+    <bf:weight>1.0</bf:weight>
+    <frm:name>type</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/queryprofiles/1#label">
+    <bf:weight>1.0</bf:weight>
+    <frm:name>label</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/queryprofiles/1#description">
+    <bf:weight>1.0</bf:weight>
+    <frm:name>description</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/queryprofiles/1#code">
+    <bf:weight>1.0</bf:weight>
+    <frm:name>code</frm:name>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/queryprofiles/1">
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/jacs/config/queryprofiles/1#type"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/jacs/config/queryprofiles/1#label"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/jacs/config/queryprofiles/1#description"/>
+    <bf:fieldWeight rdf:resource="http://api.talis.com/stores/jacs/config/queryprofiles/1#code"/>
+    <rdf:type rdf:resource="http://schemas.talis.com/2006/bigfoot/configuration#QueryProfile"/>
+    <rdfs:label>default query profile</rdfs:label>
+  </rdf:Description>
+
+</rdf:RDF>
