@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+  xmlns:frm="http://schemas.talis.com/2006/frame/schema#"
+  xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#">
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/fpmaps/1">
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/jacs/config/fpmaps/1#type"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/jacs/config/fpmaps/1#label"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/jacs/config/fpmaps/1#description"/>
+    <frm:mappedDatatypeProperty rdf:resource="http://api.talis.com/stores/jacs/config/fpmaps/1#code"/>
+    <rdf:type rdf:resource="http://schemas.talis.com/2006/bigfoot/configuration#FieldPredicateMap"/>
+    <rdfs:label>default field/predicate map</rdfs:label>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/fpmaps/1#type">
+    <frm:name>type</frm:name>
+    <frm:property rdf:resource="http://www.w3.org/1999/02/22-rdf-syntax-ns#type"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/fpmaps/1#label">
+    <frm:name>label</frm:name>
+    <frm:property rdf:resource="http://www.w3.org/2004/02/skos/core#prefLabel"/>
+  </rdf:Description>
+
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/fpmaps/1#description">
+    <frm:name>description</frm:name>
+    <frm:property rdf:resource="http://www.w3.org/2004/02/skos/core#scopeNote"/>
+  </rdf:Description>
+  
+  <rdf:Description rdf:about="http://api.talis.com/stores/jacs/config/fpmaps/1#code">
+    <frm:name>code</frm:name>
+    <frm:property rdf:resource="http://purl.org/dc/terms/identifier"/>
+  </rdf:Description>
+  
+
+</rdf:RDF>
