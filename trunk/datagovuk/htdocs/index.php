@@ -127,6 +127,10 @@ if (array_key_exists($this_host, $domain_map)) {
     $g = new SimpleGraph();
     $g->add_labelling_property('http://education.data.gov.uk/ontology/school#establishmentName');
     $g->from_json($response->body);
+
+    $h = $g->to_html($uri);
+    $h = str_replace('href="http://' . $domain_map[$this_host]['domain'], 'href="', $h);
+
     echo '<h1>' . htmlspecialchars($g->get_label($uri)) . '</h1>';
   }
   else {
@@ -141,8 +145,8 @@ if (array_key_exists($this_host, $domain_map)) {
     <div class="plain">
         
 <?php
-    if ($g) {
-      echo $g->to_html($uri);
+    if ($h) {
+      echo $h;
     }
 ?>                                    
 
