@@ -105,7 +105,10 @@ tr, th { border: 0px; }
 define('MORIARTY_DIR', '../../../lib/moriarty/');
 define('MORIARTY_ARC_DIR', '../../../lib/arc_2008_11_18/');
 
-$domain_map = array( 'datagovuk.dataincubator.org.local' => array('domain'=>'education.data.gov.uk', 'store'=>'govuk-education'));
+$domain_map = array( 'datagovuk.dataincubator.org.local' => array('domain'=>'education.data.gov.uk', 'store'=>'govuk-education')
+                     , 'datagovuk.dataincubator.org' => array('domain'=>'education.data.gov.uk', 'store'=>'govuk-education')
+                     
+                  );
 
 
 $this_host = $_SERVER["HTTP_HOST"];
