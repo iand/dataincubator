@@ -16,7 +16,7 @@ APOLLO_DATA_DIR="#{APOLLO_DIR}/data"
 STATIC_DATA_DIR="etc/static"
 
 USER="ldodds"
-PASS="gwpjmv7z"
+PASS="XXXXXX"
 STORENAME="http://api.talis.com/stores/space"
 
 CLEAN.include ["#{NSSDC_DATA_DIR}/*.rdf", "#{NSSDC_DATA_DIR}/*.ok", "#{NSSDC_DATA_DIR}/*.fail", 
