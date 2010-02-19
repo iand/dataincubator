@@ -1,4 +1,4 @@
-require 'rexml/document'
+require 'libxml'
 require 'uri'
 require 'cgi'
 require 'Util'
@@ -8,33 +8,35 @@ require 'Artist'
 require 'Track'
 class Release < DiscogResource
   
+  attr_reader :id, :title, :artists, :labels, :notes, :released, :tracks, :genres, :styles
+  
   def initialize(string)
     super(string)
     @id = @root.attributes["id"]
-    @title = @root.get_elements("title")[0].get_text
+    @title = @root.find_first("title").first.content
     
-    artists = @root.get_elements("artists")[0]
+    artists = @root.find_first("artists")
     @artists = []
-    artists.get_elements("artist").each do |artist|
-      name = artist.get_elements("name")[0].text
-      if name
-        @artists << Artist.create_uri( name )  
+    artists.find("artist").each do |artist|
+      name = artist.find_first("name").first
+      if name && name.content
+        @artists << Artist.create_uri( name.content )  
       end      
     end
 
-    labels = @root.get_elements("labels")[0]
+    labels = @root.find_first("labels")
     @labels = []
-    labels.get_elements("label").each do |label|
+    labels.find("label").each do |label|
       #TODO catno
       name = label.attributes["name"]
       @labels << Label.create_uri( name )
     end
         
-    notes = @root.get_elements("notes")[0]
-    @notes = notes.get_text unless notes == nil
-    released = @root.get_elements("released")[0]
+    notes = @root.find_first("notes")
+    @notes = notes.first.content unless notes == nil
+    released = @root.find_first("released")
     if released
-      @released = released.text
+      @released = released.first.content
       #clean up dates
       if @released.match("-00-00")
         @released = @released[0..3]
@@ -53,27 +55,27 @@ class Release < DiscogResource
     end
     
     
-    tracklist = @root.get_elements("tracklist")[0]
+    tracklist = @root.find_first("tracklist")
     @tracks = []
     if tracklist != nil    
-      tracklist.get_elements("track").each_with_index do |track, i|
+      tracklist.find("track").each_with_index do |track, i|
         @tracks << Track.new(@id, track, i+1)
       end      
     end
     
     #genres & styles -> SKOS
-    genres = @root.get_elements("genres")[0]
+    genres = @root.find_first("genres")
     @genres = []
     if genres
-      genres.get_elements("genre").each do |genre|
+      genres.find("genre").each do |genre|
         @genres << genre
       end
     end
         
-    styles = @root.get_elements("styles")[0]
+    styles = @root.find_first("styles")
     @styles = []
     if styles
-      styles.get_elements("style").each do |style|
+      styles.find("style").each do |style|
         @styles << style
       end
     end
@@ -87,39 +89,51 @@ class Release < DiscogResource
   def dump_rdf()    
     uri = Release.create_uri(@id)
     
-    rdf = "<mo:Record rdf:about=\"#{ uri  }\">\n"
-    rdf << " <dc:title>#{@title}</dc:title>\n"
-    rdf << " <mo:discogs rdf:resource=\"http://www.discogs.com/release/#{ @id }\"/>\n"    
-        
-    rdf << " <rdfs:comment>#{@notes}</rdfs:comment>\n"        
+    rdf = "<#{uri}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/mo/Record>.\n"
+    #rdf = "<mo:Record rdf:about=\"#{ uri  }\">\n"
+    rdf << "<#{uri}> <http://purl.org/dc/terms/title> \"#{Util.escape_ntriples(@title)}\".\n"
+    #rdf << " <dc:title>#{@title}</dc:title>\n"
+    rdf << "<#{uri}> <http://purl.org/ontology/mo/discogs> <http://www.discogs.com/release/#{ @id }>.\n"
+    #rdf << " <mo:discogs rdf:resource=\"http://www.discogs.com/release/#{ @id }\"/>\n"    
+    
+    if @notes != nil
+      rdf << "<#{uri}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#comment> \"#{Util.escape_ntriples(@notes)}\".\n"  
+    end
+      
+    #rdf << " <rdfs:comment>#{@notes}</rdfs:comment>\n"        
     if @released    
-      rdf << " <dc:issued rdf:datatype=\"#{@release_date_format}\">#{@released}</dc:issued>\n"      
+      rdf << "<#{uri}> <http://purl.org/dc/terms/issued> \"#{@released}\"^^<#{@release_date_format}>.\n"
+      #rdf << " <dc:issued rdf:datatype=\"#{@release_date_format}\">#{@released}</dc:issued>\n"      
     end
     
     @images.each do |image|
-      rdf << " <foaf:depiction>\n"
-      rdf << dump_image(image, "Photo of #{@title}", uri)
-      rdf << " </foaf:depiction>\n"  
+      #rdf << " <foaf:depiction>\n"
+      rdf << "<#{uri}> <http://xmlns.com/foaf/0.1/depiction> <#{image["uri"]}>.\n"
+      rdf << dump_image(image, "Photo of #{Util.escape_ntriples(@title)}", uri)
+      #rdf << " </foaf:depiction>\n"  
     end
     
-    @artists.each do |artist|      
-      rdf << " <foaf:maker rdf:resource=\"#{ Util.escape_xml(artist) }\" />\n"        
+    @artists.each do |artist|
+      rdf << "<#{uri}> <http://xmlns.com/foaf/0.1/maker> <#{ artist }>.\n"      
+      #rdf << " <foaf:maker rdf:resource=\"#{ Util.escape_xml(artist) }\" />\n"        
     end
 
     @labels.each do |label|
-      rdf << " <mo:publisher rdf:resource=\"#{ Util.escape_xml(label) }\" />\n"        
+      rdf << "<#{uri}> <http://purl.org/ontology/mo/publisher> <#{ label }>.\n"
+      #rdf << " <mo:publisher rdf:resource=\"#{ Util.escape_xml(label) }\" />\n"        
     end
 
     @tracks.each do |track|
-      rdf << " <mo:track>\n"
+      rdf << "<#{uri}> <http://purl.org/ontology/mo/track> <#{track.uri}>.\n"
+      #rdf << " <mo:track>\n"
       rdf << track.to_rdf()        
-      rdf << " </mo:track>\n"
+      #rdf << " </mo:track>\n"
     end
     
     #TODO genres and formats -- these will be skos concepts linked to relevant scheme
     #but how do we associate a Record with its scheme. Its not its "subject" or "topic" 
         
-    rdf << "</mo:Record>\n"
+    #rdf << "</mo:Record>\n"
     return rdf
   end
     

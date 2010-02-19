@@ -1,4 +1,4 @@
-require 'rexml/document'
+require 'libxml'
 require 'uri'
 require 'cgi'
 require 'Util'
@@ -21,27 +21,31 @@ class Label < NamedDiscogResource
     #[b][l=Rising High Records][/b]
     #[u]Partisan Recordings[/u]
     #@profile = get_optional_tag("profile")
-    profile = @root.get_elements("profile")[0]
+    profile = @root.find_first("profile")
     if profile != nil
-      @profile = profile.get_text  
+      @profile = profile.first.content  
     end
     
     
-    contact = @root.get_elements("contactinfo")[0]
-    if contact != nil && contact.text != nil
+    contact = @root.find_first("contactinfo")
+    if contact != nil && contact.first.content != ""
       #FIXME losing \n in addresses, temporarily fixed with space
-      @address = Util.clean_escape(contact.text)
+      @address = Util.clean_escape(contact.first.content)
     end
     
     @parent = get_optional_tag("parentLabel", false)
     
   end
     
-  def dump_rdf()    
-    uri = Util.escape_xml( Label.create_uri( @raw_name ) )
-    rdf = "<mo:Label rdf:about=\"#{ uri  }\">\n"
-    rdf << " <foaf:name>#{@name}</foaf:name>\n"
-    rdf << " <mo:discogs rdf:resource=\"http://www.discogs.com/label/#{ Util.escape_xml( CGI::escape(@raw_name) ) }\"/>\n"
+  def dump_rdf()
+    uri = Label.create_uri( @raw_name )
+    #uri = Util.escape_xml( Label.create_uri( @raw_name ) )
+    rdf = "<#{uri}> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://purl.org/ontology/mo/Label>.\n"
+    #rdf = "<mo:Label rdf:about=\"#{ uri  }\">\n"
+    rdf << "<#{uri}> <http://xmlns.com/foaf/0.1/name> \"#{@name}\".\n"
+    #rdf << " <foaf:name>#{@name}</foaf:name>\n"
+    rdf << "<#{uri}> <http://purl.org/ontology/mo/discogs> <http://www.discogs.com/label/#{CGI::escape(@raw_name)}>.\n"
+    #rdf << " <mo:discogs rdf:resource=\"http://www.discogs.com/label/#{ Util.escape_xml( CGI::escape(@raw_name) ) }\"/>\n"
     @urls.each do |url|
       #hack to strip comments after urls in data
       #TODO: comma-sep
@@ -49,7 +53,9 @@ class Label < NamedDiscogResource
       url = Util.clean_url(url)      
       begin
         URI.parse(url)
-        rdf << " <foaf:isPrimaryTopicOf rdf:resource=\"#{ Util.escape_xml(url) }\"/>\n"
+        rdf << "<#{uri}> <http://xmlns.com/foaf/0.1/isPrimaryTopicOf> <#{url}>.\n"
+        rdf << "<#{uri}> <http://xmlns.com/foaf/0.1/primaryTopic> <#{uri}>.\n"
+        #rdf << " <foaf:isPrimaryTopicOf rdf:resource=\"#{ Util.escape_xml(url) }\"/>\n"
       rescue
         puts "Invalid uri #{url}"  
       end
@@ -57,26 +63,31 @@ class Label < NamedDiscogResource
     end
     
     @images.each do |image|
-      rdf << " <foaf:logo>"
-      rdf << dump_image(image, "Logo for #{Util.escape_xml( @raw_name )}")
-      rdf << " </foaf:logo>"  
+      rdf << "<#{uri}> <http://xmlns.com/foaf/0.1/logo> <#{image["uri"]}>.\n"
+      #rdf << " <foaf:logo>"
+      rdf << dump_image(image, "Logo for #{ Util.escape_ntriples( @raw_name ) }")
+      #rdf << " </foaf:logo>"  
     end
     
-    if @profile != nil
-      rdf << " <dc:description>#{@profile}</dc:description>\n"  
+    if @profile != nil && @profile != ""
+      rdf << "<#{uri}> <http://purl.org/dc/terms/description> \"#{Util.escape_ntriples( @profile )}\".\n"
+      #rdf << " <dc:description>#{@profile}</dc:description>\n"  
     end    
-    if @address != nil
-      rdf << " <discogs:contactInformation>#{@address}</discogs:contactInformation>\n"
+    if @address != nil && @address != ""
+      rdf << "<#{uri}> <http://purl.org/net/schemas/discogs/contactInformation> \"#{Util.escape_ntriples( @address )}\".\n"
+      #rdf << " <discogs:contactInformation>#{@address}</discogs:contactInformation>\n"
     end
     
     if @parent != nil
       #clean_parent_name = Util.clean_escape(@parent)
-      parent_uri = Util.escape_xml( Label.create_uri( @parent ) )
-      rdf << " <dc:isPartOf>\n"
-      rdf << "  <mo:Label rdf:about=\"#{ parent_uri }\"/>\n"
-      rdf << " </dc:isPartOf>\n"
+      parent_uri = Label.create_uri( @parent )
+      #parent_uri = Util.escape_xml( Label.create_uri( @parent ) )
+      rdf << "<#{uri}> <http://purl.org/dc/terms/isPartOf> <#{parent_uri}>.\n"
+      #rdf << " <dc:isPartOf>\n"
+      #rdf << "  <mo:Label rdf:about=\"#{ parent_uri }\"/>\n"
+      #rdf << " </dc:isPartOf>\n"
     end
-    rdf << "</mo:Label>\n"
+    #rdf << "</mo:Label>\n"
     return rdf
               
   end  
