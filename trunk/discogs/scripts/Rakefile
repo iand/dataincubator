@@ -13,7 +13,7 @@ DISCOGS_DATA_DIR="#{DISCOGS_DIR}/data"
 STATIC_DATA_DIR="etc/static"
 
 USER="ldodds"
-PASS="gwpjmv7z"
+PASS="XXXXXX"
 STORENAME="http://api.talis.com/stores/discogs"
 
 CLEAN.include ["#{DISCOGS_DATA_DIR}/*.rdf", "#{DISCOGS_DATA_DIR}/*.ok", "#{DISCOGS_DATA_DIR}/*.fail", 
@@ -76,7 +76,8 @@ task :upload_data do
   collection = Pho::RDFCollection.new(STORE, DISCOGS_DATA_DIR)
   puts "Uploading"
   collection.store()
-  puts collection.summary()end
+  puts collection.summary()
+end
 
 #Run SPARQL construct queries from etc/sparql to add in extra data
 task :infer do
