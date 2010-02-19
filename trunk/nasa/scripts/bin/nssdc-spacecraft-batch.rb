@@ -48,6 +48,7 @@ Dir.glob( "*.html" ).each { |filename|
           #TODO ABLE1.html fails
           puts "Failed on #{filename}"
           puts e
+          puts e.backtrace
         end      
 #      end
     end
