@@ -20,6 +20,15 @@ module Util
     return "\n\n</rdf:RDF>"  
   end 
  
+  def Util.escape_ntriples(s)
+    escaped = s.dup
+    escaped.gsub! /["]/, "\\\\\""
+    escaped.gsub!("\n", " ")
+    escaped.gsub!("\r", " ")
+    escaped.gsub!("\\", "\\\\")
+    return escaped
+  end
+    
   def Util.escape_xml(s)
     escaped = s.dup    
     escaped.gsub!("&", "&amp;")

@@ -26,12 +26,14 @@ count = 0
 processed = 0
 
 if skip_records > 0
-  filename = "#{ARGV[1]}/releases_#{skip_records}.rdf"
+  filename = "#{ARGV[1]}/releases_#{skip_records}.nt"
+  #filename = "#{ARGV[1]}/releases_#{skip_records}.rdf"
 else
-  filename = "#{ARGV[1]}/releases_#{count}.rdf"
+  filename = "#{ARGV[1]}/releases_#{count}.nt"
+  #filename = "#{ARGV[1]}/releases_#{count}.rdf"
 end
 out = File.new( filename, "w")
-out.puts( Util.rdf_root() )
+#out.puts( Util.rdf_root() )
 
 file.each do |line|
     
@@ -48,17 +50,20 @@ file.each do |line|
          out.puts( release.to_rdf(false) )
         rescue StandardError => e
           puts e
+          puts e.backtrace
           $stderr.puts release_chunk
         end
         
+        #puts "Done process" if processed == 10000
         break if processed == 10000
         
-        if processed % 500 == 0
+        if processed % 100000 == 0
           puts "Completed #{processed}"
-          out.puts( Util.rdf_end() )
+          #out.puts( Util.rdf_end() )
           out.close()
-          out = File.new( "#{ARGV[1]}/releases_#{count}.rdf", "w")
-          out.puts( Util.rdf_root() )
+          out = File.new( "#{ARGV[1]}/releases_#{count}.nt", "w")
+          #out = File.new( "#{ARGV[1]}/releases_#{count}.rdf", "w")
+          #out.puts( Util.rdf_root() )
         end
                       
       else
@@ -71,4 +76,4 @@ file.each do |line|
       
 end
 
-out.puts( Util.rdf_end() )
+#out.puts( Util.rdf_end() )

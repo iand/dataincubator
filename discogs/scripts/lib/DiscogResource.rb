@@ -1,14 +1,19 @@
+require "libxml"
+
 class DiscogResource
+  
+  attr_reader :images
   
   def initialize(string)
     
-    doc = REXML::Document.new(string)
+    parser = LibXML::XML::Parser.string(string)
+    doc = parser.parse
     @root = doc.root
     
     @images = Array.new
-    images = @root.get_elements("images")[0]
+    images = @root.find_first("images")
     if images != nil
-      images.get_elements("image").each do |image|
+      images.find("image").each do |image|
          @images << image.attributes 
       end      
     end
@@ -31,12 +36,12 @@ class DiscogResource
   end  
       
   def get_optional_tag(tagname, clean=true)
-    tag = @root.get_elements(tagname)[0]
-    if tag != nil && tag.text != nil
+    tag = @root.find_first(tagname)
+    if tag != nil && tag.first.content != nil
       if clean
-        return Util.clean_escape( tag.text )
+        return Util.clean_escape( tag.first.content )
       else
-        return tag.text  
+        return tag.first.content
       end        
     end    
     return nil
@@ -45,18 +50,26 @@ class DiscogResource
   
   def dump_image(image, label=nil, depicts=nil)
     rdf = ""
-    rdf << "<foaf:Image rdf:about=\"#{image["uri"]}\">\n"
-    rdf << " <exif:height>#{image["height"]}</exif:height>\n"
-    rdf << " <exif:width>#{image["width"]}</exif:width>\n"
+    uri = "<#{image["uri"]}>"
+    rdf << "#{uri} <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://xmlns.com/foaf/0.1/Image>.\n"
+    #rdf << "<foaf:Image rdf:about=\"#{image["uri"]}\">\n"
+    rdf << "#{uri} <http://www.w3.org/2003/12/exif/ns#height> \"#{image["height"]}\".\n"
+    #rdf << " <exif:height>#{image["height"]}</exif:height>\n"
+    #rdf << ""
+    rdf << "#{uri} <http://www.w3.org/2003/12/exif/ns#width> \"#{image["width"]}\".\n"
+    #rdf << " <exif:width>#{image["width"]}</exif:width>\n"
     if label != nil
-      rdf << "<rdfs:label>#{label}</rdfs:label>\n"
+      rdf << "#{uri} <http://www.w3.org/2000/01/rdf-schema#label> \"#{label}\".\n"
+      #rdf << "<rdfs:label>#{label}</rdfs:label>\n"
     end
     if depicts != nil
-      rdf << "<foaf:depicts rdf:resource=\"#{depicts}\"/>\n"
+      rdf << "#{uri} <http://xmlns.com/foaf/0.1/depicts> <#{depicts}>.\n"
+      #rdf << "<foaf:depicts rdf:resource=\"#{depicts}\"/>\n"
     end
-    rdf << "<foaf:thumbnail rdf:resource=\"#{image["uri150"]}\"/>\n"
-    rdf << "</foaf:Image>\n"
-    return rdf
+    rdf << "#{uri} <http://xmlns.com/foaf/0.1/thumbnail> <#{image["uri150"]}>.\n"
+    #rdf << "<foaf:thumbnail rdf:resource=\"#{image["uri150"]}\"/>\n"
+    #rdf << "</foaf:Image>\n"
+    return rdf    
   end
   
 end

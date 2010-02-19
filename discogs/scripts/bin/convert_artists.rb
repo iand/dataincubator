@@ -20,8 +20,9 @@ labels = label_files[0]
 file = File.new(labels)
 chunk = ""
 count = 0
-out = File.new( "#{ARGV[1]}/artists_#{count}.rdf", "w")
-out.puts( Util.rdf_root() )
+out = File.new( "#{ARGV[1]}/artists_#{count}.nt", "w")
+#out = File.new( "#{ARGV[1]}/artists_#{count}.rdf", "w")
+#out.puts( Util.rdf_root() )
 
 file.each do |line|        
     chunk << line 
@@ -33,21 +34,23 @@ file.each do |line|
         out.puts( artist.to_rdf(false) )
       rescue StandardError => e
         puts e
+        puts e.backtrace
         $stderr.puts chunk
       end
       
       #break if count == 1000
       
-      if count % 2000 == 0
+      if count % 100000 == 0
         puts "Completed #{count}"
-        out.puts( Util.rdf_end() )
-        out.close()                
-        out = File.new( "#{ARGV[1]}/artists_#{count}.rdf", "w")
-        out.puts( Util.rdf_root() )
+        #out.puts( Util.rdf_end() )
+        out.close()
+        out = File.new( "#{ARGV[1]}/artists_#{count}.nt", "w")                
+        #out = File.new( "#{ARGV[1]}/artists_#{count}.rdf", "w")
+        #out.puts( Util.rdf_root() )
       end
             
       chunk = ""
     end  
 end
 
-out.puts( Util.rdf_end() )
+#out.puts( Util.rdf_end() )
