@@ -1,6 +1,6 @@
 
 body {
-  font: 62.5%/1.6em "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
+  font: 100%/1.125em "Lucida Grande", "Lucida Sans Unicode", verdana, geneva, sans-serif;
   color:#666;
   margin:0;
 }
@@ -12,7 +12,7 @@ body {
 
 h1 {
   font-family:"Times New Roman", Times, serif;
-  font-size:3.8em;
+  font-size:2.9em;
   font-weight:normal;
   color:#333;
   letter-spacing:-1px;
@@ -44,9 +44,13 @@ h1 a {
 
 #header h1 {
   margin:15px 0 0 0;
-  padding:25px 25px 40px 0;
+  padding:22px 25px 20px 72px;
   border-bottom:20px solid #fafafa;
+  background-image: url(/images/seedling-64.png);
+  background-repeat: no-repeat;
 }
+
+
 
 #wrapper {
   width:760px;
@@ -61,6 +65,7 @@ h1 a {
   border-top:1px solid #eee;
   margin-bottom: 7px;
   height:36px;
+  font-size:0.75em;
 }
 
 #nav li {
@@ -98,6 +103,7 @@ h1 a {
 #content {
   margin:0 0 0 0 !important;
   padding:0px 25px 40px 0;
+  font-size:0.875em;
 }
 
 
@@ -105,13 +111,12 @@ h1 a {
 #content p {
   line-height:25px;
   margin:18px 0;
-  font-size:110%;
   word-spacing:2px;
 }
 
 #content a {
   text-decoration:none;
-  color:#333;
+  color:#33C;
 }
 
 #content a:hover {
@@ -120,7 +125,7 @@ h1 a {
 
 #content h2 {
   font-family:"Times New Roman", Times, serif;
-  font-size:2.8em;
+  font-size:2em;
   font-weight:normal;
   margin:15px 0;
   padding:5px 0;
@@ -136,11 +141,12 @@ h1 a {
   width:250px;
   float:right;
   padding:10px 10px 30px 10px;
+  font-size:0.875em;
 }
 
 #sidebar h2 {
   letter-spacing:2px;
-  font-size:1.4em;
+  font-size:1.2em;
   color:#333;
   padding:0 0 3px 0;
 }
@@ -208,7 +214,10 @@ blockquote {
 img {
   padding:0px;
   border-width:0px;
+
 }
+
+
 
 #content h3 {
   margin:10px 0;
