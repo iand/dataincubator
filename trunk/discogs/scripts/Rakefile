@@ -13,7 +13,7 @@ DISCOGS_DATA_DIR="#{DISCOGS_DIR}/data"
 STATIC_DATA_DIR="etc/static"
 
 USER="ldodds"
-PASS="XXXXXX"
+PASS="gwpjmv7z"
 STORENAME="http://api.talis.com/stores/discogs"
 
 CLEAN.include ["#{DISCOGS_DATA_DIR}/*.rdf", "#{DISCOGS_DATA_DIR}/*.ok", "#{DISCOGS_DATA_DIR}/*.fail", 
