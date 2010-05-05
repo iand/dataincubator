@@ -8,6 +8,8 @@ require 'Release'
 
 class Track
   
+  attr_reader :title
+  
   def initialize(release_id, element, number)
     @element = element
     @number = number
@@ -18,6 +20,8 @@ class Track
     end
     title = element.find_first("title").first
     @title = title.content if title && title.content
+    #puts element.find_first("title").inspect()
+    #puts @title.inspect()
     
     artists = @element.find_first("artists")
     @artists = []

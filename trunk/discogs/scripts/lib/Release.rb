@@ -10,11 +10,10 @@ class Release < DiscogResource
   
   attr_reader :id, :title, :artists, :labels, :notes, :released, :tracks, :genres, :styles
   
-  def initialize(string)
+  def initialize(string)    
     super(string)
     @id = @root.attributes["id"]
     @title = @root.find_first("title").first.content
-    
     artists = @root.find_first("artists")
     @artists = []
     artists.find("artist").each do |artist|
