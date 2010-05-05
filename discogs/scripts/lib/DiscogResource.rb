@@ -9,6 +9,7 @@ class DiscogResource
     parser = LibXML::XML::Parser.string(string)
     doc = parser.parse
     @root = doc.root
+    #puts @root
     
     @images = Array.new
     images = @root.find_first("images")
@@ -22,15 +23,15 @@ class DiscogResource
   
   def to_rdf(root=true)
     rdf = ""
-    if root
-      rdf << Util.rdf_root
-    end
+    #if root
+    #  rdf << Util.rdf_root
+    #end
 
     rdf << dump_rdf()
     
-    if root
-      rdf << Util.rdf_end
-    end
+    #if root
+    #  rdf << Util.rdf_end
+    #end
     return rdf
               
   end  
