@@ -28,6 +28,7 @@ function pretty_link($uri) {
     echo '    <link rel="alternate" type="' . htmlspecialchars($media_type) . '" href="' . htmlspecialchars($format_uri) . '" title="' . htmlspecialchars($label) . ' version of this document"/>' . "\n";
   }
 ?>        
+    <link rel="primarytopic" href="<?php e($resource_uri); ?>" />
         <style type="text/css">
 * {font-family: Tahoma, "Trebuchet MS", Arial, sans-serif;margin: 0;padding: 0;}
 body {font-size: 67.5%;}
@@ -94,7 +95,7 @@ td.odd, th.odd {background-color: #f0f0f0;}
     </head>
     <body>
       <div id="header">
-          <h1><?php echo(htmlspecialchars($this->get_title($resource_uri))) ?></h1>
+          <h1><a href="/"><?php echo(htmlspecialchars($this->get_title($resource_uri))) ?></a></h1>
           <h2><a href="<?php echo(htmlspecialchars($resource_uri));?>" rel="bookmark"><?php echo(htmlspecialchars($resource_uri));?></a></h2>
       </div>
 

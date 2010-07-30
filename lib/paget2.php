@@ -31,7 +31,10 @@ define('MORIARTY_HTTP_CACHE_USE_STALE_ON_FAILURE', TRUE ); // use a cached respo
 
 require_once PAGET_DIR . 'paget_storebackedurispace.class.php';
 
-$space = new PAGET_StoreBackedUriSpace(STORE_URI);
+if (! isset($space)) {
+  $space = new PAGET_StoreBackedUriSpace(STORE_URI);
+}
+
 $space->set_description_template(dirname(dirname(__FILE__)) . "/lib/paget2-desc-template.html");
 $space->set_namespace_mapping('bibo', 'http://purl.org/ontology/bibo/');
 $space->set_namespace_mapping('bio', 'http://vocab.org/bio/0.1/');
@@ -39,6 +42,11 @@ $space->set_namespace_mapping('ol', 'http://olrdf.appspot.com/key/');
 $space->set_namespace_mapping('ov', 'http://open.vocab.org/terms/');
 $space->set_namespace_mapping('void', 'http://rdfs.org/ns/void#');
 $space->set_namespace_mapping('ex', 'http://example.org/terms/');
+
+if (DI_DOMAIN == 'discogs') {
+  $space->set_static_data('http://discogs.dataincubator.org/', dirname(dirname(__FILE__)) . '/discogs/htdocs/void.rdf');
+}
+
 $space->dispatch();
 
 ?>
