@@ -17,6 +17,7 @@
 				    xmlns:ov="http://open.vocab.org/terms/"
 				    xmlns:geo="http://www.w3.org/2003/01/geo/wgs84_pos#"
 					xmlns:yweather="http://xml.weather.yahoo.com/ns/rss/1.0"
+                    xmlns="http://purl.org/rss/1.0/"
 				>
 
 
@@ -24,12 +25,16 @@
 	<xsl:strip-space elements="*"/>					
 	<xsl:template match="/">
 	<rdf:RDF>
+	    <channel rdf:about="">
+	        <title><xsl:value-of select="///title"/> as Linked Data</title>
 		<geo:SpatialThing><xsl:attribute name="rdf:about">http://placetime.com/geopoint/wgs84/X<xsl:value-of select="//item/geo:lat"/>Y<xsl:value-of select="//item/geo:long"/></xsl:attribute>
 			<weather:forecast>
 				<weather:Forecast rdf:about="#forecast">
 					<rdfs:label><xsl:value-of select="//item/title"/></rdfs:label>
 					<dct:creator>
-						<xsl:attribute name="rdf:resource">http://weather.yahoo.com</xsl:attribute>
+					    <foaf:Agent rdf:about="http://yahooweather.dataincubator.org/agents/yahooweather">
+						    <foaf:homepage><xsl:attribute name="rdf:resource">http://weather.yahoo.com</xsl:attribute></foaf:homepage>
+					    </foaf:Agent>
 					</dct:creator>
 					<dct:created><xsl:value-of select="//item/pubDate"/></dct:created>
 					<foaf:isPrimaryTopicOf>
@@ -55,12 +60,14 @@
 				</weather:Forecast>
 			</weather:forecast>
 		</geo:SpatialThing>
+		</channel>
 	</rdf:RDF>
 	</xsl:template>
 	
 	<xsl:template name="getDatatype">
 		<xsl:param name="unit"/>
-		
+		<xsl:param name="value"/>
+		    <rdf:Description>
 			<xsl:if test="$unit = 'F'">
 				<xsl:attribute name="rdf:datatype">http://dbpedia.org/resource/Fahrenheit</xsl:attribute>
 			</xsl:if>
@@ -72,5 +79,6 @@
 			<xsl:if test="$unit = 'mph'"><xsl:attribute name="rdf:datatype">http://dbpedia.org/resource/Mph</xsl:attribute></xsl:if>
 			<xsl:if test="$unit = 'kmph'"><xsl:attribute name="rdf:datatype">http://dbpedia.org/resource/Kmph</xsl:attribute></xsl:if>
 			<xsl:if test="$unit = 'mb'"><xsl:attribute name="rdf:datatype">http://dbpedia.org/resource/Millibar</xsl:attribute></xsl:if> -->
+			</rdf:Description>
 	</xsl:template>
 </xsl:stylesheet>
